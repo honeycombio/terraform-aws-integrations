@@ -1,6 +1,6 @@
-variable "cloudwatch_log_groups" {
-    type = list
-    description = "CloudWatch Log Group names to stream to Honeycomb"
+variable "cloudwatch_log_group" {
+    type = string
+    description = "CloudWatch Log Group name to stream to Honeycomb"
 }
 
  variable "honeycomb_dataset_name" {
