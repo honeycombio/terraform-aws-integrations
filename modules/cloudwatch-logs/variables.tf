@@ -1,5 +1,5 @@
-variable "cloudwatch_log_group" {
-    type = string
+variable "cloudwatch_log_groups" {
+    type = list
     description = "CloudWatch Log Group name to stream to Honeycomb"
 }
 
@@ -14,9 +14,9 @@ variable "cloudwatch_log_group" {
    sensitive   = true
  }
 
-variable "backup_s3_bucket_name" {
+variable "delivery_stream_and_s3_bucket_name" {
   type = string
-  description = "Name of the s3 bucket to store the backup logs that failed to send via the delivery stream. Needs to be globally unique"
+  description = "Name of the delivery stream and s3 bucket to store the backup logs that failed to send via the delivery stream. Needs to be globally unique"
 }
 
  # Optional variables for customer configuration
