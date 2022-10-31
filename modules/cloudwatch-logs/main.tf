@@ -81,7 +81,7 @@ resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
 }
 
 resource "aws_cloudwatch_log_subscription_filter" "cwl_logfilter" {
-  for_each = toset(var.cloudwatch_log_groups)
+  for_each        = toset(var.cloudwatch_log_groups)
   name            = "${each.value}-logs_subscription_filter"
   role_arn        = aws_iam_role.cwl_to_firehose.arn
   log_group_name  = each.value
