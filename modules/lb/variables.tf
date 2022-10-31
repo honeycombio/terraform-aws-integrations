@@ -22,9 +22,9 @@ variable "honeycomb_dataset" {
 }
 
 variable "filter_fields" {
-  type        = string
-  description = "Optional. Comma-separated simple strings to specify which field names to remove from events."
-  default     = ""
+  type        = list(string)
+  description = "Optional. Strings to specify which field names to remove from events."
+  default     = []
 }
 
 variable "kms_key_arn" {
@@ -68,9 +68,9 @@ variable "load_balancer_type" {
 }
 
 variable "rename_fields" {
-  type        = string
-  description = "Optional. Comma-separated list of k=v pairs to rename fields."
-  default     = ""
+  type        = map(string)
+  description = "Optional. Map of fields to rename, old -> new."
+  default     = {}
 }
 
 variable "s3_bucket_arn" {

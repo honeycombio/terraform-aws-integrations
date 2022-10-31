@@ -64,8 +64,8 @@ module "s3_processor" {
     API_HOST            = var.honeycomb_api_host
     DATASET             = var.honeycomb_dataset
     SAMPLE_RATE         = var.sample_rate
-    FILTER_FIELDS       = var.filter_fields
-    RENAME_FIELDS       = var.rename_fields
+    FILTER_FIELDS       = join(",", var.filter_fields)
+    RENAME_FIELDS       = join(",", [for k, v in var.rename_fields : "${k}=${v}"])
   }
 
   attach_policy = true
