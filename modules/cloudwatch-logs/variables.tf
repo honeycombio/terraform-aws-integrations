@@ -11,6 +11,7 @@ variable "cloudwatch_log_group" {
  variable "honeycomb_api_key" {
    type        = string
    description = "Your Honeycomb team's API key."
+   sensitive   = true
  }
 
 variable "backup_s3_bucket_name" {
