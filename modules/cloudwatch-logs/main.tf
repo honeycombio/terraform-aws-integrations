@@ -12,7 +12,7 @@ resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
 }
 
 resource "aws_s3_bucket" "temp_bucket" {
-  bucket = "temp-bucket-cw-logs-honeycomb"
+  bucket = var.backup_s3_bucket_name
 
   # 'true' allows terraform to delete this bucket even if it is not empty.
   force_destroy = var.s3_force_destroy
@@ -51,14 +51,9 @@ data "aws_iam_policy_document" "firehose_s3_policy_document" {
   }
 }
 
-resource "aws_iam_role_policy" "firehose_s3_policy" {
-  name   = "firehose_s3_policy_${local.region}"
-  role   = aws_iam_role.firehose_s3_role.id
-  policy = data.aws_iam_policy_document.firehose_s3_policy_document.json
-}
 
 resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
-  name        = "cloudwatch-logs-to-honeycomb_firehose_delivery_stream"
+  name        = "${replace(trimprefix(var.cloudwatch_log_group, "/"), "/", "-")}-firehose_delivery_stream"
   destination = "http_endpoint"
 
   s3_configuration {
@@ -89,45 +84,6 @@ resource "aws_cloudwatch_log_subscription_filter" "cwl_logfilter" {
   name            = "${var.cloudwatch_log_group}-logs_subscription_filter"
   role_arn        = aws_iam_role.cwl_to_firehose.arn
   log_group_name  = var.cloudwatch_log_group
-  filter_pattern  = ""
+  filter_pattern  = var.log_subscription_filter_pattern
   destination_arn = aws_kinesis_firehose_delivery_stream.http_stream.arn
-}
-
-data "aws_iam_policy_document" "logs-assume-role-policy" {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["logs.${local.region}.amazonaws.com"]
-    }
-
-    condition {
-      test     = "StringLike"
-      variable = "aws:SourceArn"
-
-      values = [
-        "arn:aws:logs:${local.region}:${local.account_id}:*"
-      ]
-    }
-  }
-}
-
-resource "aws_iam_role" "cwl_to_firehose" {
-  name               = "cwl_role_${local.region}"
-  assume_role_policy = data.aws_iam_policy_document.logs-assume-role-policy.json
-}
-
-data "aws_iam_policy_document" "cwl_policy_document" {
-  statement {
-    actions   = ["firehose:*"]
-    resources = ["arn:aws:firehose:${local.region}:${local.account_id}:*"]
-  }
-}
-
-resource "aws_iam_role_policy" "cwl_policy" {
-  name = "cwl_role_policy_${local.region}"
-  role = aws_iam_role.cwl_to_firehose.id
-
-  policy = data.aws_iam_policy_document.cwl_policy_document.json
 }
