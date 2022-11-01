@@ -11,11 +11,16 @@ module "cloudwatch_logs_to_honeycomb_integration" {
   name = "terraform-cloudwatch-logs-test" // A name for this CloudWatch Kinesis Firehose Stream to Honeycomb.
 
   # insert required variables here
+  cloudwatch_log_groups  = []
+  honeycomb_api_key      = ""
+  honeycomb_dataset_name = ""
+  s3_bucket_name         = ""
 }
 
 module "S3_logs_to_honeycomb_integration" {
   source = "./modules/lb-logs"
-  name = "terraform-s3-logs-test" // A name for this CloudWatch Kinesis Firehose Stream to Honeycomb.
 
   # insert required variables here
+  honeycomb_api_key = ""
+  s3_bucket_arn = ""
 }
