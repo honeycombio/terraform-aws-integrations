@@ -1,3 +1,8 @@
+variable "name" {
+  type        = string
+  description = "A unique name for this CloudWatch Kinesis Firehose Stream."
+}
+
 variable "cloudwatch_log_groups" {
   type        = list(any)
   description = "CloudWatch Log Group names to stream to Honeycomb"
@@ -12,11 +17,6 @@ variable "honeycomb_api_key" {
   type        = string
   description = "Your Honeycomb team's API key."
   sensitive   = true
-}
-
-variable "delivery_stream_and_s3_bucket_name" {
-  type        = string
-  description = "Name of the delivery stream and s3 bucket to store the backup logs that failed to send via the delivery stream. Needs to be globally unique"
 }
 
 # Optional variables for customer configuration

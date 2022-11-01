@@ -12,7 +12,7 @@ resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
 }
 
 resource "aws_s3_bucket" "temp_bucket" {
-  bucket = var.delivery_stream_and_s3_bucket_name
+  bucket = var.name
 
   # 'true' allows terraform to delete this bucket even if it is not empty.
   force_destroy = var.s3_force_destroy
@@ -53,7 +53,7 @@ data "aws_iam_policy_document" "firehose_s3_policy_document" {
 
 
 resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
-  name        = var.delivery_stream_and_s3_bucket_name
+  name        = var.name
   destination = "http_endpoint"
 
   s3_configuration {
