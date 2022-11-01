@@ -7,12 +7,12 @@ locals {
 }
 
 resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
-  bucket = aws_s3_bucket.temp_bucket.id
+  bucket = aws_s3_bucket.bucket_for_failures.id
   acl    = "private"
 }
 
-resource "aws_s3_bucket" "temp_bucket" {
-  bucket = var.backup_s3_bucket_name
+resource "aws_s3_bucket" "bucket_for_failures" {
+  bucket = var.s3_bucket_name
 
   # 'true' allows terraform to delete this bucket even if it is not empty.
   force_destroy = var.s3_force_destroy
@@ -45,20 +45,20 @@ data "aws_iam_policy_document" "firehose_s3_policy_document" {
       "s3:PutObject"
     ]
     resources = [
-      "${aws_s3_bucket.temp_bucket.arn}",
-      "${aws_s3_bucket.temp_bucket.arn}/*"
+      "${aws_s3_bucket.bucket_for_failures.arn}",
+      "${aws_s3_bucket.bucket_for_failures.arn}/*"
     ]
   }
 }
 
 
 resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
-  name        = "${replace(trimprefix(var.cloudwatch_log_group, "/"), "/", "-")}-firehose_delivery_stream"
+  name        = var.name
   destination = "http_endpoint"
 
   s3_configuration {
     role_arn   = aws_iam_role.firehose_s3_role.arn
-    bucket_arn = aws_s3_bucket.temp_bucket.arn
+    bucket_arn = aws_s3_bucket.bucket_for_failures.arn
 
     buffer_size        = var.s3_buffer_size
     buffer_interval    = var.s3_buffer_interval
@@ -81,9 +81,10 @@ resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
 }
 
 resource "aws_cloudwatch_log_subscription_filter" "cwl_logfilter" {
-  name            = "${var.cloudwatch_log_group}-logs_subscription_filter"
+  for_each        = toset(var.cloudwatch_log_groups)
+  name            = "${each.value}-logs_subscription_filter"
   role_arn        = aws_iam_role.cwl_to_firehose.arn
-  log_group_name  = var.cloudwatch_log_group
+  log_group_name  = each.value
   filter_pattern  = var.log_subscription_filter_pattern
   destination_arn = aws_kinesis_firehose_delivery_stream.http_stream.arn
 }
