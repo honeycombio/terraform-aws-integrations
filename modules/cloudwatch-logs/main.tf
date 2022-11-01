@@ -7,12 +7,12 @@ locals {
 }
 
 resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
-  bucket = aws_s3_bucket.temp_bucket.id
+  bucket = aws_s3_bucket.bucket_for_failures.id
   acl    = "private"
 }
 
-resource "aws_s3_bucket" "temp_bucket" {
-  bucket = var.name
+  resource "aws_s3_bucket" "bucket_for_failures" {
+  bucket = var.s3_bucket_name
 
   # 'true' allows terraform to delete this bucket even if it is not empty.
   force_destroy = var.s3_force_destroy
@@ -45,8 +45,8 @@ data "aws_iam_policy_document" "firehose_s3_policy_document" {
       "s3:PutObject"
     ]
     resources = [
-      "${aws_s3_bucket.temp_bucket.arn}",
-      "${aws_s3_bucket.temp_bucket.arn}/*"
+      "${aws_s3_bucket.bucket_for_failures.arn}",
+      "${aws_s3_bucket.bucket_for_failures.arn}/*"
     ]
   }
 }
@@ -58,7 +58,7 @@ resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
 
   s3_configuration {
     role_arn   = aws_iam_role.firehose_s3_role.arn
-    bucket_arn = aws_s3_bucket.temp_bucket.arn
+    bucket_arn = aws_s3_bucket.bucket_for_failures.arn
 
     buffer_size        = var.s3_buffer_size
     buffer_interval    = var.s3_buffer_interval

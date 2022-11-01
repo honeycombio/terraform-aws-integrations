@@ -3,6 +3,11 @@ variable "name" {
   description = "A unique name for this CloudWatch Kinesis Firehose Stream."
 }
 
+variable "s3_bucket_name" {
+  type        = string
+  description = "Name of the S3 bucket that will store any logs that failed to be sent to Honeycomb."
+}
+
 variable "cloudwatch_log_groups" {
   type        = list(any)
   description = "CloudWatch Log Group names to stream to Honeycomb"
