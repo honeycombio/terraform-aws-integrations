@@ -11,7 +11,7 @@ resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
   acl    = "private"
 }
 
-  resource "aws_s3_bucket" "bucket_for_failures" {
+resource "aws_s3_bucket" "bucket_for_failures" {
   bucket = var.s3_bucket_name
 
   # 'true' allows terraform to delete this bucket even if it is not empty.
