@@ -9,7 +9,7 @@ variable "s3_bucket_name" {
 }
 
 variable "cloudwatch_log_groups" {
-  type        = list(any)
+  type        = list(string)
   description = "CloudWatch Log Group names to stream to Honeycomb"
 }
 
