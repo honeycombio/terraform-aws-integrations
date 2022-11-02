@@ -26,5 +26,5 @@ module "lb_logs_to_honeycomb_integration" {
   # insert required variables here
   honeycomb_api_key = var.honeycomb_api_key // Your Honeycomb team's API key.
   s3_bucket_arn     = var.s3_bucket_arn     // The full ARN of the bucket storing load balancer access logs.
-  kms_key_arn   = var.kms_key_arn // TODO - Considered optional but is required at the moment.
+  kms_key_arn       = var.kms_key_arn       // TODO - Considered optional but is required at the moment.
 }

@@ -74,7 +74,7 @@ variable "s3_compression_format" {
       "Snappy",
       "Zip",
       "Hadoop-Compatible Snappy"],
-      var.s3_compression_format)
+    var.s3_compression_format)
     error_message = "Not an allowed compression format."
   }
 }
@@ -86,7 +86,7 @@ variable "s3_backup_mode" {
 
   validation {
     condition = contains(["FailedDataOnly", "AllData"],
-      var.s3_backup_mode)
+    var.s3_backup_mode)
     error_message = "Not an allowed s3_backup_mode."
   }
 }
