@@ -14,13 +14,17 @@ module "cloudwatch_logs_to_honeycomb_integration" {
   cloudwatch_log_groups  = var.cloudwatch_log_groups
   honeycomb_api_key      = var.honeycomb_api_key      // Your Honeycomb team's API key.
   honeycomb_dataset_name = var.honeycomb_dataset_name // Your Honeycomb dataset name.
-  s3_bucket_name         = var.s3_bucket_name         // A name of the S3 bucket that will store any logs that failed to be sent to Honeycomb.
+  s3_bucket_name         = var.s3_bucket_name
+  // A name of the S3 bucket that will store any logs that failed to be sent to Honeycomb.
 }
 
 module "lb_logs_to_honeycomb_integration" {
   source = "./modules/lb-logs"
 
+  name = "terraform-lb-logs-test"
+
   # insert required variables here
   honeycomb_api_key = var.honeycomb_api_key // Your Honeycomb team's API key.
   s3_bucket_arn     = var.s3_bucket_arn     // The full ARN of the bucket storing load balancer access logs.
+  kms_key_arn   = var.kms_key_arn // TODO - Considered optional but is required at the moment.
 }
