@@ -8,20 +8,14 @@ on:
 
 jobs:
   terraform-fmt:
-    strategy:
-      matrix:
-        terraform-config: [ ".", "modules/cloudwatch-logs/", "modules/lb-logs/", "examples/", "tests/" ]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ matrix.terraform-config }}
     steps:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v1
 
     - name: Terraform fmt
       id: fmt
-      run: terraform fmt -check
+      run: make terraform-format validate=true
 
     - name: GitHub Action linting Terraform files
       uses: devops-infra/action-tflint@0.3
