@@ -35,4 +35,4 @@ jobs:
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve -no-color
-        post-if: 'always()'
+        if: 'always()'
