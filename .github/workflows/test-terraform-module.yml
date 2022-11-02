@@ -1,4 +1,4 @@
-name: Test Terraform Module
+name: Test Terraform Modules
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
 
       - name: Set Honeycomb API Key environment variable
-        run: {% raw %}echo "HONEYCOMB_API_KEY=${{ secrets.HONEYCOMB_API_KEY }}" >> $GITHUB_ENV{% endraw %}
+        run: echo "HONEYCOMB_API_KEY=${{ secrets.HONEYCOMB_API_KEY }}" >> $GITHUB_ENV
 
       - name: Terraform Init
         run: terraform init
