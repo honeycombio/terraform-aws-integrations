@@ -9,7 +9,7 @@ module "aws-honeycomb-cloudwatch-logs-test" {
   #aws lb
   s3_bucket_arn = "arn:aws:s3:::mj-testing-alb"
   // The full ARN of the bucket storing load balancer access logs.
-  kms_key_arn = "arn:aws:kms:us-east-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab" // FIX THIS
+  kms_key_arn = "arn:aws:kms:us-east-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab" // TODO: code expects this even if considered optional
 
   #aws cloudwatch
   cloudwatch_log_groups = [
