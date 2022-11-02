@@ -38,7 +38,7 @@ module "s3_processor" {
   source  = "terraform-aws-modules/lambda/aws"
   version = "~> 4.2"
 
-  function_name = "honeycomb-lb-log-parser"
+  function_name = "${var.name}-honeycomb-lb-log-parser"
   description   = "Parses LB access logs from S3, sending them to Honeycomb as structured events"
   handler       = "s3-handler"
   runtime       = "go1.x"
