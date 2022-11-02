@@ -69,7 +69,7 @@ module "s3_processor" {
   }
 
   attach_policy = true
-  policy        = aws_iam_policy.lambda.arn
+  policy= aws_iam_policy.lambda.arn
 
   tags = local.tags
 }
