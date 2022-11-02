@@ -1,0 +1,21 @@
+name: Lints and formatting
+on: [push, pull_request]
+jobs:
+  terraform-fmt:
+    strategy:
+      matrix:
+        terraform-config: [ ".", "./modules/cloudwatch-logs-examples" ]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ matrix.terraform-config }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform fmt
+      id: fmt
+      run: terraform fmt -check
+
+    - name: GitHub Action linting Terraform files
+      uses: devops-infra/action-tflint@0.3

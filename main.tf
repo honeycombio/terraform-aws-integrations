@@ -17,7 +17,7 @@ module "cloudwatch_logs_to_honeycomb_integration" {
   s3_bucket_name         = var.s3_bucket_name // A name of the S3 bucket that will store any logs that failed to be sent to Honeycomb.
 }
 
-module "S3_logs_to_honeycomb_integration" {
+module "lb_logs_to_honeycomb_integration" {
   source = "./modules/lb-logs"
 
   # insert required variables here
