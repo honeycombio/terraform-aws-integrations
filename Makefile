@@ -3,3 +3,6 @@ update-changelog:
 
 generate-docs:
 	./scripts/docs.sh
+
+terraform-format:
+	./scripts/terraform-format.sh $(validate)
