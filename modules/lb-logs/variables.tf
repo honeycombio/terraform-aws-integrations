@@ -1,3 +1,8 @@
+variable "name" {
+  type        = string
+  description = "A name for this Integration."
+}
+
 variable "environment" {
   type        = string
   description = "Optional. The environment this code is running in. If set, will be added as 'env' to each event."

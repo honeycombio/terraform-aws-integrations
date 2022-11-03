@@ -1,0 +1,21 @@
+name: Lints and formatting
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - README.md
+      - CHANGELOG.md
+
+jobs:
+  terraform-fmt:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform fmt
+      id: fmt
+      run: make terraform-format validate=true
+
+    - name: GitHub Action linting Terraform files
+      uses: devops-infra/action-tflint@0.3
