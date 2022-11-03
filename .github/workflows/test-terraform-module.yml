@@ -1,0 +1,38 @@
+name: Test Terraform Modules
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - README.md
+      - CHANGELOG.md
+env:
+  TF_VAR_HONEYCOMB_API_KEY: ${{ secrets.HONEYCOMB_API_KEY }}
+  AWS_DEFAULT_REGION: us-east-1
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  tf-apply:
+    name: Test terraform-aws-integrations
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./tests
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate -no-color
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -no-color
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve -no-color
+        if: 'always()'
