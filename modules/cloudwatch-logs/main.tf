@@ -1,90 +1,29 @@
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
+module "kfh" {
+  source = "../kinesis-firehose-honeycomb"
 
-locals {
-  account_id = data.aws_caller_identity.current.account_id
-  region     = data.aws_region.current.name
-}
+  name = "honeycomb-cloudwatch-logs"
 
-resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
-  bucket = aws_s3_bucket.bucket_for_failures.id
-  acl    = "private"
-}
+  honeycomb_api_host     = var.honeycomb_api_host
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = var.honeycomb_dataset_name
 
-resource "aws_s3_bucket" "bucket_for_failures" {
-  bucket = var.s3_bucket_name
+  http_buffering_size     = var.http_buffering_size
+  http_buffering_interval = var.http_buffering_interval
 
-  # 'true' allows terraform to delete this bucket even if it is not empty.
-  force_destroy = var.s3_force_destroy
-}
+  s3_failure_bucket_arn = var.s3_failure_bucket_arn
+  s3_backup_mode        = var.s3_backup_mode
+  s3_buffer_size        = var.s3_buffer_size
+  s3_buffer_interval    = var.s3_buffer_interval
+  s3_compression_format = var.s3_compression_format
 
-data "aws_iam_policy_document" "firehose-assume-role-policy" {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["firehose.amazonaws.com"]
-    }
-  }
-}
-
-resource "aws_iam_role" "firehose_s3_role" {
-  name               = "firehose_s3_role"
-  assume_role_policy = data.aws_iam_policy_document.firehose-assume-role-policy.json
-}
-
-data "aws_iam_policy_document" "firehose_s3_policy_document" {
-  statement {
-    actions = [
-      "s3:AbortMultipartUpload",
-      "s3:GetBucketLocation",
-      "s3:GetObject",
-      "s3:ListBucket",
-      "s3:ListBucketMultipartUploads",
-      "s3:PutObject"
-    ]
-    resources = [
-      "${aws_s3_bucket.bucket_for_failures.arn}",
-      "${aws_s3_bucket.bucket_for_failures.arn}/*"
-    ]
-  }
-}
-
-
-resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
-  name        = var.name
-  destination = "http_endpoint"
-
-  s3_configuration {
-    role_arn   = aws_iam_role.firehose_s3_role.arn
-    bucket_arn = aws_s3_bucket.bucket_for_failures.arn
-
-    buffer_size        = var.s3_buffer_size
-    buffer_interval    = var.s3_buffer_interval
-    compression_format = var.s3_compression_format
-  }
-
-  http_endpoint_configuration {
-    url                = "${var.honeycomb_api_host}/1/kinesis_events/${var.honeycomb_dataset_name}"
-    name               = "honeycomb"
-    access_key         = var.honeycomb_api_key
-    role_arn           = aws_iam_role.firehose_s3_role.arn
-    s3_backup_mode     = var.s3_backup_mode
-    buffering_size     = var.http_buffering_size
-    buffering_interval = var.http_buffering_interval
-
-    request_configuration {
-      content_encoding = "GZIP"
-    }
-  }
+  tags = var.tags
 }
 
 resource "aws_cloudwatch_log_subscription_filter" "cwl_logfilter" {
   for_each        = toset(var.cloudwatch_log_groups)
   name            = "${each.value}-logs_subscription_filter"
-  role_arn        = aws_iam_role.cwl_to_firehose.arn
+  role_arn        = aws_iam_role.this.arn
   log_group_name  = each.value
   filter_pattern  = var.log_subscription_filter_pattern
-  destination_arn = aws_kinesis_firehose_delivery_stream.http_stream.arn
+  destination_arn = module.kfh.kinesis_firehose_delivery_stream_arn
 }

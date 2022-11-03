@@ -7,6 +7,7 @@ variable "environment" {
 variable "honeycomb_api_key" {
   type        = string
   description = "Honeycomb API Key"
+  sensitive   = true
 }
 
 variable "honeycomb_api_host" {

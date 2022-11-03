@@ -1,21 +1,13 @@
+# Required variables
 variable "name" {
   type        = string
-  description = "A name for this CloudWatch Kinesis Firehose Stream."
+  description = "A name for this CloudWatch Metric Stream."
+  # required, no default
 
   validation {
     condition     = length(var.name) >= 1 && length(var.name) <= 32
     error_message = "We use var.name as a name_prefix, so it must be 1-32 characters in length."
   }
-}
-
-variable "s3_failure_bucket_arn" {
-  type        = string
-  description = "ARN of the S3 bucket that will store any logs that failed to be sent to Honeycomb."
-}
-
-variable "cloudwatch_log_groups" {
-  type        = list(string)
-  description = "CloudWatch Log Group names to stream to Honeycomb"
 }
 
 variable "honeycomb_dataset_name" {
@@ -30,16 +22,33 @@ variable "honeycomb_api_key" {
 }
 
 # Optional variables for customer configuration
-variable "log_subscription_filter_pattern" {
-  type        = string
-  description = "A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events. Defaults to empty string to match everything. For more information, see the Amazon CloudWatch Logs User Guide."
-  default     = ""
-}
-
 variable "honeycomb_api_host" {
   type        = string
   default     = "https://api.honeycomb.io"
   description = "If you use a Secure Tenancy or other proxy, put its schema://host[:port] here."
+}
+
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "A map of tags to apply to resources created by this module."
+}
+
+variable "namespace_include_filters" {
+  type        = list(string)
+  default     = []
+  description = "An optional list of CloudWatch Metric namespaces to include. If set, we'll only stream metrics from these namespaces. Mutually exclusive with `namespace_exclude_filters`."
+}
+
+variable "namespace_exclude_filters" {
+  type        = list(string)
+  default     = []
+  description = "An optional list of CloudWatch Metric namespaces to exclude. If set, we'll only stream metrics that are not in these namespaces. Mutually exclusive with `namespace_include_filters`."
+}
+
+variable "s3_failure_bucket_arn" {
+  type        = string
+  description = "ARN of the S3 bucket that will store any logs that failed to be sent to Honeycomb."
 }
 
 variable "s3_buffer_size" {
@@ -91,21 +100,16 @@ variable "s3_backup_mode" {
   }
 }
 
-variable "s3_force_destroy" {
-  type        = bool
-  default     = true
-  description = <<EOF
- By default, AWS will decline to delete S3 buckets that are not empty:
- `BucketNotEmpty: The bucket you tried to delete is not empty`.  These buckets
- are used for backup if delivery or processing fail.
- #
- To allow this module's resources to be removed, we've set force_destroy =
- true, allowing non-empty buckets to be deleted. If you want to block this and
- preserve those failed deliveries, you can set this value to false, though that
- will leave terraform unable to cleanly destroy the module.
- EOF
-}
+variable "output_format" {
+  type        = string
+  default     = "opentelemetry0.7"
+  description = "Output format of metrics. You should probably not modify this value; the default format is supported, but others may not be."
 
+  validation {
+    condition     = contains(["json", "opentelemetry0.7"], var.output_format)
+    error_message = "Not an allowed output format."
+  }
+}
 
 variable "http_buffering_size" {
   type        = number
@@ -117,10 +121,4 @@ variable "http_buffering_interval" {
   type        = number
   default     = 60
   description = "Kinesis Firehose http buffer interval, in seconds."
-}
-
-variable "tags" {
-  type        = map(string)
-  default     = {}
-  description = "A map of tags to apply to resources created by this module."
 }
