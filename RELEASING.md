@@ -2,7 +2,7 @@
 
 ## VERSIONING
 
-This follows the [recommendation from the GitHub Actions team](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning): each tag and release has a semantic version (i.e. v1.0.1). There is a major version tag (i.e. v1) that binds to the latest semantic version. If a new version is released, the major version tag is moved.
+This follows the [recommendation from the GitHub Actions team](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning): each tag and release has a semantic version (i.e. v1.0.1). There is a major version tag (i.e. v1) that binds to the latest semantic version.
 
 ## MAKING A NEW RELEASE
 
