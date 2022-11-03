@@ -5,6 +5,16 @@
 
 This module creates resources in AWS to set up integrations that send data to Honeycomb.
 
+## What does this module do?
+
+This module sets up various resources in AWS required to send olly data from AWS services to Honeycomb. 
+
+
+Current Integrations supported are:
+
+* Cloudwatch Logs
+* Load Balancer Logs
+
 ## Use
 
 The minimal config is:

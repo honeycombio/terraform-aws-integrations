@@ -1,7 +1,13 @@
-variable "name" {
+variable "cloudwatch_logs_integration_name" {
   type        = string
   description = "A name for this Integration."
 }
+
+variable "lb_logs_integration_name" {
+  type        = string
+  description = "A name for this Integration."
+}
+
 
 variable "s3_bucket_name" {
   type        = string

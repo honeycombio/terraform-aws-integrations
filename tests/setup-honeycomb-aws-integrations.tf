@@ -3,15 +3,15 @@ variable "HONEYCOMB_API_KEY" {}
 module "aws-honeycomb-cloudwatch-logs-test" {
   source = "../"
 
-  name = "terraform-cloudwatch-and-lb-test" // A name for the Integration.
-
-
   #aws lb
-  s3_bucket_arn = "arn:aws:s3:::mj-testing-alb"
+  lb_logs_integration_name = "terraform-lb-logs-test"
+  s3_bucket_arn            = "arn:aws:s3:::mj-testing-alb"
   // The full ARN of the bucket storing load balancer access logs.
-  kms_key_arn = "arn:aws:kms:us-east-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab" // TODO: code expects this even if considered optional
+  kms_key_arn = "arn:aws:kms:us-east-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+  // TODO: code expects this even if considered optional
 
   #aws cloudwatch
+  cloudwatch_logs_integration_name = "terraform-cloudwatch-logs-test"
   cloudwatch_log_groups = [
     "/aws/lambda/S3LambdaHandler-test", "/aws/lambda/S3LambdaHandler-honeycomb-alb-log-integration"
   ] // CloudWatch Log Group names to stream to Honeycomb.
