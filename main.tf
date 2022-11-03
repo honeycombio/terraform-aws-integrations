@@ -18,7 +18,7 @@ module "cloudwatch_logs_to_honeycomb_integration" {
   // A name of the S3 bucket that will store any logs that failed to be sent to Honeycomb.
 }
 
-module "lb_logs_to_honeycomb_integration" {
+module "lb_logs" {
   source = "./modules/lb-logs"
 
   name = "terraform-lb-logs-test"
