@@ -4,8 +4,8 @@ variable "db_engine" {
 }
 
 variable "firehose_name" {
-    type = string
-    description = "Name of Firehose delivery stream on which to enable this Lambda transform"
+  type        = string
+  description = "Name of Firehose delivery stream on which to enable this Lambda transform"
 }
 
 variable "lambda_function_memory" {

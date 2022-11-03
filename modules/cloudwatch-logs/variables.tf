@@ -25,6 +25,17 @@ variable "honeycomb_api_key" {
 }
 
 # Optional variables for customer configuration
+variable "enable_lambda_transform" {
+  type        = bool
+  description = "Enable a Lambda transform on the Kinesis Firehose to preprocess and structure the logs"
+  default     = false
+}
+
+variable "lambda_transform_arn" {
+  type        = string
+  description = "If enable_lambda_transform is set to true, specify a valid arn"
+  default     = ""
+}
 variable "log_subscription_filter_pattern" {
   type        = string
   description = "A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events. Defaults to empty string to match everything. For more information, see the Amazon CloudWatch Logs User Guide."

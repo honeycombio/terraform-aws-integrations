@@ -77,6 +77,19 @@ resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
     request_configuration {
       content_encoding = "GZIP"
     }
+
+    processing_configuration {
+      enabled = var.enable_lambda_transform
+
+      processors {
+        type = "Lambda"
+
+        parameters {
+          parameter_name  = "LambdaArn"
+          parameter_value = "${var.lambda_transform_arn}:$LATEST"
+        }
+      }
+    }
   }
 }
 
