@@ -1,19 +1,25 @@
 # TERRAFORM AWS INTEGRATIONS
-=============================
 
 [![CI](https://github.com/honeycombio/terraform-aws-integrations/actions/workflows/test-terraform-module.yml/badge.svg)](https://github.com/honeycombio/terraform-aws-integrations/actions?query=Test%20Terraform%20Module)
 
-This module creates resources in AWS to set up integrations that send data to Honeycomb.
-
-## What does this module do?
-
-This module sets up various resources in AWS required to send olly data from AWS services to Honeycomb. 
+This repo contains a set of modules in the [modules folder](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules) for resources
+quorum](https://www.consul.io/docs/internals/consensus.html), and a larger number of client nodes, which you typically
+in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) to send observability data to [Honeycomb](https://www.honeycomb.io/).
 
 
-Current Integrations supported are:
+![AWS Integrations architecture](docs/architecture.png?raw=true)
 
-* Cloudwatch Logs
-* Load Balancer Logs
+
+**Current Integrations supported are:**
+
+* [Cloudwatch Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-logs)
+ 
+
+* [Cloudwatch Metrics](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-metrics)
+
+
+* [Load Balancer Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/lb-logs)
+
 
 ## Use
 
@@ -46,7 +52,13 @@ Set the API key used by Terraform setting the HONEYCOMB_API_KEY environment vari
 export TF_VAR_HONEYCOMB_API_KEY=$HONEYCOMB_API_KEY
 ```
 
-Setup AWS credentials for the intended AWS account where the resources will be created and managed.
+Setup AWS credentials for the intended AWS account where the resources will be created and managed. Please see for more [details and options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
+
+```bash
+export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+```
 
 Now you can run `terraform plan/apply` in sequence.
 
@@ -67,14 +79,24 @@ in [`tests/`](https://github.com/honeycombio/terraform-aws-integrations/tree/mai
 
 1. Set the API key used by Terraform setting the TF_VAR_HONEYCOMB_API_KEY environment variable.
 
-2. Setup AWS credentials.
+```bash
+export TF_VAR_HONEYCOMB_API_KEY=$HONEYCOMB_API_KEY
+```
 
-3. Run `terraform init`
+3. Setup AWS credentials. Please see for more [details and options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
 
-4. `terraform plan` and `terraform apply` will now work as expected, as will
+```bash
+export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+```
+
+4. Run `terraform init`
+
+5. `terraform plan` and `terraform apply` will now work as expected, as will
    `terraform destroy`.
 
-5. Test cases also run as part of the pipeline.
+6. Test cases also run as part of the pipeline.
    See [test-terraform-module.yml](https://github.com/honeycombio/terraform-aws-integrations/blob/main/.github/workflows/test-terraform-module.yml)
 
 ### Docs
