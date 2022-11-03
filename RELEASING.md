@@ -2,7 +2,7 @@
 
 ## VERSIONING
 
-This follows the [recommendation from the GitHub Actions team](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning): each tag and release has a semantic version (i.e. v1.0.1). There is a major version tag (i.e. v1) that binds to the latest semantic version.
+This follows the [recommendation from the HashiCorp team](https://developer.hashicorp.com/terraform/registry/modules/publish#releasing-new-versions): each tag and release has a semantic version optionally prefixed with a `v` (i.e. v1.0.1 or 0.9.4).
 
 ## MAKING A NEW RELEASE
 
