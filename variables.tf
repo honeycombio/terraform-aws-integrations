@@ -39,13 +39,13 @@ variable "log_subscription_filter_pattern" {
 variable "honeycomb_api_host" {
   type        = string
   default     = "https://api.honeycomb.io"
-  description = "If you use a Secure Tenancy or other proxy, put its schema://host[:port] here."
+  description = "The name of the S3 bucket Kinesis uses for backup data."
 }
 
 variable "s3_buffer_size" {
   type        = number
   default     = 10
-  description = "In MiB. See https://docs.aws.amazon.com/firehose/latest/dev/create-configure.html"
+  description = "The size of the Firehose S3 buffer (in MiB). See https://docs.aws.amazon.com/firehose/latest/dev/create-configure.html"
 
   validation {
     condition     = var.s3_buffer_size >= 1 && var.s3_buffer_size <= 128
@@ -56,7 +56,7 @@ variable "s3_buffer_size" {
 variable "s3_buffer_interval" {
   type        = number
   default     = 400
-  description = "In seconds. See https://docs.aws.amazon.com/firehose/latest/dev/create-configure.html"
+  description = "The Firehose S3 buffer interval (in seconds). See https://docs.aws.amazon.com/firehose/latest/dev/create-configure.html"
 
   validation {
     condition     = var.s3_buffer_interval >= 60 && var.s3_buffer_interval <= 900
@@ -67,7 +67,7 @@ variable "s3_buffer_interval" {
 variable "s3_compression_format" {
   type        = string
   default     = "GZIP"
-  description = "May be GZIP, Snappy, Zip, or Hadoop-Compatiable Snappy. See https://docs.aws.amazon.com/firehose/latest/dev/create-configure.html"
+  description = "The Firehose S3 compression format. May be GZIP, Snappy, Zip, or Hadoop-Compatiable Snappy. See https://docs.aws.amazon.com/firehose/latest/dev/create-configure.html"
 
   validation {
     condition = contains(["GZIP",

@@ -6,7 +6,7 @@
 # Required variables need to be provided. Please see docs for details on what is expected.
 # ---------------------------------------------------------------------------------------------------------------------
 
-module "cloudwatch_logs_to_honeycomb_integration" {
+module "cloudwatch_logs" {
   source = "./modules/cloudwatch-logs"
   name   = "terraform-cloudwatch-logs-test" // A name for this CloudWatch Kinesis Firehose Stream to Honeycomb.
 
