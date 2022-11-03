@@ -8,9 +8,7 @@
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.9.0 |
+No providers.
 
 ## Modules
 
