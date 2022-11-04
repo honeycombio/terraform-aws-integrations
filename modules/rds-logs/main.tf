@@ -51,7 +51,7 @@ module "rds_lambda_transform" {
 }
 
 module "cloudwatch_logs" {
-  source = "./modules/cloudwatch-logs"
+  source = "../cloudwatch-logs"
   name   = var.name
 
   cloudwatch_log_groups   = local.log_groups
