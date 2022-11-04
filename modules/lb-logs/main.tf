@@ -3,7 +3,8 @@ data "aws_arn" "s3_bucket" {
 }
 
 data "aws_arn" "kms_key" {
-  arn = var.kms_key_arn
+  arn   = var.kms_key_arn
+  count = var.kms_key_arn == "" ? 0 : 1
 }
 
 data "aws_region" "current" {}
@@ -60,7 +61,7 @@ module "s3_processor" {
 
     ENVIRONMENT         = var.environment
     HONEYCOMB_WRITE_KEY = var.honeycomb_api_key
-    KMS_KEY_ID          = data.aws_arn.kms_key.resource
+    KMS_KEY_ID          = (var.kms_key_arn != "" ? data.aws_arn.kms_key[0].resource : "")
     API_HOST            = var.honeycomb_api_host
     DATASET             = var.honeycomb_dataset
     SAMPLE_RATE         = var.sample_rate

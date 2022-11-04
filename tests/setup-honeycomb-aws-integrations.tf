@@ -15,8 +15,6 @@ provider "aws" {
   region = "us-east-2"
 }
 
-data "aws_region" "current" {}
-
 data "aws_vpc" "default" {
   default = true
 }
@@ -32,28 +30,38 @@ data "aws_subnets" "default" {
   }
 }
 
+variable "honeycomb_api_host" {
+  type    = string
+  default = "https://api.honeycomb.io"
+}
+
+variable "honeycomb_api_key" {
+  type = string
+}
+
 /****** honeycomb modules ******/
 
-module "honeycomb-aws" {
+module "alb_logs" {
   source = "../modules/lb-logs"
 
-  honeycomb_api_key         = var.honeycomb_api_key
-  honeycomb_api_host        = "https://api-dogfood.honeycomb.io"
-  cloudwatch_log_groups     = [module.log_group.cloudwatch_log_group_name]
-  enable_cloudwatch_metrics = true
+  name               = "tf-integrations-alb-${random_pet.this.id}"
+  honeycomb_api_key  = var.honeycomb_api_key
+  honeycomb_api_host = var.honeycomb_api_host
+
+  s3_bucket_arn = module.log_bucket.s3_bucket_arn
 }
 
 module "cloudwatch_logs" {
   source = "../modules/cloudwatch-logs"
 
   name                  = "honeycomb-cloudwatch-logs"
-  cloudwatch_log_groups = var.cloudwatch_log_groups
+  cloudwatch_log_groups = [module.log_group.cloudwatch_log_group_name]
 
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "cloudwatch-logs"
 
-  s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
+  s3_failure_bucket_arn = module.firehose_failure_bucket.s3_bucket_arn
 }
 
 module "cloudwatch_metrics" {
@@ -65,7 +73,7 @@ module "cloudwatch_metrics" {
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "cloudwatch-metrics"
 
-  s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
+  s3_failure_bucket_arn = module.firehose_failure_bucket.s3_bucket_arn
 }
 
 /****** dependencies ******/
@@ -93,7 +101,7 @@ module "log_group" {
   version = "~> 3.0"
 
   name              = "honeycomb-tf-integrations-${random_pet.this.id}"
-  retention_in_days = 2
+  retention_in_days = 1
 }
 
 resource "aws_security_group" "allow_http" {
@@ -119,7 +127,6 @@ resource "aws_security_group" "allow_http" {
   }
 }
 
-
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 7.0"
@@ -135,19 +142,25 @@ module "alb" {
     bucket = module.log_bucket.s3_bucket_id
   }
 
-  https_listener_rules = [{
-    https_listener_index = 0
-    actions = [{
-      type         = "fixed-response"
-      content_type = "text/plain"
-      status_code  = 200
-      message_body = "Hello"
-    }]
-  }]
+  target_groups = [
+    {
+      name_prefix      = "defaul"
+      backend_protocol = "HTTP"
+      backend_port     = 80
+      target_type      = "instance"
+    }
+  ]
 
   http_tcp_listeners = [{
-    port               = 80
-    protocol           = "HTTP"
-    target_group_index = 0
+    port     = 80
+    protocol = "HTTP"
+    http_listener_rules = [{
+      actions = [{
+        type         = "fixed-response"
+        content_type = "text/plain"
+        status_code  = 200
+        message_body = "Hello"
+      }]
+    }]
   }]
 }
