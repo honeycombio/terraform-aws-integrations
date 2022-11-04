@@ -6,7 +6,7 @@ set -euo pipefail
 
 if ! (command -v terraform-docs >/dev/null); then
   echo "You need terraform-docs:"
-  echo "  go get github.com/terraform-docs/terraform-docs@v0.13.0"
+  echo "  go get github.com/terraform-docs/terraform-docs@v0.16.0"
   exit 1
 fi
 
