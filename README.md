@@ -8,7 +8,7 @@ in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) t
 
 ## How does this work?
 
-![AWS Integrations architecture](docs/architecture.png?raw=true)
+![AWS Integrations architecture](docs/overview.png?raw=true)
 
 
 **Integrations supported are:**
