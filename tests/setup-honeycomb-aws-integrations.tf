@@ -54,7 +54,7 @@ module "alb_logs" {
 module "cloudwatch_logs" {
   source = "../modules/cloudwatch-logs"
 
-  name                  = "honeycomb-cloudwatch-logs-${random_pet.this.id}"
+  name                  = "cwlogs-${random_pet.this.id}"
   cloudwatch_log_groups = [module.log_group.cloudwatch_log_group_name]
 
   honeycomb_api_host     = var.honeycomb_api_host
@@ -67,7 +67,7 @@ module "cloudwatch_logs" {
 module "cloudwatch_metrics" {
   source = "../modules/cloudwatch-metrics"
 
-  name = "honeycomb-cloudwatch-metrics-${random_pet.this.id}"
+  name = "cwmetrics-${random_pet.this.id}"
 
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
