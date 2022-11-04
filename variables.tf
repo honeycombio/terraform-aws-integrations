@@ -121,21 +121,21 @@ variable "enable_cloudwatch_metrics" {
 }
 
 variable "enable_rds_logs" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "rds_db_name" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "rds_db_engine" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "rds_db_log_types" {
-  type = list[string]
+  type    = list[string]
   default = []
 }
