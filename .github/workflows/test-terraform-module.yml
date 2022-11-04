@@ -7,7 +7,7 @@ on:
       - README.md
       - CHANGELOG.md
 env:
-  TF_VAR_HONEYCOMB_API_KEY: ${{ secrets.HONEYCOMB_API_KEY }}
+  TF_VAR_honeycomb_api_key: ${{ secrets.HONEYCOMB_API_KEY }}
   AWS_DEFAULT_REGION: us-east-1
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -34,5 +34,5 @@ jobs:
         run: terraform apply -auto-approve -no-color -input=false
 
       - name: Terraform Destroy
-        run: terraform destroy -auto-approve -no-color
+        run: terraform destroy -auto-approve -no-color -input=false
         if: 'always()'
