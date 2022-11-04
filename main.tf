@@ -6,36 +6,43 @@
 # Required variables need to be provided. Please see docs for details on what is expected.
 # ---------------------------------------------------------------------------------------------------------------------
 
+data "aws_region" "current" {}
+
+locals {
+  failure_bucket = replace(var.delivery_failure_s3_bucket_name, "{REGION}", data.aws_region.current.name)
+}
+
+module "failure_bucket" {
+  source  = "terraform-aws-modules/s3-bucket/aws"
+  version = "~> 3.0"
+
+  bucket = local.failure_bucket
+  acl    = "private"
+}
+
+
 module "cloudwatch_logs" {
   source = "./modules/cloudwatch-logs"
-  name   = var.cloudwatch_logs_integration_name // A name for this CloudWatch Kinesis Firehose Stream to Honeycomb.
+  name   = "honeycomb-cloudwatch-logs"
 
-  # insert required variables here
-  cloudwatch_log_groups  = var.cloudwatch_log_groups
-  honeycomb_api_key      = var.honeycomb_api_key      // Your Honeycomb team's API key.
-  honeycomb_dataset_name = var.honeycomb_dataset_name // Your Honeycomb dataset name.
-  s3_bucket_name         = var.s3_bucket_name
-  // A name of the S3 bucket that will store any logs that failed to be sent to Honeycomb.
+  cloudwatch_log_groups = var.cloudwatch_log_groups
+
+  honeycomb_api_host     = var.honeycomb_api_host
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "cloudwatch-logs"
+
+  s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
 }
 
-module "rds_cloudwatch_logs" {
-  source = "./modules/rds-logs"
-  name = var.rds_logs_integration_name
-  
-  count = var.enable_rds_logs ? 1 : 0
+module "cloudwatch_metrics" {
+  source = "./modules/cloudwatch-metrics"
+  name   = "honeycomb-cloudwatch-metrics"
 
-  db_name = var.rds_db_name
-  db_engine = var.rds_db_engine
-  db_log_types = var.rds_db_log_types
-}
+  count = var.enable_cloudwatch_metrics ? 1 : 0
 
-module "lb_logs" {
-  source = "./modules/lb-logs"
+  honeycomb_api_host     = var.honeycomb_api_host
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "cloudwatch-metrics"
 
-  name = var.lb_logs_integration_name
-
-  # insert required variables here
-  honeycomb_api_key = var.honeycomb_api_key // Your Honeycomb team's API key.
-  s3_bucket_arn     = var.s3_bucket_arn     // The full ARN of the bucket storing load balancer access logs.
-  kms_key_arn       = var.kms_key_arn       // TODO - Considered optional but is required at the moment.
+  s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
 }
