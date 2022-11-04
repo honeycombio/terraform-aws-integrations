@@ -1,15 +1,72 @@
-# Honeycomb AWS Cloudwatch Logs integration module
+# TERRAFORM AWS CLOUDWATCH LOGS INTEGRATION
 
-Assumptions - for general one:
-* User specified: Cloudwatch Log Group (setting this up and sending data to this is not included)
-* Module creates everything else: 
-  * Firehose Stream
-  * Permissions
-  * Config to point to Honeycomb
-  * Backup in S3
+This repo contains a module for resources in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/)
+to send cloudwatch logs to [Honeycomb](https://www.honeycomb.io/).
 
-Note: Backfilling old data from the Log Groups: currently does not do. New data comes in.
+## How does this work?
 
-TODO Extension:
+![AWS CloudWatch Logs Integration overview](../../docs/cloudwatch-logs-overview.png)
 
-* Extend to take a list of Log Groups?
+All required resources to setup an integration pipelines to take logs from a Cloudwatch Log group and send them to
+Honecyomb can be created and managed via this module.
+
+**NOTE:** 
+
+The data transform is optional and only available for RDS.
+
+## Use
+
+The minimal config is:
+
+```hcl
+module "honeycomb-aws-cloudwatch-logs-integration" {
+  source = "honeycombio/integrations/aws//modules/cloudwatch-logs"
+
+  name = "terraform-honeycomb-aws-integrations" // A name for the Integration.
+
+  #aws cloudwatch integration
+  cloudwatch_log_groups = ["/aws/lambda/S3LambdaHandler-test"] // CloudWatch Log Group names to stream to Honeycomb.
+  s3_bucket_name        = "terraform-aws-integrations-test"
+  // A name for the S3 bucket that will store any logs that failed to be sent to Honeycomb.
+
+  #honeycomb
+  honeycomb_api_key      = var.HONEYCOMB_API_KEY // Honeycomb API key.
+  honeycomb_dataset_name = "terraform-aws-integrations-test" // Your Honeycomb dataset name that will receive the logs.
+}
+```
+
+Set the API key used by Terraform setting the HONEYCOMB_API_KEY environment variable.
+
+```bash
+export TF_VAR_HONEYCOMB_API_KEY=$HONEYCOMB_API_KEY
+```
+
+Setup AWS credentials for the intended AWS account where the resources will be created and managed. Please see for
+more [details and options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
+.
+
+```bash
+export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+```
+
+Now you can run `terraform plan/apply` in sequence.
+
+For more config options, see [USAGE.md](https://github.com/honeycombio/terraform-aws-integrations/blob/main/USAGE.md).
+
+## Examples
+
+Examples of use of this module can be found
+in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples).
+
+## Development
+
+Please see [this](https://github.com/honeycombio/terraform-aws-integrations#development) for details.
+
+## Contributions
+
+Features, bug fixes and other changes to this module are gladly accepted. Please open issues or a pull request with your
+change.
+
+All contributions will be released under the Apache License 2.0.
