@@ -52,15 +52,12 @@ module "rds_lambda_transform" {
 
 module "cloudwatch_logs" {
   source = "./modules/cloudwatch-logs"
-  name   = var.cloudwatch_logs_integration_name // A name for this CloudWatch Kinesis Firehose Stream to Honeycomb.
+  name   = var.name
 
-  # insert required variables here
   cloudwatch_log_groups  = local.log_groups
-  honeycomb_api_key      = var.honeycomb_api_key      // Your Honeycomb team's API key.
-  honeycomb_dataset_name = var.honeycomb_dataset_name // Your Honeycomb dataset name.
+  honeycomb_api_key      = var.honeycomb_api_key      
+  honeycomb_dataset_name = var.honeycomb_dataset_name 
   s3_failure_bucket_arn = var.failure_bucket.s3_bucket_arn
-  // A name of the S3 bucket that will store any logs that failed to be sent to Honeycomb.
   enable_lambda_transform = local.enable_lambda_transform
   lambda_transform_arn = local.enable_lambda_transform ? module.rds_lambda_transform.output.lambda_function_arn : ""
 }
-

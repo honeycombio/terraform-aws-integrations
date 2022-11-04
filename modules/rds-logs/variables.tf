@@ -1,3 +1,13 @@
+variable "name" {
+  type        = string
+  description = "A name for this CloudWatch Kinesis Firehose Stream."
+
+  validation {
+    condition     = length(var.name) >= 1 && length(var.name) <= 32
+    error_message = "We use var.name as a name_prefix, so it must be 1-32 characters in length."
+  }
+}
+
 variable "db_name" {
   type        = string
   description = "Name of your RDS database."

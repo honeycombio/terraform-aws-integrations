@@ -125,6 +125,11 @@ variable "enable_rds_logs" {
   default = false
 }
 
+variable "rds_db_name" {
+  type = string
+  default = ""
+}
+
 variable "rds_db_engine" {
   type = string
   default = ""

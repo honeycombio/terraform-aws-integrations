@@ -34,6 +34,22 @@ module "cloudwatch_logs" {
   s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
 }
 
+module "rds_logs" {
+  source = "./modules/rds-logs"
+  name = "honeycomb-rds-cloudwatch-logs"
+
+  count = var.enable_rds_logs ? 1 : 0
+
+  db_name = var.rds_db_name
+  db_engine = var.rds_db_engine
+  db_log_types = var.rds_db_log_types
+  honeycomb_api_host     = var.honeycomb_api_host
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "rds-${var.rds_db_engine}-logs"
+
+  s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
+}
+
 module "cloudwatch_metrics" {
   source = "./modules/cloudwatch-metrics"
   name   = "honeycomb-cloudwatch-metrics"
