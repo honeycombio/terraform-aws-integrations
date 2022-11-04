@@ -6,11 +6,12 @@ This repo contains a set of modules in the [modules folder](https://github.com/h
 quorum](https://www.consul.io/docs/internals/consensus.html), and a larger number of client nodes, which you typically
 in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) to send observability data to [Honeycomb](https://www.honeycomb.io/).
 
+## How does this work?
 
 ![AWS Integrations architecture](docs/architecture.png?raw=true)
 
 
-**Current Integrations supported are:**
+**Integrations supported are:**
 
 * [Cloudwatch Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-logs)
  
