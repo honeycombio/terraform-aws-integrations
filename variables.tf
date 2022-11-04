@@ -116,6 +116,6 @@ variable "enable_cloudwatch_metrics" {
   default     = false
   description = <<DESC
       Honeycomb Enterprise customers can enable CloudWatch Metrics collection by
-      setting this to true."
+      setting this to true.
   DESC
 }
