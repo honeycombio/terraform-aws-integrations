@@ -1,26 +1,153 @@
-variable "HONEYCOMB_API_KEY" {}
+terraform {
+  required_providers {
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
 
-module "aws-honeycomb-cloudwatch-logs-test" {
-  source = "../"
+provider "aws" {
+  region = "us-east-2"
+}
 
-  #aws lb
-  lb_logs_integration_name = "terraform-lb-logs-test"
-  s3_bucket_arn            = "arn:aws:s3:::mj-testing-alb"
-  // The full ARN of the bucket storing load balancer access logs.
-  kms_key_arn = "arn:aws:kms:us-east-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"
-  // TODO: code expects this even if considered optional
+data "aws_region" "current" {}
 
-  #aws cloudwatch
-  cloudwatch_logs_integration_name = "terraform-cloudwatch-logs-test"
-  cloudwatch_log_groups = [
-    "/aws/lambda/S3LambdaHandler-test", "/aws/lambda/S3LambdaHandler-honeycomb-alb-log-integration"
-  ] // CloudWatch Log Group names to stream to Honeycomb.
-  s3_bucket_name = "terraform-aws-integrations-test"
-  // A name for the S3 bucket that will store any logs that failed to be sent to Honeycomb.
+data "aws_vpc" "default" {
+  default = true
+}
 
-  #honeycomb
-  honeycomb_api_key  = var.HONEYCOMB_API_KEY // Honeycomb API key.
-  honeycomb_api_host = "https://api-dogfood.honeycomb.io"
-  // Defaults to https://api.honeycomb.io. If you use a Secure Tenancy or other proxy, put its schema://host[:port] here.
-  honeycomb_dataset_name = "terraform-aws-integrations-test" // Your Honeycomb dataset name that will receive the logs.
+resource "random_pet" "this" {
+  length = 2
+}
+
+data "aws_subnets" "default" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+}
+
+/****** honeycomb modules ******/
+
+module "honeycomb-aws" {
+  source = "../modules/lb-logs"
+
+  honeycomb_api_key         = var.honeycomb_api_key
+  honeycomb_api_host        = "https://api-dogfood.honeycomb.io"
+  cloudwatch_log_groups     = [module.log_group.cloudwatch_log_group_name]
+  enable_cloudwatch_metrics = true
+}
+
+module "cloudwatch_logs" {
+  source = "../modules/cloudwatch-logs"
+
+  name                  = "honeycomb-cloudwatch-logs"
+  cloudwatch_log_groups = var.cloudwatch_log_groups
+
+  honeycomb_api_host     = var.honeycomb_api_host
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "cloudwatch-logs"
+
+  s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
+}
+
+module "cloudwatch_metrics" {
+  source = "../modules/cloudwatch-metrics"
+
+  name = "honeycomb-cloudwatch-metrics"
+
+  honeycomb_api_host     = var.honeycomb_api_host
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "cloudwatch-metrics"
+
+  s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
+}
+
+/****** dependencies ******/
+
+module "firehose_failure_bucket" {
+  source  = "terraform-aws-modules/s3-bucket/aws"
+  version = "~> 3.0"
+
+  bucket        = "honeycomb-tf-integrations-failures-${random_pet.this.id}"
+  force_destroy = true
+}
+
+module "log_bucket" {
+  source  = "terraform-aws-modules/s3-bucket/aws"
+  version = "~> 3.0"
+
+  bucket                         = "honeycomb-tf-integrations-logs-${random_pet.this.id}"
+  acl                            = "log-delivery-write"
+  force_destroy                  = true
+  attach_elb_log_delivery_policy = true
+}
+
+module "log_group" {
+  source  = "terraform-aws-modules/cloudwatch/aws//modules/log-group"
+  version = "~> 3.0"
+
+  name              = "honeycomb-tf-integrations-${random_pet.this.id}"
+  retention_in_days = 2
+}
+
+resource "aws_security_group" "allow_http" {
+  name        = "allow_http"
+  description = "Allow HTTP inbound traffic"
+  vpc_id      = data.aws_vpc.default.id
+
+  ingress {
+    description      = "HTTP from public"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+}
+
+
+module "alb" {
+  source  = "terraform-aws-modules/alb/aws"
+  version = "~> 7.0"
+
+  name               = "tf-integrations-alb-${random_pet.this.id}"
+  load_balancer_type = "application"
+
+  vpc_id          = data.aws_vpc.default.id
+  subnets         = toset(data.aws_subnets.default.ids)
+  security_groups = [aws_security_group.allow_http.id]
+
+  access_logs = {
+    bucket = module.log_bucket.s3_bucket_id
+  }
+
+  https_listener_rules = [{
+    https_listener_index = 0
+    actions = [{
+      type         = "fixed-response"
+      content_type = "text/plain"
+      status_code  = 200
+      message_body = "Hello"
+    }]
+  }]
+
+  http_tcp_listeners = [{
+    port               = 80
+    protocol           = "HTTP"
+    target_group_index = 0
+  }]
 }
