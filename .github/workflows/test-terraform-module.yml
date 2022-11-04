@@ -31,7 +31,7 @@ jobs:
         run: terraform validate -no-color
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -no-color
+        run: terraform apply -auto-approve -no-color -input=false
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve -no-color
