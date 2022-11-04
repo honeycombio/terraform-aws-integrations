@@ -1,11 +1,15 @@
-variable "db_engine" {
+variable "db_name" {
   type        = string
-  description = "Engine type for your RDS database. MySQL and Postgresql are supported."
+  description = "Name of your RDS database."
 }
 
-variable "firehose_name" {
+variable "db_engine" {
   type        = string
-  description = "Name of Firehose delivery stream on which to enable this Lambda transform"
+  description = "Engine type on your RDS database"
+}
+
+variable "db_log_types" {
+    type = list[string]
 }
 
 variable "lambda_function_memory" {

@@ -183,6 +183,30 @@ variable "load_balancer_type" {
   }
 }
 
+variable "enable_rds_logs" {
+  type = string
+  description = "Controls setting up Cloudwatch Logs module with RDS defaults"
+  default = false
+}
+
+variable "rds_db_name" {
+  type = string
+  default = ""
+}
+variable "rds_db_engine" {
+  type = string
+  description = "If enable_rds_logs is set to true, set the db engine of your RDS instance"
+  default = ""
+  validation {
+    conditon = contains(["", "aurora-mysql", "aurora-postgresql", "mariadb", "sqlserver", "mysql", "oracle", "postgresql"])
+    error_message = "rds_db_engine must be a valid engine type if set"
+  }
+}
+
+variable "rds_db_log_types" {
+  type = list[string]
+  default = []
+}
 variable "rename_fields" {
   type        = map(string)
   description = "Optional. Map of fields to rename, old -> new."

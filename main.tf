@@ -18,6 +18,17 @@ module "cloudwatch_logs" {
   // A name of the S3 bucket that will store any logs that failed to be sent to Honeycomb.
 }
 
+module "rds_cloudwatch_logs" {
+  source = "./modules/rds-logs"
+  name = var.rds_logs_integration_name
+  
+  count = var.enable_rds_logs ? 1 : 0
+
+  db_name = var.rds_db_name
+  db_engine = var.rds_db_engine
+  db_log_types = var.rds_db_log_types
+}
+
 module "lb_logs" {
   source = "./modules/lb-logs"
 
