@@ -2,9 +2,9 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 locals {
-  account_id = data.aws_caller_identity.current.account_id
-  region     = data.aws_region.current.name
-  log_groups = [ for log_type in var.db_log_types: "aws/rds/instance/${var.db_name}/${log_type}"]
+  account_id              = data.aws_caller_identity.current.account_id
+  region                  = data.aws_region.current.name
+  log_groups              = [for log_type in var.db_log_types : "aws/rds/instance/${var.db_name}/${log_type}"]
   enable_lambda_transform = var.db_engine == "mysql" || var.db_engine == "postgresql"
   tags = merge(var.tags, {
     "Honeycomb Agentless" = true,
@@ -20,7 +20,7 @@ data "aws_iam_policy_document" "lambda" {
 }
 
 resource "aws_iam_policy" "lambda" {
-  count = local.enable_lambda_transform ? 1 : 0
+  count       = local.enable_lambda_transform ? 1 : 0
   description = "Honeycomb RDS Lambda Transform"
   policy      = data.aws_iam_policy_document.lambda.json
 }
@@ -54,10 +54,10 @@ module "cloudwatch_logs" {
   source = "./modules/cloudwatch-logs"
   name   = var.name
 
-  cloudwatch_log_groups  = local.log_groups
-  honeycomb_api_key      = var.honeycomb_api_key      
-  honeycomb_dataset_name = var.honeycomb_dataset_name 
-  s3_failure_bucket_arn = var.failure_bucket.s3_bucket_arn
+  cloudwatch_log_groups   = local.log_groups
+  honeycomb_api_key       = var.honeycomb_api_key
+  honeycomb_dataset_name  = var.honeycomb_dataset_name
+  s3_failure_bucket_arn   = var.failure_bucket.s3_bucket_arn
   enable_lambda_transform = local.enable_lambda_transform
-  lambda_transform_arn = local.enable_lambda_transform ? module.rds_lambda_transform.output.lambda_function_arn : ""
+  lambda_transform_arn    = local.enable_lambda_transform ? module.rds_lambda_transform.output.lambda_function_arn : ""
 }
