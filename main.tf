@@ -34,7 +34,7 @@ module "cloudwatch_logs" {
   s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
 }
 
-/*module "rds_logs" {
+module "rds_logs" {
   source = "./modules/rds-logs"
   name   = "honeycomb-rds-cloudwatch-logs"
 
@@ -48,7 +48,7 @@ module "cloudwatch_logs" {
   honeycomb_dataset_name = "rds-${var.rds_db_engine}-logs"
 
   s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
-}*/
+}
 
 module "cloudwatch_metrics" {
   source = "./modules/cloudwatch-metrics"
