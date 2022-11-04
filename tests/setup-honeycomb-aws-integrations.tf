@@ -73,11 +73,11 @@ module "cloudwatch_metrics" {
 }
 
 module "rds_mysql_logs" {
-  source = "../modules/rds-logs"
-  name = "honeycomb-rds-mysql-logs"
-  db_engine = "mysql"
-  db_name = local.rds_mysql_db_name
-  db_log_types = ["slow_query"]
+  source                 = "../modules/rds-logs"
+  name                   = "honeycomb-rds-mysql-logs"
+  db_engine              = "mysql"
+  db_name                = local.rds_mysql_db_name
+  db_log_types           = ["slow_query"]
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "rds-mysql-logs"
