@@ -15,6 +15,10 @@ provider "aws" {
   region = "us-east-2"
 }
 
+locals {
+  rds_mysql_db_name = "tf-integrations-rds-mysql-${random_pet.this.id}"
+}
+
 data "aws_region" "current" {}
 
 data "aws_vpc" "default" {
@@ -64,6 +68,19 @@ module "cloudwatch_metrics" {
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "cloudwatch-metrics"
+
+  s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
+}
+
+module "rds_mysql_logs" {
+  source = "../modules/rds-logs"
+  name = "honeycomb-rds-mysql-logs"
+  db_engine = "mysql"
+  db_name = local.rds_mysql_db_name
+  db_log_types = ["slow_query"]
+  honeycomb_api_host     = var.honeycomb_api_host
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "rds-mysql-logs"
 
   s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
 }
@@ -119,7 +136,6 @@ resource "aws_security_group" "allow_http" {
   }
 }
 
-
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 7.0"
@@ -150,4 +166,67 @@ module "alb" {
     protocol           = "HTTP"
     target_group_index = 0
   }]
+}
+
+resource "aws_security_group" "allow_mysql" {
+  name        = "allow_mysql"
+  description = "Allow MySQL inbound traffic"
+  vpc_id      = data.aws_vpc.default.id
+
+  ingress {
+    description      = "MySQL"
+    from_port        = 3306
+    to_port          = 3306
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+}
+
+module "rds_mysql" {
+  source = "terraform-aws-modules/rds/aws"
+
+  identifier = local.rds_integration_name
+
+  # All available versions: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html#MySQL.Concepts.VersionMgmt
+  engine               = "mysql"
+  engine_version       = "8.0.27"
+  family               = "mysql8.0" # DB parameter group
+  major_engine_version = "8.0"      # DB option group
+  instance_class       = "db.t3.micro"
+
+  allocated_storage     = 20
+  max_allocated_storage = 100
+
+  db_name  = local.rds_integration_name
+  username = "mysql"
+  port     = 3306
+
+  multi_az               = false
+  subnet_ids             = data.aws_subnets.default.ids
+  vpc_security_group_ids = ["${aws_security_group.allow_mysql.id}"]
+
+  maintenance_window              = "Mon:00:00-Mon:03:00"
+  backup_window                   = "03:00-06:00"
+  enabled_cloudwatch_logs_exports = ["slow_query"]
+  create_cloudwatch_log_group     = true
+
+  backup_retention_period = 0
+  skip_final_snapshot     = true
+  deletion_protection     = false
+
+  performance_insights_enabled          = false
+  performance_insights_retention_period = 7
+  create_monitoring_role                = true
+  monitoring_interval                   = 60
+
+  tags = local.tags
 }
