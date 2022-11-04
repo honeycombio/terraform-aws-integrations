@@ -136,6 +136,6 @@ variable "rds_db_engine" {
 }
 
 variable "rds_db_log_types" {
-  type    = list[string]
+  type    = list(string)
   default = []
 }

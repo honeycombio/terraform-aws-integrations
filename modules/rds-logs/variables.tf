@@ -19,7 +19,7 @@ variable "db_engine" {
 }
 
 variable "db_log_types" {
-  type = list[string]
+  type = list(string)
 }
 
 variable "honeycomb_dataset_name" {
