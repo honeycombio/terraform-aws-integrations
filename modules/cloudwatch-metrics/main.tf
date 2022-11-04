@@ -1,7 +1,7 @@
 module "kfh" {
   source = "../kinesis-firehose-honeycomb"
 
-  name = "honeycomb-cloudwatch-metrics"
+  name = var.name
 
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key

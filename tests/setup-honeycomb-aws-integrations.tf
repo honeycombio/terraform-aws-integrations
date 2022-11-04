@@ -100,7 +100,7 @@ module "log_group" {
   source  = "terraform-aws-modules/cloudwatch/aws//modules/log-group"
   version = "~> 3.0"
 
-  name              = "honeycomb-tf-integrations-${random_pet.this.id}"
+  name              = "tf-integrations-${random_pet.this.id}"
   retention_in_days = 1
 }
 
@@ -131,7 +131,7 @@ module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 7.0"
 
-  name               = "tf-integrations-alb-${random_pet.this.id}"
+  name               = random_pet.this.id
   load_balancer_type = "application"
 
   vpc_id          = data.aws_vpc.default.id
