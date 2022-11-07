@@ -16,6 +16,11 @@ variable "db_name" {
 variable "db_engine" {
   type        = string
   description = "Engine type on your RDS database"
+  validation {
+    condition = contains(["aurora-mysql", "aurora-postgresql", "mariadb", "sqlserver", "mysql", "oracle", "postgresql"],
+    var.db_engine)
+    error_message = "Not a valid database engine."
+  }
 }
 
 variable "db_log_types" {
