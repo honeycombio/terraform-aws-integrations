@@ -188,7 +188,7 @@ module "alb" {
 }
 
 resource "aws_security_group" "allow_mysql" {
-  name        = "allow_mysql"
+  name        = "allow_mysql_${random_pet.this.id}"
   description = "Allow MySQL inbound traffic"
   vpc_id      = data.aws_vpc.default.id
 
@@ -213,7 +213,7 @@ resource "aws_security_group" "allow_mysql" {
 module "rds_mysql" {
   source = "terraform-aws-modules/rds/aws"
 
-  identifier = replace(local.rds_mysql_db_name, "-", "")
+  identifier = local.rds_mysql_db_name
 
   # All available versions: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html#MySQL.Concepts.VersionMgmt
   engine               = "mysql"
