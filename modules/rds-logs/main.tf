@@ -4,7 +4,8 @@ data "aws_region" "current" {}
 locals {
   account_id              = data.aws_caller_identity.current.account_id
   region                  = data.aws_region.current.name
-  log_groups              = [for log_type in var.db_log_types : "aws/rds/instance/${var.db_name}/${log_type}"]
+  log_group_prefix        = startswith(var.db_engine, "aurora") ? "aws/rds/cluster" : "aws/rds/instance"
+  log_groups              = [for log_type in var.db_log_types : "${local.log_group_prefix}/${var.db_name}/${log_type}"]
   enable_lambda_transform = var.db_engine == "mysql" || var.db_engine == "postgresql"
   tags = merge(var.tags, {
     "Honeycomb Agentless" = true,
