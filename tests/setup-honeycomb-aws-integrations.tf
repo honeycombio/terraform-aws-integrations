@@ -92,7 +92,7 @@ module "rds_mysql_logs" {
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "rds-mysql-logs"
 
-  s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
+  s3_failure_bucket_arn = module.firehose_failure_bucket.s3_bucket_arn
 }
 
 /****** dependencies ******/
