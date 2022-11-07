@@ -87,7 +87,7 @@ module "rds_mysql_logs" {
   depends_on = [
     module.rds_mysql
   ]
-  name                   = "honeycomb-rds-mysql-logs"
+  name                   = "honeycomb-rds-mysql-logs-${random_pet.this.id}"
   db_engine              = "mysql"
   db_name                = local.rds_mysql_db_name
   db_log_types           = ["slow_query"]
