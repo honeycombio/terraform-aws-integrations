@@ -83,7 +83,7 @@ module "cloudwatch_metrics" {
 }
 
 module "rds_mysql_logs" {
-  source                 = "../modules/rds-logs"
+  source = "../modules/rds-logs"
   depends_on = [
     module.rds_mysql
   ]
