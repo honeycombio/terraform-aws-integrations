@@ -213,7 +213,7 @@ resource "aws_security_group" "allow_mysql" {
 module "rds_mysql" {
   source = "terraform-aws-modules/rds/aws"
 
-  identifier = local.rds_mysql_db_name
+  identifier = replace(local.rds_mysql_db_name, "-", "")
 
   # All available versions: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html#MySQL.Concepts.VersionMgmt
   engine               = "mysql"
