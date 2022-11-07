@@ -225,7 +225,7 @@ module "rds_mysql" {
   allocated_storage     = 20
   max_allocated_storage = 100
 
-  db_name  = local.rds_mysql_db_name
+  db_name  = replace(local.rds_mysql_db_name, "-", "")
   username = "mysql"
   port     = 3306
 
