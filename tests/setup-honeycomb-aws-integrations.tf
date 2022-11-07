@@ -232,7 +232,7 @@ module "rds_mysql" {
 
   maintenance_window              = "Mon:00:00-Mon:03:00"
   backup_window                   = "03:00-06:00"
-  enabled_cloudwatch_logs_exports = ["slow_query"]
+  enabled_cloudwatch_logs_exports = ["slowquery"]
   create_cloudwatch_log_group     = true
 
   backup_retention_period = 0
