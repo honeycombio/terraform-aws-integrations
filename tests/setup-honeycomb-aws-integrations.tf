@@ -96,9 +96,6 @@ module "firehose_failure_bucket" {
 
 data "aws_s3_bucket" "log_bucket" {
   bucket                         = "honeycomb-tf-integrations-logs"
-  acl                            = "log-delivery-write"
-  force_destroy                  = true
-  attach_elb_log_delivery_policy = true
 }
 
 module "log_group" {
