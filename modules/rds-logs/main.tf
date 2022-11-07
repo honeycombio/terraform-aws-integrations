@@ -16,7 +16,7 @@ locals {
 data "aws_iam_policy_document" "lambda" {
   statement {
     actions   = ["firehose:PutRecordBatch"]
-    resources = ["arn:aws:firehose:${local.region}:${local.account_id}:deliverystream/${var.firehose_name}"]
+    resources = ["arn:aws:firehose:${local.region}:${local.account_id}:deliverystream/${var.name}"]
   }
 }
 
