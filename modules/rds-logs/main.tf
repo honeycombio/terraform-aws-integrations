@@ -32,7 +32,7 @@ module "rds_lambda_transform" {
 
   count = local.enable_lambda_transform ? 1 : 0
 
-  function_name = "honeycomb-rds-${var.db_engine}-log-parser"
+  function_name = "${var.name}-honeycomb-rds-${var.db_engine}-log-parser"
   description   = "Parses RDS logs coming off of Kinesis Firehose, sending them back to the Firehose as structured JSON events."
   handler       = "rds-${var.db_engine}-kfh-transform"
   runtime       = "go1.x"
