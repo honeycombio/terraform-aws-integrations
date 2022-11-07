@@ -44,6 +44,11 @@ variable "s3_failure_bucket_arn" {
 }
 
 # Optional variables for customer configuration
+variable "honeycomb_api_host" {
+  type        = string
+  default     = "https://api.honeycomb.io"
+  description = "If you use a Secure Tenancy or other proxy, put its schema://host[:port] here."
+}
 variable "lambda_function_memory" {
   type        = number
   default     = 192
