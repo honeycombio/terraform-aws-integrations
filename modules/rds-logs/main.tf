@@ -46,7 +46,7 @@ module "rds_lambda_transform" {
   }
 
   attach_policy = true
-  policy        = aws_iam_policy.lambda.arn
+  policy        = aws_iam_policy.lambda[count.index].arn
 
   tags = local.tags
 }
@@ -58,7 +58,7 @@ module "cloudwatch_logs" {
   cloudwatch_log_groups   = local.log_groups
   honeycomb_api_key       = var.honeycomb_api_key
   honeycomb_dataset_name  = var.honeycomb_dataset_name
-  s3_failure_bucket_arn   = var.failure_bucket.s3_bucket_arn
+  s3_failure_bucket_arn   = var.s3_failure_bucket_arn
   enable_lambda_transform = local.enable_lambda_transform
   lambda_transform_arn    = local.enable_lambda_transform ? module.rds_lambda_transform.output.lambda_function_arn : ""
 }
