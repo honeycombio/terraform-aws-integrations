@@ -61,4 +61,9 @@ module "cloudwatch_logs" {
   s3_failure_bucket_arn   = var.s3_failure_bucket_arn
   enable_lambda_transform = local.enable_lambda_transform
   lambda_transform_arn    = local.enable_lambda_transform ? module.rds_lambda_transform[0].lambda_function_arn : ""
+  lambda_function_memory  = var.lambda_function_memory
+  lambda_function_timeout = var.lambda_function_timeout
+  lambda_package_bucket   = var.lambda_package_bucket
+  lambda_package_key      = var.lambda_package_key
+  tags                    = var.tags
 }
