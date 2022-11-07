@@ -34,6 +34,7 @@ module "cloudwatch_logs" {
   s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
 }
 
+<<<<<<< HEAD
 module "rds_logs" {
   source = "./modules/rds-logs"
   name   = "honeycomb-rds-cloudwatch-logs"
@@ -56,6 +57,14 @@ module "cloudwatch_metrics" {
 
   count = var.enable_cloudwatch_metrics ? 1 : 0
 
+=======
+module "cloudwatch_metrics" {
+  source = "./modules/cloudwatch-metrics"
+  name   = "honeycomb-cloudwatch-metrics"
+
+  count = var.enable_cloudwatch_metrics ? 1 : 0
+
+>>>>>>> main
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "cloudwatch-metrics"

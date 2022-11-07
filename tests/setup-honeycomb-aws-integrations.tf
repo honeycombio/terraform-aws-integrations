@@ -15,12 +15,6 @@ provider "aws" {
   region = "us-east-2"
 }
 
-locals {
-  rds_mysql_db_name = "tf-integrations-rds-mysql-${random_pet.this.id}"
-}
-
-data "aws_region" "current" {}
-
 data "aws_vpc" "default" {
   default = true
 }
@@ -45,6 +39,10 @@ variable "honeycomb_api_key" {
   type = string
 }
 
+locals {
+  rds_mysql_db_name = "tf-integrations-rds-mysql-${random_pet.this.id}"
+}
+
 /****** honeycomb modules ******/
 
 module "alb_logs" {
@@ -54,7 +52,7 @@ module "alb_logs" {
   honeycomb_api_key  = var.honeycomb_api_key
   honeycomb_api_host = var.honeycomb_api_host
 
-  s3_bucket_arn = module.log_bucket.s3_bucket_arn
+  s3_bucket_arn = data.aws_s3_bucket.log_bucket.arn
 }
 
 module "cloudwatch_logs" {
@@ -108,14 +106,16 @@ module "firehose_failure_bucket" {
   force_destroy = true
 }
 
-module "log_bucket" {
-  source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "~> 3.0"
+// ideally this would be dynamically created, but using a random_pet in the bucket name
+// and the feeding it into the ALB module results in a TF provider error:
+//   When expanding the plan for module.alb.aws_lb.this[0] to include new values
+//   learned so far during apply, provider "registry.terraform.io/hashicorp/aws"
+//   produced an invalid new value for .access_logs[0].bucket: was
+//   cty.StringVal(""), but now
+//   cty.StringVal("honeycomb-tf-integrations-logs-decent-sunbird").
 
-  bucket                         = "honeycomb-tf-integrations-logs-${random_pet.this.id}"
-  acl                            = "log-delivery-write"
-  force_destroy                  = true
-  attach_elb_log_delivery_policy = true
+data "aws_s3_bucket" "log_bucket" {
+  bucket = "honeycomb-tf-integrations-logs"
 }
 
 module "log_group" {
@@ -161,7 +161,7 @@ module "alb" {
   security_groups = [aws_security_group.allow_http.id]
 
   access_logs = {
-    bucket = module.log_bucket.s3_bucket_id
+    bucket = data.aws_s3_bucket.log_bucket.id
   }
 
   target_groups = [
