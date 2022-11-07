@@ -60,5 +60,5 @@ module "cloudwatch_logs" {
   honeycomb_dataset_name  = var.honeycomb_dataset_name
   s3_failure_bucket_arn   = var.s3_failure_bucket_arn
   enable_lambda_transform = local.enable_lambda_transform
-  lambda_transform_arn    = local.enable_lambda_transform ? module.rds_lambda_transform[1].lambda_function_arn : ""
+  lambda_transform_arn    = local.enable_lambda_transform ? module.rds_lambda_transform[0].lambda_function_arn : ""
 }
