@@ -210,7 +210,7 @@ resource "aws_security_group" "allow_mysql" {
 module "rds_mysql" {
   source = "terraform-aws-modules/rds/aws"
 
-  identifier = local.rds_integration_name
+  identifier = local.rds_mysql_db_named
 
   # All available versions: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html#MySQL.Concepts.VersionMgmt
   engine               = "mysql"
@@ -222,7 +222,7 @@ module "rds_mysql" {
   allocated_storage     = 20
   max_allocated_storage = 100
 
-  db_name  = local.rds_integration_name
+  db_name  = local.rds_mysql_db_name
   username = "mysql"
   port     = 3306
 
