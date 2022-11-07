@@ -1,11 +1,4 @@
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
-
-locals {
-  account_id = data.aws_caller_identity.current.account_id
-  region     = data.aws_region.current.name
-}
-
+# https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-metric-streams-trustpolicy.html
 resource "aws_iam_role" "this" {
   name_prefix        = var.name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
@@ -15,29 +8,19 @@ resource "aws_iam_role" "this" {
 data "aws_iam_policy_document" "assume_role" {
   statement {
     actions = ["sts:AssumeRole"]
-
     principals {
       type        = "Service"
-      identifiers = ["logs.${local.region}.amazonaws.com"]
-    }
-
-    condition {
-      test     = "StringLike"
-      variable = "aws:SourceArn"
-
-      values = [
-        "arn:aws:logs:${local.region}:${local.account_id}:*"
-      ]
+      identifiers = ["streams.metrics.cloudwatch.amazonaws.com"]
     }
   }
 }
 
-resource "aws_iam_role_policy" "cwl_policy" {
+# https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-metric-streams-trustpolicy.html
+resource "aws_iam_role_policy" "this" {
   name_prefix = var.name
   role        = aws_iam_role.this.id
   policy      = data.aws_iam_policy_document.this.json
 }
-
 
 data "aws_iam_policy_document" "this" {
   statement {
@@ -45,3 +28,4 @@ data "aws_iam_policy_document" "this" {
     resources = [module.kfh.kinesis_firehose_delivery_stream_arn]
   }
 }
+
