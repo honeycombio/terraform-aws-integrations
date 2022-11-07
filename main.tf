@@ -6,25 +6,43 @@
 # Required variables need to be provided. Please see docs for details on what is expected.
 # ---------------------------------------------------------------------------------------------------------------------
 
-module "cloudwatch_logs" {
-  source = "./modules/cloudwatch-logs"
-  name   = var.cloudwatch_logs_integration_name // A name for this CloudWatch Kinesis Firehose Stream to Honeycomb.
+data "aws_region" "current" {}
 
-  # insert required variables here
-  cloudwatch_log_groups  = var.cloudwatch_log_groups
-  honeycomb_api_key      = var.honeycomb_api_key      // Your Honeycomb team's API key.
-  honeycomb_dataset_name = var.honeycomb_dataset_name // Your Honeycomb dataset name.
-  s3_bucket_name         = var.s3_bucket_name
-  // A name of the S3 bucket that will store any logs that failed to be sent to Honeycomb.
+locals {
+  failure_bucket = replace(var.delivery_failure_s3_bucket_name, "{REGION}", data.aws_region.current.name)
 }
 
-module "lb_logs" {
-  source = "./modules/lb-logs"
+module "failure_bucket" {
+  source  = "terraform-aws-modules/s3-bucket/aws"
+  version = "~> 3.0"
 
-  name = var.lb_logs_integration_name
+  bucket = local.failure_bucket
+  acl    = "private"
+}
 
-  # insert required variables here
-  honeycomb_api_key = var.honeycomb_api_key // Your Honeycomb team's API key.
-  s3_bucket_arn     = var.s3_bucket_arn     // The full ARN of the bucket storing load balancer access logs.
-  kms_key_arn       = var.kms_key_arn       // TODO - Considered optional but is required at the moment.
+
+module "cloudwatch_logs" {
+  source = "./modules/cloudwatch-logs"
+  name   = "honeycomb-cloudwatch-logs"
+
+  cloudwatch_log_groups = var.cloudwatch_log_groups
+
+  honeycomb_api_host     = var.honeycomb_api_host
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "cloudwatch-logs"
+
+  s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
+}
+
+module "cloudwatch_metrics" {
+  source = "./modules/cloudwatch-metrics"
+  name   = "honeycomb-cloudwatch-metrics"
+
+  count = var.enable_cloudwatch_metrics ? 1 : 0
+
+  honeycomb_api_host     = var.honeycomb_api_host
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "cloudwatch-metrics"
+
+  s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
 }

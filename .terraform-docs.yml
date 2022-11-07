@@ -1,0 +1,3 @@
+recursive:
+  enabled: true
+  path: modules
