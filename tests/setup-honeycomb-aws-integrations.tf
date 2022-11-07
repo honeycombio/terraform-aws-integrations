@@ -141,6 +141,7 @@ module "alb" {
   access_logs = {
     bucket = module.log_bucket.s3_bucket_id
   }
+  depends_on = [module.log_bucket] // workaround TF bug
 
   target_groups = [
     {
