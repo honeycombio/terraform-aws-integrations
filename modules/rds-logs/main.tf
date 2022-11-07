@@ -51,7 +51,7 @@ module "rds_lambda_transform" {
   tags = local.tags
 }
 
-module "cloudwatch_logs" {
+/*module "cloudwatch_logs" {
   source = "../cloudwatch-logs"
   name   = var.name
 
@@ -69,4 +69,4 @@ module "cloudwatch_logs" {
   http_buffering_size     = var.http_buffering_size
   http_buffering_interval = var.http_buffering_interval
   tags                    = var.tags
-}
+}*/
