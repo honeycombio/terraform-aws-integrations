@@ -84,6 +84,9 @@ module "cloudwatch_metrics" {
 
 module "rds_mysql_logs" {
   source                 = "../modules/rds-logs"
+  depends_on = [
+    module.rds_mysql
+  ]
   name                   = "honeycomb-rds-mysql-logs"
   db_engine              = "mysql"
   db_name                = local.rds_mysql_db_name
@@ -241,6 +244,4 @@ module "rds_mysql" {
 
   performance_insights_enabled          = false
   performance_insights_retention_period = 7
-  create_monitoring_role                = true
-  monitoring_interval                   = 60
 }
