@@ -1,7 +1,7 @@
 module "kfh" {
   source = "../kinesis-firehose-honeycomb"
 
-  name = "honeycomb-cloudwatch-logs"
+  name = var.name
 
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
@@ -19,11 +19,11 @@ module "kfh" {
   tags = var.tags
 }
 
-resource "aws_cloudwatch_log_subscription_filter" "cwl_logfilter" {
-  for_each        = toset(var.cloudwatch_log_groups)
-  name            = "${each.value}-logs_subscription_filter"
+resource "aws_cloudwatch_log_subscription_filter" "this" {
+  count           = length(var.cloudwatch_log_groups)
+  name            = "${var.cloudwatch_log_groups[count.index]}-logs_subscription_filter"
   role_arn        = aws_iam_role.this.arn
-  log_group_name  = each.value
+  log_group_name  = var.cloudwatch_log_groups[count.index]
   filter_pattern  = var.log_subscription_filter_pattern
   destination_arn = module.kfh.kinesis_firehose_delivery_stream_arn
 }

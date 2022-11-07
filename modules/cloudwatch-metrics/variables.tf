@@ -1,8 +1,8 @@
 # Required variables
 variable "name" {
   type        = string
-  description = "A name for this CloudWatch Metric Stream."
-  # required, no default
+  description = "A unique name for this CloudWatch Metric Stream."
+  default     = "honeycomb-cloudwatch-metrics"
 
   validation {
     condition     = length(var.name) >= 1 && length(var.name) <= 32

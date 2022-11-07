@@ -1,3 +1,5 @@
+default: terraform-format
+
 update-changelog:
 	./scripts/update-changelog.sh
 

@@ -1,6 +1,7 @@
 variable "name" {
   type        = string
   description = "A name for this CloudWatch Kinesis Firehose Stream."
+  default     = "honeycomb-cloudwatch-logs"
 
   validation {
     condition     = length(var.name) >= 1 && length(var.name) <= 32
