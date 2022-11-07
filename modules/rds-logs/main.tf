@@ -5,7 +5,7 @@ locals {
   account_id              = data.aws_caller_identity.current.account_id
   region                  = data.aws_region.current.name
   log_group_prefix        = startswith(var.db_engine, "aurora") ? "aws/rds/cluster" : "aws/rds/instance"
-  log_groups              = [for log_type in var.db_log_types : "${local.log_group_prefix}/${var.db_name}/${log_type}"]
+  log_groups              = [for log_type in var.db_log_types : "/${local.log_group_prefix}/${var.db_name}/${log_type}"]
   enable_lambda_transform = var.db_engine == "mysql" || var.db_engine == "postgresql"
   tags = merge(var.tags, {
     "Honeycomb Agentless" = true,
@@ -51,11 +51,7 @@ module "rds_lambda_transform" {
   tags = local.tags
 }
 
-resource "random_pet" "test" {
-  prefix = local.log_groups[0]
-  length = 2
-}
-/*module "cloudwatch_logs" {
+module "cloudwatch_logs" {
   source = "../cloudwatch-logs"
   name   = var.name
 
@@ -73,4 +69,4 @@ resource "random_pet" "test" {
   http_buffering_size     = var.http_buffering_size
   http_buffering_interval = var.http_buffering_interval
   tags                    = var.tags
-}*/
+}
