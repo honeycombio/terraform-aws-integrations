@@ -54,14 +54,11 @@ module "rds_lambda_transform" {
 module "cloudwatch_logs" {
   source = "../cloudwatch-logs"
   name   = var.name
-  depends_on = [
-    module.rds_lambda_transform
-  ]
 
   cloudwatch_log_groups   = local.log_groups
   honeycomb_api_key       = var.honeycomb_api_key
   honeycomb_dataset_name  = var.honeycomb_dataset_name
   s3_failure_bucket_arn   = var.s3_failure_bucket_arn
   enable_lambda_transform = local.enable_lambda_transform
-  lambda_transform_arn    = local.enable_lambda_transform ? module.rds_lambda_transform.output.lambda_function_arn : ""
+  lambda_transform_arn    = local.enable_lambda_transform ? module.rds_lambda_transform.lambda_function_arn : ""
 }
