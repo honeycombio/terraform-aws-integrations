@@ -95,7 +95,7 @@ module "firehose_failure_bucket" {
 //   cty.StringVal("honeycomb-tf-integrations-logs-decent-sunbird").
 
 data "aws_s3_bucket" "log_bucket" {
-  bucket                         = "honeycomb-tf-integrations-logs"
+  bucket = "honeycomb-tf-integrations-logs"
 }
 
 module "log_group" {
