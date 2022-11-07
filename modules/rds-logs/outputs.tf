@@ -1,3 +1,3 @@
-output log_groups {
-    value = local.log_groups
+output "log_groups" {
+  value = local.log_groups
 }
