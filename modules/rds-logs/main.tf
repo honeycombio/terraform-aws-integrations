@@ -51,6 +51,10 @@ module "rds_lambda_transform" {
   tags = local.tags
 }
 
+resource "random_pet" "test" {
+  prefix = local.log_groups[0]
+  length = 2
+}
 /*module "cloudwatch_logs" {
   source = "../cloudwatch-logs"
   name   = var.name
