@@ -88,7 +88,7 @@ module "rds_mysql_logs" {
   name                   = "rds-logs-${random_pet.this.id}"
   db_engine              = "mysql"
   db_name                = local.rds_mysql_db_name
-  db_log_types           = ["slow_query"]
+  db_log_types           = ["slowquery"]
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "rds-mysql-logs"
