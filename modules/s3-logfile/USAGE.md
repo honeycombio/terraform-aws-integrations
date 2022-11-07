@@ -43,8 +43,8 @@
 | <a name="input_lambda_function_timeout"></a> [lambda\_function\_timeout](#input\_lambda\_function\_timeout) | Timeout in seconds for lambda function. | `number` | `600` | no |
 | <a name="input_lambda_package_bucket"></a> [lambda\_package\_bucket](#input\_lambda\_package\_bucket) | Internal. Override S3 bucket where lambda function zip is located. | `string` | `""` | no |
 | <a name="input_lambda_package_key"></a> [lambda\_package\_key](#input\_lambda\_package\_key) | Internal. Override S3 key where lambda function zip is located. | `string` | `""` | no |
-| <a name="input_load_balancer_type"></a> [load\_balancer\_type](#input\_load\_balancer\_type) | Controls parsing of ALB or ELB (Classic) log format | `string` | `"alb"` | no |
 | <a name="input_name"></a> [name](#input\_name) | A name for this Integration. | `string` | n/a | yes |
+| <a name="input_parser_type"></a> [parser\_type](#input\_parser\_type) | The type of logfile to parse. | `string` | n/a | yes |
 | <a name="input_rename_fields"></a> [rename\_fields](#input\_rename\_fields) | Optional. Map of fields to rename, old -> new. | `map(string)` | `{}` | no |
 | <a name="input_s3_bucket_arn"></a> [s3\_bucket\_arn](#input\_s3\_bucket\_arn) | The full ARN of the bucket storing load balancer access logs. | `string` | n/a | yes |
 | <a name="input_s3_filter_prefix"></a> [s3\_filter\_prefix](#input\_s3\_filter\_prefix) | Optional. Prefix within logs bucket to restrict processing. | `string` | `""` | no |

@@ -1,7 +1,19 @@
 module "alb_logs" {
-  source = "../modules/lb-logs"
+  source = "../modules/s3-logfile"
 
   name               = "tf-integrations-alb-${random_pet.this.id}"
+  parser_type        = "alb"
+  honeycomb_api_key  = var.honeycomb_api_key
+  honeycomb_api_host = var.honeycomb_api_host
+
+  s3_bucket_arn = data.aws_s3_bucket.log_bucket.arn
+}
+
+module "elb_logs" {
+  source = "../modules/s3-logfile"
+
+  parser_type        = "elb"
+  name               = "tf-integrations-elb-${random_pet.this.id}"
   honeycomb_api_key  = var.honeycomb_api_key
   honeycomb_api_host = var.honeycomb_api_host
 
@@ -19,6 +31,8 @@ module "alb_logs" {
 data "aws_s3_bucket" "log_bucket" {
   bucket = "honeycomb-tf-integrations-logs"
 }
+
+/*** ALB ***/
 
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
@@ -81,3 +95,63 @@ resource "aws_security_group" "allow_http" {
   }
 }
 
+/*** ELB ***/
+
+module "elb" {
+  source  = "terraform-aws-modules/elb/aws"
+  version = "~> 3.0"
+
+  name = random_pet.this.id
+
+  subnets         = toset(data.aws_subnets.default.ids)
+  security_groups = [aws_security_group.allow_http.id]
+  internal        = false
+
+  number_of_instances = 1
+  instances           = module.ec2_instances.id
+
+  health_check = {
+    target              = "HTTP:80/"
+    interval            = 30
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+  }
+
+  access_logs = {
+    bucket = data.aws_s3_bucket.log_bucket.id
+  }
+
+  listener = [
+    {
+      instance_port     = "80"
+      instance_protocol = "http"
+      lb_port           = "80"
+      lb_protocol       = "http"
+    },
+  ]
+}
+
+data "aws_ami" "latest" {
+  owners      = ["amazon"]
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-*-x86_64-ebs"]
+  }
+}
+
+module "ec2_instances" {
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 2.0"
+
+  instance_count = 1
+
+  name                        = random_pet.this.id
+  ami                         = data.aws_ami.latest.id
+  instance_type               = "t2.micro"
+  vpc_security_group_ids      = [aws_security_group.allow_http.id]
+  subnet_id                   = element(data.aws_subnets.default.ids, 0)
+  associate_public_ip_address = true
+}
