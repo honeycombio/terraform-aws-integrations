@@ -61,9 +61,12 @@ module "cloudwatch_logs" {
   s3_failure_bucket_arn   = var.s3_failure_bucket_arn
   enable_lambda_transform = local.enable_lambda_transform
   lambda_transform_arn    = local.enable_lambda_transform ? module.rds_lambda_transform[0].lambda_function_arn : ""
-  lambda_function_memory  = var.lambda_function_memory
-  lambda_function_timeout = var.lambda_function_timeout
-  lambda_package_bucket   = var.lambda_package_bucket
-  lambda_package_key      = var.lambda_package_key
+  s3_buffer_size          = var.s3_buffer_size
+  s3_buffer_interval      = var.s3_buffer_interval
+  s3_backup_mode          = var.s3_backup_mode
+  s3_compression_format   = var.s3_compression_format
+  s3_force_destroy        = var.s3_force_destroy
+  http_buffering_size     = var.http_buffering_size
+  http_buffering_interval = var.http_buffering_interval
   tags                    = var.tags
 }
