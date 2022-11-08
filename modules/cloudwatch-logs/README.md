@@ -7,7 +7,7 @@ to send CloudWatch Logs to [Honeycomb](https://www.honeycomb.io/).
 
 ![AWS CloudWatch Logs Integration overview](../../docs/cloudwatch-logs-overview.png)
 
-All required resources to setup an integration pipelines to take logs from a Cloudwatch Log group and send them to
+All required resources to setup an integration pipelines to take logs from a CloudWatch Log group and send them to
 Honecyomb can be created and managed via this module.
 
 ## Use
