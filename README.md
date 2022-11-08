@@ -15,7 +15,7 @@ in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) t
 * [CloudWatch Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-logs)
  
 
-* [Cloudwatch Metrics](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-metrics)
+* [CloudWatch Metrics](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-metrics)
 
 
 * [Load Balancer Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/lb-logs)
