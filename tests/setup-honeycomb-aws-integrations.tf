@@ -47,15 +47,12 @@ variable "honeycomb_api_key" {
   type = string
 }
 
-locals {
-  failure_bucket    = replace(var.delivery_failure_s3_bucket_name, "{REGION}", data.aws_region.current.name)
-  rds_mysql_db_name = "tf-integrations-rds-mysql-${random_pet.this.id}"
-}
-
+// shared s3 bucket for cloudwatch-logs and cloudwatch-metrics
+// kinesis failure messages
 module "firehose_failure_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "~> 3.0"
 
-  bucket = local.failure_bucket
-  acl    = "private"
+  bucket        = "honeycomb-tf-integrations-failures-${random_pet.this.id}"
+  force_destroy = true
 }

@@ -1,3 +1,7 @@
+locals {
+  rds_mysql_db_name = "tf-integrations-rds-mysql-${random_pet.this.id}"
+}
+
 module "rds_mysql_logs" {
   source = "../modules/rds-logs"
   depends_on = [
