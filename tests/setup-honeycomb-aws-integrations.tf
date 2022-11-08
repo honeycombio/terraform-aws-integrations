@@ -30,6 +30,14 @@ data "aws_subnets" "default" {
   }
 }
 
+data "aws_security_group" "default" {
+  vpc_id = data.aws_vpc.default.id
+  filter {
+    name = "group-name"
+    values = ["default"]
+  }
+}
+
 variable "honeycomb_api_host" {
   type    = string
   default = "https://api.honeycomb.io"
@@ -187,29 +195,6 @@ module "alb" {
   }]
 }
 
-resource "aws_security_group" "allow_mysql" {
-  name        = "allow_mysql_${random_pet.this.id}"
-  description = "Allow MySQL inbound traffic"
-  vpc_id      = data.aws_vpc.default.id
-
-  ingress {
-    description      = "MySQL"
-    from_port        = 3306
-    to_port          = 3306
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-}
-
 module "rds_mysql" {
   source = "terraform-aws-modules/rds/aws"
 
@@ -218,9 +203,10 @@ module "rds_mysql" {
   # All available versions: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html#MySQL.Concepts.VersionMgmt
   engine               = "mysql"
   engine_version       = "8.0.27"
-  family               = "mysql8.0" # DB parameter group
-  major_engine_version = "8.0"      # DB option group
+  family               = "mysql8.0" 
+  major_engine_version = "8.0"      
   instance_class       = "db.t3.micro"
+
 
   allocated_storage     = 20
   max_allocated_storage = 100
@@ -231,17 +217,34 @@ module "rds_mysql" {
 
   multi_az               = false
   subnet_ids             = data.aws_subnets.default.ids
-  vpc_security_group_ids = ["${aws_security_group.allow_mysql.id}"]
+  vpc_security_group_ids = ["${data.aws_security_group.default.id}"]
 
   maintenance_window              = "Mon:00:00-Mon:03:00"
   backup_window                   = "03:00-06:00"
   enabled_cloudwatch_logs_exports = ["slowquery"]
   create_cloudwatch_log_group     = true
-
+  
   backup_retention_period = 0
   skip_final_snapshot     = true
   deletion_protection     = false
+  create_monitoring_role                = true
+  monitoring_interval                   = 60
 
   performance_insights_enabled          = false
   performance_insights_retention_period = 7
+
+  parameters = [
+    {
+      name  = "character_set_client"
+      value = "utf8mb4"
+    },
+    {
+      name  = "character_set_server"
+      value = "utf8mb4"
+    },
+    {
+      name = "slow_query_log"
+      value = "1"
+    }
+  ]
 }
