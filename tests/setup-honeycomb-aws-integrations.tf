@@ -48,7 +48,7 @@ variable "honeycomb_api_key" {
 }
 
 locals {
-  failure_bucket = replace(var.delivery_failure_s3_bucket_name, "{REGION}", data.aws_region.current.name)
+  failure_bucket    = replace(var.delivery_failure_s3_bucket_name, "{REGION}", data.aws_region.current.name)
   rds_mysql_db_name = "tf-integrations-rds-mysql-${random_pet.this.id}"
 }
 
