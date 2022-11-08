@@ -1,7 +1,7 @@
 # TERRAFORM AWS CLOUDWATCH METRICS INTEGRATION
 
 This repo contains a module for resources in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/)
-to send cloudwatch metrics to [Honeycomb](https://www.honeycomb.io/).
+to send CloudWatch Metrics to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
 
