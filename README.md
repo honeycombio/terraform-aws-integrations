@@ -12,7 +12,7 @@ in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) t
 
 **Integrations supported are:**
 
-* [Cloudwatch Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-logs)
+* [CloudWatch Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-logs)
  
 
 * [Cloudwatch Metrics](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-metrics)
