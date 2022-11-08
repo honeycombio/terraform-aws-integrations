@@ -1,7 +1,7 @@
 # TERRAFORM AWS CLOUDWATCH LOGS INTEGRATION
 
 This repo contains a module for resources in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/)
-to send cloudwatch logs to [Honeycomb](https://www.honeycomb.io/).
+to send CloudWatch Logs to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
 
