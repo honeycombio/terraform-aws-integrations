@@ -33,7 +33,7 @@ data "aws_subnets" "default" {
 data "aws_security_group" "default" {
   vpc_id = data.aws_vpc.default.id
   filter {
-    name = "group-name"
+    name   = "group-name"
     values = ["default"]
   }
 }
@@ -206,8 +206,8 @@ module "rds_mysql" {
   # All available versions: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html#MySQL.Concepts.VersionMgmt
   engine               = "mysql"
   engine_version       = "8.0.27"
-  family               = "mysql8.0" 
-  major_engine_version = "8.0"      
+  family               = "mysql8.0"
+  major_engine_version = "8.0"
   instance_class       = "db.t3.micro"
 
 
@@ -226,12 +226,12 @@ module "rds_mysql" {
   backup_window                   = "03:00-06:00"
   enabled_cloudwatch_logs_exports = ["slowquery"]
   create_cloudwatch_log_group     = true
-  
+
   backup_retention_period = 0
   skip_final_snapshot     = true
   deletion_protection     = false
-  create_monitoring_role                = true
-  monitoring_interval                   = 60
+  create_monitoring_role  = true
+  monitoring_interval     = 60
 
   performance_insights_enabled          = false
   performance_insights_retention_period = 7
@@ -246,7 +246,7 @@ module "rds_mysql" {
       value = "utf8mb4"
     },
     {
-      name = "slow_query_log"
+      name  = "slow_query_log"
       value = "1"
     }
   ]
