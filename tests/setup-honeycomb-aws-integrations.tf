@@ -52,7 +52,7 @@ locals {
   rds_mysql_db_name = "tf-integrations-rds-mysql-${random_pet.this.id}"
 }
 
-module "failure_bucket" {
+module "firehose_failure_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "~> 3.0"
 
