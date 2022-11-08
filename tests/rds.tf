@@ -52,8 +52,6 @@ module "rds_mysql" {
   backup_retention_period = 0
   skip_final_snapshot     = true
   deletion_protection     = false
-  create_monitoring_role  = true
-  monitoring_interval     = 60
 
   performance_insights_enabled          = false
   performance_insights_retention_period = 7
