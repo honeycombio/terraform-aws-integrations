@@ -7,6 +7,9 @@ module "kfh" {
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = var.honeycomb_dataset_name
 
+  enable_lambda_transform = var.enable_lambda_transform
+  lambda_transform_arn    = var.lambda_transform_arn
+
   http_buffering_size     = var.http_buffering_size
   http_buffering_interval = var.http_buffering_interval
 
