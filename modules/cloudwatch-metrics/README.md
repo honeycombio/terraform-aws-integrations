@@ -8,7 +8,7 @@ to send CloudWatch Metrics to [Honeycomb](https://www.honeycomb.io/).
 ![AWS CloudWatch metrics Integration overview](../../docs/cloudwatch-metrics-overview.png)
 
 All required resources to setup an integration pipelines to take metrics from a Cloudwatch metrics group and send them to
-Honecyomb can be created and managed via this module.
+Honeycomb can be created and managed via this module.
 
 ## Use
 
