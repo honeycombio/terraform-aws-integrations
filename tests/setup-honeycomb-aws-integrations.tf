@@ -106,6 +106,9 @@ module "rds_mysql_logs" {
 
 /****** dependencies ******/
 
+// shared s3 bucket for cloudwatch-logs and cloudwatch-metrics
+// kinesis failure messages
+
 module "firehose_failure_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "~> 3.0"

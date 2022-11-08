@@ -54,7 +54,7 @@ module "s3_processor" {
 
 
   environment_variables = {
-    PARSER_TYPE       = var.load_balancer_type
+    PARSER_TYPE       = var.parser_type
     TIME_FIELD_NAME   = "timestamp"
     TIME_FIELD_FORMAT = "2006-01-02T15:04:05.9999Z"
     FORCE_GUNZIP      = true

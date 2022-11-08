@@ -1,33 +1,28 @@
-# TERRAFORM AWS CLOUDWATCH LOGS INTEGRATION
+# TERRAFORM AWS LOAD BALANCER LOGS INTEGRATION
 
 This repo contains a module for resources in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/)
-to send CloudWatch Logs to [Honeycomb](https://www.honeycomb.io/).
+to send logs from AWS Load Balancers to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
 
-![AWS CloudWatch Logs Integration overview](../../docs/cloudwatch-logs-overview.png)
+![AWS CloudWatch Logs Integration overview](../../docs/loadbalancer-logs-overview.png)
 
-All required resources to setup an integration pipelines to take logs from a CloudWatch Log group and send them to
+All required resources to setup an integration pipelines to take load balancer logs from a S3 bucket and send them to
 Honecyomb can be created and managed via this module.
+
 
 ## Use
 
 The minimal config is:
 
 ```hcl
-module "honeycomb-aws-cloudwatch-logs-integration" {
-  source = "honeycombio/integrations/aws//modules/cloudwatch-logs"
+module "lb_logs_integrations" {
+  source = "./modules/lb-logs"
 
-  name = var.cloudwatch_logs_integration_name // A name for the Integration.
+  name = var.lb_logs_integration_name
 
-  #aws cloudwatch integration
-  cloudwatch_log_groups = ["/aws/lambda/S3LambdaHandler-test"] // CloudWatch Log Group names to stream to Honeycomb.
-  s3_bucket_name        = var.s3_bucket_name
-  // A name for the S3 bucket that will store any logs that failed to be sent to Honeycomb.
-
-  #honeycomb
-  honeycomb_api_key      = var.HONEYCOMB_API_KEY // Honeycomb API key.
-  honeycomb_dataset_name = "cloudwatch-logs" // Your Honeycomb dataset name that will receive the logs.
+  honeycomb_api_key = var.honeycomb_api_key // Your Honeycomb team's API key.
+  s3_bucket_arn     = var.s3_bucket_arn     // The full ARN of the bucket storing load balancer access logs.
 }
 ```
 

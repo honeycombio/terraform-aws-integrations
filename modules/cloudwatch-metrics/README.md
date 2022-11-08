@@ -1,33 +1,29 @@
-# TERRAFORM AWS CLOUDWATCH LOGS INTEGRATION
+# TERRAFORM AWS CLOUDWATCH METRICS INTEGRATION
 
 This repo contains a module for resources in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/)
-to send CloudWatch Logs to [Honeycomb](https://www.honeycomb.io/).
+to send CloudWatch Metrics to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
 
-![AWS CloudWatch Logs Integration overview](../../docs/cloudwatch-logs-overview.png)
+![AWS CloudWatch metrics Integration overview](../../docs/cloudwatch-metrics-overview.png)
 
-All required resources to setup an integration pipelines to take logs from a CloudWatch Log group and send them to
-Honecyomb can be created and managed via this module.
+All required resources to setup an integration pipelines to take metrics from a CloudWatch Metrics group and send them to
+Honeycomb can be created and managed via this module.
 
 ## Use
 
 The minimal config is:
 
 ```hcl
-module "honeycomb-aws-cloudwatch-logs-integration" {
-  source = "honeycombio/integrations/aws//modules/cloudwatch-logs"
+module "honeycomb-aws-cloudwatch-metrics-integration" {
+  source = "honeycombio/integrations/aws//modules/cloudwatch-metrics"
 
-  name = var.cloudwatch_logs_integration_name // A name for the Integration.
-
-  #aws cloudwatch integration
-  cloudwatch_log_groups = ["/aws/lambda/S3LambdaHandler-test"] // CloudWatch Log Group names to stream to Honeycomb.
-  s3_bucket_name        = var.s3_bucket_name
-  // A name for the S3 bucket that will store any logs that failed to be sent to Honeycomb.
-
-  #honeycomb
+  name = var.cloudwatch_metrics_integration_name // A name for the Integration.
+  
   honeycomb_api_key      = var.HONEYCOMB_API_KEY // Honeycomb API key.
-  honeycomb_dataset_name = "cloudwatch-logs" // Your Honeycomb dataset name that will receive the logs.
+  honeycomb_dataset_name = "cloudwatch-metrics" // Your Honeycomb dataset name that will receive the metrics.
+
+  s3_failure_bucket_arn = var.s3_bucket_arn // A S3 bucket that will store any metrics that failed to be sent to Honeycomb.
 }
 ```
 
