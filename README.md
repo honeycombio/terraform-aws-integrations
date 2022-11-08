@@ -3,7 +3,6 @@
 [![CI](https://github.com/honeycombio/terraform-aws-integrations/actions/workflows/test-terraform-module.yml/badge.svg)](https://github.com/honeycombio/terraform-aws-integrations/actions?query=Test%20Terraform%20Module)
 
 This repo contains a set of modules in the [modules folder](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules) for resources
-quorum](https://www.consul.io/docs/internals/consensus.html), and a larger number of client nodes, which you typically
 in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) to send observability data to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
