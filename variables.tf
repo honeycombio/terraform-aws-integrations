@@ -119,3 +119,23 @@ variable "enable_cloudwatch_metrics" {
       setting this to true.
   DESC
 }
+
+variable "enable_rds_logs" {
+  type    = bool
+  default = false
+}
+
+variable "rds_db_name" {
+  type    = string
+  default = ""
+}
+
+variable "rds_db_engine" {
+  type    = string
+  default = ""
+}
+
+variable "rds_db_log_types" {
+  type    = list(string)
+  default = []
+}

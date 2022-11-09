@@ -29,6 +29,23 @@ resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
     request_configuration {
       content_encoding = "GZIP"
     }
+
+    dynamic "processing_configuration" {
+      for_each = var.lambda_transform_arn != "" ? ["allow_transform"] : []
+      content {
+        enabled = var.enable_lambda_transform
+
+        processors {
+          type = "Lambda"
+
+          parameters {
+            parameter_name  = "LambdaArn"
+            parameter_value = "${var.lambda_transform_arn}:$LATEST"
+          }
+        }
+      }
+    }
+
   }
 }
 
@@ -71,3 +88,21 @@ resource "aws_iam_role_policy" "firehose_s3_policy" {
   policy = data.aws_iam_policy_document.firehose_s3_policy_document.json
 }
 
+data "aws_iam_policy_document" "firehose_lambda_policy_document" {
+  statement {
+    actions = [
+      "lambda:InvokeFunction",
+      "lambda:GetFunctionConfiguration"
+    ]
+    resources = [
+      "${var.lambda_transform_arn}:*"
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "firehose_lambda_policy" {
+  count  = var.enable_lambda_transform ? 1 : 0
+  name   = "firehose_lambda_policy_${local.region}"
+  role   = aws_iam_role.firehose_s3_role.id
+  policy = data.aws_iam_policy_document.firehose_lambda_policy_document.json
+}

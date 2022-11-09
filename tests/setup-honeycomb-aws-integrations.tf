@@ -30,6 +30,14 @@ data "aws_subnets" "default" {
   }
 }
 
+data "aws_security_group" "default" {
+  vpc_id = data.aws_vpc.default.id
+  filter {
+    name   = "group-name"
+    values = ["default"]
+  }
+}
+
 variable "honeycomb_api_host" {
   type    = string
   default = "https://api.honeycomb.io"

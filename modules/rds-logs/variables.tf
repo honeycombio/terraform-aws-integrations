@@ -1,7 +1,6 @@
 variable "name" {
   type        = string
   description = "A name for this CloudWatch Kinesis Firehose Stream."
-  default     = "honeycomb-cloudwatch-logs"
 
   validation {
     condition     = length(var.name) >= 1 && length(var.name) <= 32
@@ -9,14 +8,23 @@ variable "name" {
   }
 }
 
-variable "s3_failure_bucket_arn" {
+variable "db_name" {
   type        = string
-  description = "ARN of the S3 bucket that will store any logs that failed to be sent to Honeycomb."
+  description = "Name of your RDS database."
 }
 
-variable "cloudwatch_log_groups" {
-  type        = list(string)
-  description = "CloudWatch Log Group names to stream to Honeycomb"
+variable "db_engine" {
+  type        = string
+  description = "Engine type on your RDS database"
+  validation {
+    condition = contains(["aurora-mysql", "aurora-postgresql", "mariadb", "sqlserver", "mysql", "oracle", "postgresql"],
+    var.db_engine)
+    error_message = "Not a valid database engine."
+  }
+}
+
+variable "db_log_types" {
+  type = list(string)
 }
 
 variable "honeycomb_dataset_name" {
@@ -30,18 +38,12 @@ variable "honeycomb_api_key" {
   sensitive   = true
 }
 
-# Optional variables for customer configuration
-variable "enable_lambda_transform" {
-  type        = bool
-  description = "Enable a Lambda transform on the Kinesis Firehose to preprocess and structure the logs"
-  default     = false
+variable "s3_failure_bucket_arn" {
+  type        = string
+  description = "ARN of the S3 bucket that will store any logs that failed to be sent to Honeycomb."
 }
 
-variable "lambda_transform_arn" {
-  type        = string
-  description = "If enable_lambda_transform is set to true, specify a valid arn"
-  default     = ""
-}
+# Optional variables for customer configuration
 variable "log_subscription_filter_pattern" {
   type        = string
   description = "A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events. Defaults to empty string to match everything. For more information, see the Amazon CloudWatch Logs User Guide."
@@ -131,8 +133,32 @@ variable "http_buffering_interval" {
   description = "Kinesis Firehose http buffer interval, in seconds."
 }
 
+variable "lambda_function_memory" {
+  type        = number
+  default     = 192
+  description = "Memory allocated to the Lambda function in MB. Must be between 128 and 10,240 (10GB), in 64MB increments."
+}
+
+variable "lambda_function_timeout" {
+  type        = number
+  description = "Timeout in seconds for lambda function."
+  default     = 600
+}
+
+variable "lambda_package_bucket" {
+  type        = string
+  description = "Internal. Override S3 bucket where lambda function zip is located."
+  default     = ""
+}
+
+variable "lambda_package_key" {
+  type        = string
+  description = "Internal. Override S3 key where lambda function zip is located."
+  default     = ""
+}
+
 variable "tags" {
   type        = map(string)
-  default     = {}
-  description = "A map of tags to apply to resources created by this module."
+  description = "Optional. Tags to add to resources created by this module."
+  default     = null
 }

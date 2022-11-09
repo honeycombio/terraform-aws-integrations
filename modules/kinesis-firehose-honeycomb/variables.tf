@@ -26,6 +26,18 @@ variable "honeycomb_api_host" {
   description = "If you use a Secure Tenancy or other proxy, put its schema://host[:port] here."
 }
 
+variable "enable_lambda_transform" {
+  type        = bool
+  default     = false
+  description = "Enable a Lambda transform on the Kinesis Firehose to preprocess and structure the logs"
+}
+
+variable "lambda_transform_arn" {
+  type        = string
+  default     = ""
+  description = "If enable_lambda_transform is set to true, specify a valid arn"
+}
+
 variable "http_buffering_size" {
   type        = number
   default     = 15
