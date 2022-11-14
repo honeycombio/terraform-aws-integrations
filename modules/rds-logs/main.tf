@@ -59,6 +59,7 @@ module "cloudwatch_logs" {
   cloudwatch_log_groups   = local.log_groups
   honeycomb_api_key       = var.honeycomb_api_key
   honeycomb_dataset_name  = var.honeycomb_dataset_name
+  honeycomb_api_host      = var.honeycomb_api_host
   s3_failure_bucket_arn   = var.s3_failure_bucket_arn
   enable_lambda_transform = local.enable_lambda_transform
   lambda_transform_arn    = local.enable_lambda_transform ? module.rds_lambda_transform[0].lambda_function_arn : ""
