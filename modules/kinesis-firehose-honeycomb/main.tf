@@ -1,7 +1,14 @@
 data "aws_region" "current" {}
 
 locals {
-  region = data.aws_region.current.name
+  region                    = data.aws_region.current.name
+  default_lambda_parameters = { "BufferSizeInMBs" = 2, "BufferIntervalInSeconds" = 61 }
+  lambda_parameters = merge(
+    local.default_lambda_parameters,
+    var.lambda_processor_parameters,
+    { "LambdaArn" = "${var.lambda_transform_arn}:$LATEST" },
+  )
+
 }
 
 resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
@@ -38,9 +45,13 @@ resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
         processors {
           type = "Lambda"
 
-          parameters {
-            parameter_name  = "LambdaArn"
-            parameter_value = "${var.lambda_transform_arn}:$LATEST"
+          dynamic "parameters" {
+            // use keys() to get a stable ordering
+            for_each = keys(local.lambda_parameters)
+            content {
+              parameter_name  = parameters.value
+              parameter_value = local.lambda_parameters[parameters.value]
+            }
           }
         }
       }

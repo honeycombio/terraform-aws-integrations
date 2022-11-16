@@ -38,6 +38,17 @@ variable "lambda_transform_arn" {
   description = "If enable_lambda_transform is set to true, specify a valid arn"
 }
 
+variable "lambda_processor_parameters" {
+  type        = map(string)
+  default     = {}
+  description = <<DESC
+Values passed as the Lambda processing_configuration.processors.parameters, as detailed
+at https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_firehose_delivery_stream#processors.
+
+Do not use the default values for BufferSizeInMBs (3) and BufferIntervalInSeconds (60) or you will trigger a provider bug (https://github.com/hashicorp/terraform-provider-aws/issues/9827) resulting in infinite diffs.
+DESC
+}
+
 variable "http_buffering_size" {
   type        = number
   default     = 15
