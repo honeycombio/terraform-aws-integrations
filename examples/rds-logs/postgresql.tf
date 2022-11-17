@@ -64,10 +64,6 @@ module "rds_mysql" {
     {
       name  = "character_set_server"
       value = "utf8mb4"
-    },
-    {
-      name  = "slow_query_log"
-      value = "1"
     }
   ]
 }

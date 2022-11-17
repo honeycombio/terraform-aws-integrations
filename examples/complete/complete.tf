@@ -113,6 +113,10 @@ module "rds_mysql" {
     {
       name  = "slow_query_log"
       value = "1"
+    },
+    {
+      name  = "log_output"
+      value = "FILE"
     }
   ]
 }
