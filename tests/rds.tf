@@ -70,6 +70,10 @@ module "rds_mysql" {
       value = "1"
     },
     {
+      name  = "long_query_time"
+      value = "0"
+    },
+    {
       name  = "log_output"
       value = "FILE"
     }

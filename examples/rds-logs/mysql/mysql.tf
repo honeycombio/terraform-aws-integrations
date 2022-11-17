@@ -3,7 +3,7 @@ locals {
 }
 
 module "mysql_logs" {
-  source = "honeycombio/integrations/aws//rds-logs"
+  source = "../../../modules/rds-logs"
   depends_on = [
     module.rds_mysql
   ]
@@ -20,10 +20,33 @@ module "mysql_logs" {
 
 # dependencies
 
+resource "random_pet" "this" {
+  length = 2
+}
+
+data "aws_vpc" "default" {
+  default = true
+}
+
+data "aws_subnets" "default" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+}
+
+data "aws_security_group" "default" {
+  vpc_id = data.aws_vpc.default.id
+  filter {
+    name   = "group-name"
+    values = ["default"]
+  }
+}
+
 module "rds_mysql" {
   source = "terraform-aws-modules/rds/aws"
 
-  identifier = local.rds_mysql_db_name
+  identifier = local.db_name
 
   # All available versions: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html#MySQL.Concepts.VersionMgmt
   engine               = "mysql"
@@ -36,7 +59,7 @@ module "rds_mysql" {
   allocated_storage     = 20
   max_allocated_storage = 100
 
-  db_name  = replace(local.rds_mysql_db_name, "-", "")
+  db_name  = replace(local.db_name, "-", "")
   username = "tfuser"
   port     = 3306
 
@@ -68,6 +91,10 @@ module "rds_mysql" {
     {
       name  = "slow_query_log"
       value = "1"
+    },
+    {
+      name  = "long_query_time"
+      value = "0"
     },
     {
       name  = "log_output"
