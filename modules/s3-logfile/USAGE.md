@@ -48,6 +48,7 @@
 | <a name="input_rename_fields"></a> [rename\_fields](#input\_rename\_fields) | Optional. Map of fields to rename, old -> new. | `map(string)` | `{}` | no |
 | <a name="input_s3_bucket_arn"></a> [s3\_bucket\_arn](#input\_s3\_bucket\_arn) | The full ARN of the bucket storing load balancer access logs. | `string` | n/a | yes |
 | <a name="input_s3_filter_prefix"></a> [s3\_filter\_prefix](#input\_s3\_filter\_prefix) | Optional. Prefix within logs bucket to restrict processing. | `string` | `""` | no |
+| <a name="input_s3_filter_suffix"></a> [s3\_filter\_suffix](#input\_s3\_filter\_suffix) | Optional. Suffix of files that should be processed. | `string` | `".gz"` | no |
 | <a name="input_sample_rate"></a> [sample\_rate](#input\_sample\_rate) | Sample rate. See https://honeycomb.io/docs/guides/sampling/. | `number` | `1` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Optional. Tags to add to resources created by this module. | `map(string)` | `null` | no |
 

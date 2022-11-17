@@ -90,6 +90,12 @@ variable "s3_filter_prefix" {
   default     = ""
 }
 
+variable "s3_filter_suffix" {
+  type        = string
+  description = "Optional. Suffix of files that should be processed."
+  default     = ".gz"
+}
+
 variable "sample_rate" {
   type        = number
   default     = 1
