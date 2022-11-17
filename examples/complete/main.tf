@@ -19,7 +19,7 @@ module "honeycomb-aws-integrations" {
   rds_db_log_types = ["slowquery"] # valid types include general, slowquery, error, and audit (audit will be unstructured)
 
   # aws metrics integration - pro/enterprise Honeycomb teams only
-  enable_cloudwatch_metrics = true
+  # enable_cloudwatch_metrics = true
 
   #honeycomb
   honeycomb_api_key = var.honeycomb_api_key             // Honeycomb API key.
