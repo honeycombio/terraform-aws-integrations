@@ -87,7 +87,7 @@ module "log_bucket" {
       function_name = module.s3_processor.lambda_function_name
       events        = ["s3:ObjectCreated:*"]
       filter_prefix = var.s3_filter_prefix
-      filter_suffix = ".log.gz"
+      filter_suffix = var.s3_filter_suffix
     }
   }
 }

@@ -8,7 +8,7 @@ DESC
 
 variable "environment" {
   type        = string
-  description = "Optional. The environment this code is running in. If set, will be added as 'env' to each event."
+  description = "The environment this code is running in. If set, will be added as 'env' to each event."
   default     = ""
 }
 
@@ -32,13 +32,13 @@ variable "honeycomb_dataset" {
 
 variable "filter_fields" {
   type        = list(string)
-  description = "Optional. Strings to specify which field names to remove from events."
+  description = "Strings to specify which field names to remove from events."
   default     = []
 }
 
 variable "kms_key_arn" {
   type        = string
-  description = "Optional. KMS Key ARN of key used to encript var.honeycomb_api_key."
+  description = "KMS Key ARN of key used to encript var.honeycomb_api_key."
   default     = ""
 }
 
@@ -78,7 +78,7 @@ variable "parser_type" {
 
 variable "rename_fields" {
   type        = map(string)
-  description = "Optional. Map of fields to rename, old -> new."
+  description = "Map of fields to rename, old -> new."
   default     = {}
 }
 
@@ -89,8 +89,14 @@ variable "s3_bucket_arn" {
 
 variable "s3_filter_prefix" {
   type        = string
-  description = "Optional. Prefix within logs bucket to restrict processing."
+  description = "Prefix within logs bucket to restrict processing."
   default     = ""
+}
+
+variable "s3_filter_suffix" {
+  type        = string
+  description = "Suffix of files that should be processed."
+  default     = ".gz"
 }
 
 variable "sample_rate" {
@@ -101,6 +107,6 @@ variable "sample_rate" {
 
 variable "tags" {
   type        = map(string)
-  description = "Optional. Tags to add to resources created by this module."
+  description = "Tags to add to resources created by this module."
   default     = null
 }

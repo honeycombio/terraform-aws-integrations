@@ -35,7 +35,7 @@
 | <a name="input_delivery_failure_s3_bucket_name"></a> [delivery\_failure\_s3\_bucket\_name](#input\_delivery\_failure\_s3\_bucket\_name) | Name for S3 bucket that will be created to hold Kinesis Firehose delivery failures. | `string` | `"honeycomb-firehose-failures-{REGION}"` | no |
 | <a name="input_enable_cloudwatch_metrics"></a> [enable\_cloudwatch\_metrics](#input\_enable\_cloudwatch\_metrics) | Honeycomb Enterprise customers can enable CloudWatch Metrics collection by<br>      setting this to true. | `bool` | `false` | no |
 | <a name="input_enable_rds_logs"></a> [enable\_rds\_logs](#input\_enable\_rds\_logs) | n/a | `bool` | `false` | no |
-| <a name="input_environment"></a> [environment](#input\_environment) | Optional. The environment this code is running in. If set, will be added as 'env' to each event. | `string` | `""` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | The environment this code is running in. If set, will be added as 'env' to each event. | `string` | `""` | no |
 | <a name="input_honeycomb_api_host"></a> [honeycomb\_api\_host](#input\_honeycomb\_api\_host) | The name of the S3 bucket Kinesis uses for backup data. | `string` | `"https://api.honeycomb.io"` | no |
 | <a name="input_honeycomb_api_key"></a> [honeycomb\_api\_key](#input\_honeycomb\_api\_key) | Your Honeycomb team's API key. | `string` | n/a | yes |
 | <a name="input_honeycomb_dataset"></a> [honeycomb\_dataset](#input\_honeycomb\_dataset) | Honeycomb Dataset where events will be sent. | `string` | `"lb-access-logs"` | no |
