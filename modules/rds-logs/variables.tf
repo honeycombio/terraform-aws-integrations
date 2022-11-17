@@ -159,6 +159,6 @@ variable "lambda_package_key" {
 
 variable "tags" {
   type        = map(string)
-  description = "Optional. Tags to add to resources created by this module."
+  description = "Tags to add to resources created by this module."
   default     = null
 }

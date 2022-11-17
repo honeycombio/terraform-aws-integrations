@@ -19,6 +19,7 @@
 | <a name="module_cloudwatch_logs"></a> [cloudwatch\_logs](#module\_cloudwatch\_logs) | ./modules/cloudwatch-logs | n/a |
 | <a name="module_cloudwatch_metrics"></a> [cloudwatch\_metrics](#module\_cloudwatch\_metrics) | ./modules/cloudwatch-metrics | n/a |
 | <a name="module_failure_bucket"></a> [failure\_bucket](#module\_failure\_bucket) | terraform-aws-modules/s3-bucket/aws | ~> 3.0 |
+| <a name="module_rds_logs"></a> [rds\_logs](#module\_rds\_logs) | ./modules/rds-logs | n/a |
 
 ## Resources
 
@@ -33,12 +34,16 @@
 | <a name="input_cloudwatch_log_groups"></a> [cloudwatch\_log\_groups](#input\_cloudwatch\_log\_groups) | CloudWatch Log Group names to stream to Honeycomb | `list(string)` | `[]` | no |
 | <a name="input_delivery_failure_s3_bucket_name"></a> [delivery\_failure\_s3\_bucket\_name](#input\_delivery\_failure\_s3\_bucket\_name) | Name for S3 bucket that will be created to hold Kinesis Firehose delivery failures. | `string` | `"honeycomb-firehose-failures-{REGION}"` | no |
 | <a name="input_enable_cloudwatch_metrics"></a> [enable\_cloudwatch\_metrics](#input\_enable\_cloudwatch\_metrics) | Honeycomb Enterprise customers can enable CloudWatch Metrics collection by<br>      setting this to true. | `bool` | `false` | no |
-| <a name="input_environment"></a> [environment](#input\_environment) | Optional. The environment this code is running in. If set, will be added as 'env' to each event. | `string` | `""` | no |
+| <a name="input_enable_rds_logs"></a> [enable\_rds\_logs](#input\_enable\_rds\_logs) | n/a | `bool` | `false` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | The environment this code is running in. If set, will be added as 'env' to each event. | `string` | `""` | no |
 | <a name="input_honeycomb_api_host"></a> [honeycomb\_api\_host](#input\_honeycomb\_api\_host) | The name of the S3 bucket Kinesis uses for backup data. | `string` | `"https://api.honeycomb.io"` | no |
 | <a name="input_honeycomb_api_key"></a> [honeycomb\_api\_key](#input\_honeycomb\_api\_key) | Your Honeycomb team's API key. | `string` | n/a | yes |
 | <a name="input_honeycomb_dataset"></a> [honeycomb\_dataset](#input\_honeycomb\_dataset) | Honeycomb Dataset where events will be sent. | `string` | `"lb-access-logs"` | no |
 | <a name="input_http_buffering_interval"></a> [http\_buffering\_interval](#input\_http\_buffering\_interval) | Kinesis Firehose http buffer interval, in seconds. | `number` | `60` | no |
 | <a name="input_http_buffering_size"></a> [http\_buffering\_size](#input\_http\_buffering\_size) | Kinesis Firehose http buffer size, in MiB. | `number` | `15` | no |
+| <a name="input_rds_db_engine"></a> [rds\_db\_engine](#input\_rds\_db\_engine) | n/a | `string` | `""` | no |
+| <a name="input_rds_db_log_types"></a> [rds\_db\_log\_types](#input\_rds\_db\_log\_types) | n/a | `list(string)` | `[]` | no |
+| <a name="input_rds_db_name"></a> [rds\_db\_name](#input\_rds\_db\_name) | n/a | `string` | `""` | no |
 | <a name="input_s3_backup_mode"></a> [s3\_backup\_mode](#input\_s3\_backup\_mode) | Should we only backup to S3 data that failed delivery, or all data? | `string` | `"FailedDataOnly"` | no |
 | <a name="input_s3_buffer_interval"></a> [s3\_buffer\_interval](#input\_s3\_buffer\_interval) | The Firehose S3 buffer interval (in seconds). See https://docs.aws.amazon.com/firehose/latest/dev/create-configure.html | `number` | `400` | no |
 | <a name="input_s3_buffer_size"></a> [s3\_buffer\_size](#input\_s3\_buffer\_size) | The size of the Firehose S3 buffer (in MiB). See https://docs.aws.amazon.com/firehose/latest/dev/create-configure.html | `number` | `10` | no |
