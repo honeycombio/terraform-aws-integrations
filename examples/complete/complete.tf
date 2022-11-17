@@ -8,7 +8,7 @@ module "honeycomb-aws-integrations" {
   depends_on = [
     module.rds_mysql
   ]
-  
+
   # aws cloudwatch logs integration
   cloudwatch_log_groups = [module.log_group.cloudwatch_log_group_name] // CloudWatch Log Group names to stream to Honeycomb.
 
@@ -22,7 +22,7 @@ module "honeycomb-aws-integrations" {
 
   # aws metrics integration - pro/enterprise Honeycomb teams only
   enable_cloudwatch_metrics = true
-  
+
   #honeycomb
   honeycomb_api_key = var.honeycomb_api_key             // Honeycomb API key.
   honeycomb_dataset = "terraform-aws-integrations-test" // Your Honeycomb dataset name that will receive the logs.
