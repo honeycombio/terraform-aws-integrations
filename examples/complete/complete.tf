@@ -12,8 +12,6 @@ module "honeycomb-aws-integrations" {
   # aws cloudwatch logs integration
   cloudwatch_log_groups = [module.log_group.cloudwatch_log_group_name] // CloudWatch Log Group names to stream to Honeycomb.
 
-  // A name for the S3 bucket that will store any logs that failed to be sent to Honeycomb.
-
   # aws rds logs integration
   enable_rds_logs  = true
   rds_db_name      = local.db_name
@@ -26,6 +24,8 @@ module "honeycomb-aws-integrations" {
   #honeycomb
   honeycomb_api_key = var.honeycomb_api_key             // Honeycomb API key.
   honeycomb_dataset = "terraform-aws-integrations-test" // Your Honeycomb dataset name that will receive the logs.
+  # Users generally don't need to set this unless they're using Secure Tenancy
+  honeycomb_api_host = var.honeycomb_api_host
 }
 
 # dependencies

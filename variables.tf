@@ -19,7 +19,7 @@ variable "delivery_failure_s3_bucket_name" {
 variable "honeycomb_api_host" {
   type        = string
   default     = "https://api.honeycomb.io"
-  description = "The name of the S3 bucket Kinesis uses for backup data."
+  description = "If you use a Secure Tenancy or other proxy, put its schema://host[:port] here."
 }
 
 variable "s3_buffer_size" {
