@@ -1,6 +1,9 @@
 variable "name" {
   type        = string
-  description = "A name for this Integration."
+  description = <<DESC
+  A name for this integration.
+  Used for the lambda name, so should be unique within your AWS account.
+DESC
 }
 
 variable "environment" {
