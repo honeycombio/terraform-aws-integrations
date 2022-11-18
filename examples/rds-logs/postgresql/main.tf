@@ -96,7 +96,7 @@ module "rds_postgres" {
     },
     {
       name  = "log_min_duration_statement"
-      value = "0" # milliseconds
+      value = "0" # define what you consider to be a long query here, in milliseconds
     }
   ]
 }

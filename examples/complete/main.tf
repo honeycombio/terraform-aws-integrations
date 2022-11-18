@@ -120,7 +120,7 @@ module "rds_mysql" {
     },
     {
       name  = "long_query_time"
-      value = "0"
+      value = "0" # define what you consider to be a long query here, in seconds
     }
   ]
 }
