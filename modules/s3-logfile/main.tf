@@ -54,9 +54,8 @@ module "s3_processor" {
 
 
   environment_variables = {
-    PARSER_TYPE       = var.parser_type
-    FORCE_GUNZIP      = true
-
+    PARSER_TYPE         = var.parser_type
+    FORCE_GUNZIP        = true
     ENVIRONMENT         = var.environment
     HONEYCOMB_WRITE_KEY = var.honeycomb_api_key
     KMS_KEY_ID          = (var.kms_key_arn != "" ? data.aws_arn.kms_key[0].resource : "")
