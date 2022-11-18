@@ -1,29 +1,50 @@
 locals {
-  rds_mysql_db_name = "tf-integrations-rds-mysql-${random_pet.this.id}"
+  db_name = "tf-integrations-rds-mysql-${random_pet.this.id}"
 }
 
-module "rds_mysql_logs" {
-  source = "../modules/rds-logs"
-  depends_on = [
-    module.rds_mysql
-  ]
+module "mysql_logs" {
+  source = "honeycombio/integrations/aws//rds-logs"
+
   name                   = "rds-logs-${random_pet.this.id}"
   db_engine              = "mysql"
-  db_name                = local.rds_mysql_db_name
-  db_log_types           = ["slowquery"]
+  db_name                = local.db_name
+  db_log_types           = ["slowquery"] # valid types for mysql include general, error, slowquery (audit logs not supported)
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "rds-mysql-logs"
-
+  # firehose failure logs can be found here for troubleshooting
   s3_failure_bucket_arn = module.firehose_failure_bucket.s3_bucket_arn
 }
 
-/*** RDS ***/
+# dependencies
+
+resource "random_pet" "this" {
+  length = 2
+}
+
+data "aws_vpc" "default" {
+  default = true
+}
+
+data "aws_subnets" "default" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+}
+
+data "aws_security_group" "default" {
+  vpc_id = data.aws_vpc.default.id
+  filter {
+    name   = "group-name"
+    values = ["default"]
+  }
+}
 
 module "rds_mysql" {
   source = "terraform-aws-modules/rds/aws"
 
-  identifier = local.rds_mysql_db_name
+  identifier = local.db_name
 
   # All available versions: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html#MySQL.Concepts.VersionMgmt
   engine               = "mysql"
@@ -36,7 +57,7 @@ module "rds_mysql" {
   allocated_storage     = 20
   max_allocated_storage = 100
 
-  db_name  = replace(local.rds_mysql_db_name, "-", "")
+  db_name  = replace(local.db_name, "-", "")
   username = "tfuser"
   port     = 3306
 
@@ -71,11 +92,19 @@ module "rds_mysql" {
     },
     {
       name  = "long_query_time"
-      value = "0"
+      value = "0" # define what you consider to be a long query here, in seconds
     },
     {
       name  = "log_output"
       value = "FILE"
     }
   ]
+}
+
+module "firehose_failure_bucket" {
+  source  = "terraform-aws-modules/s3-bucket/aws"
+  version = "~> 3.0"
+
+  bucket        = "honeycomb-tf-integrations-failures-${random_pet.this.id}"
+  force_destroy = true
 }
