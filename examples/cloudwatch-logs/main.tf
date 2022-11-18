@@ -1,8 +1,8 @@
 module "cloudwatch_logs" {
-  source = "../../modules/cloudwatch-logs"
+  source = "honeycombio/integrations/aws//cloudwatch-logs"
 
   name                  = "cwlogs-${random_pet.this.id}"
-  cloudwatch_log_groups = [module.log_group.cloudwatch_log_group_name]
+  cloudwatch_log_groups = [module.log_group.cloudwatch_log_group_name, "/aws/rds/instance/tf-integrations-rds-mysql-enabled-blowfish/slowquery"]
 
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "cloudwatch-logs"

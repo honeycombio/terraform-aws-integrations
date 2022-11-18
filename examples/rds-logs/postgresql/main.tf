@@ -3,7 +3,7 @@ locals {
 }
 
 module "postgresql_logs" {
-  source = "../../../modules/rds-logs"
+  source = "honeycombio/integrations/aws//rds-logs"
 
   name                   = "rds-logs-${random_pet.this.id}"
   db_engine              = "postgresql"
@@ -92,11 +92,11 @@ module "rds_postgres" {
     },
     {
       name  = "log_statement"
-      value = "ddl"
+      value = "all"
     },
     {
       name  = "log_min_duration_statement"
-      value = "500" # milliseconds
+      value = "0" # milliseconds
     }
   ]
 }

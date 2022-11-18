@@ -3,7 +3,7 @@ locals {
 }
 
 module "honeycomb-aws-integrations" {
-  source = "../../"
+  source = "honeycombio/integrations/aws"
 
   depends_on = [
     module.rds_mysql
@@ -117,6 +117,10 @@ module "rds_mysql" {
     {
       name  = "log_output"
       value = "FILE"
+    },
+    {
+      name  = "long_query_time"
+      value = "0"
     }
   ]
 }

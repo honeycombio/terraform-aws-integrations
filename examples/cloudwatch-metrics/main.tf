@@ -1,7 +1,7 @@
-module "cloudwatch_metric_stream_with_includes" {
-  source = "../../modules/cloudwatch-metrics"
+module "cloudwatch_metric_stream" {
+  source = "honeycombio/integrations/aws//cloudwatch-metrics"
 
-  name = "cms_complete"
+  name = "cloudwatch-metrics-complete"
 
   honeycomb_dataset_name = "cloudwatch-metrics"
   honeycomb_api_key      = var.honeycomb_api_key

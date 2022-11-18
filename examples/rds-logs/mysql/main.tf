@@ -3,17 +3,15 @@ locals {
 }
 
 module "mysql_logs" {
-  source = "../../../modules/rds-logs"
-  depends_on = [
-    module.rds_mysql
-  ]
+  source = "honeycombio/integrations/aws//rds-logs"
+
   name                   = "rds-logs-${random_pet.this.id}"
-  db_engine              = "postgresql"
+  db_engine              = "mysql"
   db_name                = local.db_name
   db_log_types           = ["slowquery"] # valid types for mysql include general, error, slowquery (audit logs not supported)
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
-  honeycomb_dataset_name = "rds-postgresql-logs"
+  honeycomb_dataset_name = "rds-mysql-logs"
   # firehose failure logs can be found here for troubleshooting
   s3_failure_bucket_arn = module.firehose_failure_bucket.s3_bucket_arn
 }
