@@ -54,11 +54,8 @@ module "s3_processor" {
 
 
   environment_variables = {
-    PARSER_TYPE       = var.parser_type
-    TIME_FIELD_NAME   = "timestamp"
-    TIME_FIELD_FORMAT = "2006-01-02T15:04:05.9999Z"
-    FORCE_GUNZIP      = true
-
+    PARSER_TYPE         = var.parser_type
+    FORCE_GUNZIP        = true
     ENVIRONMENT         = var.environment
     HONEYCOMB_WRITE_KEY = var.honeycomb_api_key
     KMS_KEY_ID          = (var.kms_key_arn != "" ? data.aws_arn.kms_key[0].resource : "")
