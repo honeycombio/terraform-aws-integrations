@@ -3,7 +3,7 @@ locals {
 }
 
 module "mysql_logs" {
-  source = "honeycombio/integrations/aws//rds-logs"
+  source = "honeycombio/integrations/aws//modules/rds-logs"
 
   name                   = "rds-logs-${random_pet.this.id}"
   db_engine              = "mysql"

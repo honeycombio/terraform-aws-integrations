@@ -1,5 +1,5 @@
 module "cloudwatch_metric_stream" {
-  source = "honeycombio/integrations/aws//cloudwatch-metrics"
+  source = "honeycombio/integrations/aws//modules/cloudwatch-metrics"
 
   name = "cloudwatch-metrics-complete"
 
