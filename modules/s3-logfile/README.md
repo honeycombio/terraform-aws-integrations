@@ -1,4 +1,5 @@
-# TERRAFORM AWS S3 LOGS INTEGRATION
+# TERRAFORM AWS S3 LOGS IN A BUCKET
+
 
 This repo contains a module for resources in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/)
 to send logs from an AWS S3 Bucket to [Honeycomb](https://www.honeycomb.io/).
@@ -9,6 +10,7 @@ to send logs from an AWS S3 Bucket to [Honeycomb](https://www.honeycomb.io/).
 
 All required resources to setup an integration pipelines to take logs from a S3 bucket and send them to
 Honecyomb can be created and managed via this module.
+
 
 ## Use
 
@@ -22,7 +24,9 @@ module "logs_from_a_bucket_integrations" {
   parser_type   = var.parser_type # valid types are alb, elb, cloudfront, vpc-flow-log, s3-access, json, and keyval
   s3_bucket_arn = var.s3_bucket_arn     // The full ARN of the bucket storing the logs.
 
-  honeycomb_api_key = var.honeycomb_api_key // Your Honeycomb team's API key.
+
+  honeycomb_api_key      = var.honeycomb_api_key // Your Honeycomb team's API key.
+  honeycomb_dataset_name = "alb-logs" // Your Honeycomb dataset name that will receive the metrics.
 }
 ```
 
@@ -49,7 +53,7 @@ For more config options, see [USAGE.md](https://github.com/honeycombio/terraform
 ## Examples
 
 Examples of use of this module can be found
-in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples).
+in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples/s3-logfile).
 
 ## Development
 

@@ -4,6 +4,11 @@ variable "honeycomb_api_key" {
   sensitive   = true
 }
 
+variable "s3_bucket_arn" {
+  type        = string
+  description = "ARN for bucket containing ALB logs"
+}
+
 variable "honeycomb_api_host" {
   type        = string
   default     = "https://api.honeycomb.io"
