@@ -8,7 +8,7 @@ to send CloudWatch Logs to [Honeycomb](https://www.honeycomb.io/).
 ![AWS CloudWatch Logs Integration overview](../../docs/cloudwatch-logs-overview.png)
 
 All required resources to setup an integration pipelines to take logs from a CloudWatch Log group and send them to
-Honecyomb can be created and managed via this module.
+Honeycomb can be created and managed via this module.
 
 ## Use
 
@@ -22,8 +22,8 @@ module "honeycomb-aws-cloudwatch-logs-integration" {
 
   #aws cloudwatch integration
   cloudwatch_log_groups = ["/aws/lambda/S3LambdaHandler-test"] // CloudWatch Log Group names to stream to Honeycomb.
-  s3_bucket_name        = var.s3_bucket_name
-  // A name for the S3 bucket that will store any logs that failed to be sent to Honeycomb.
+  s3_failure_bucket_arn        = var.s3_bucket_name
+  // S3 bucket ARN that will store any logs that failed to be sent to Honeycomb.
 
   #honeycomb
   honeycomb_api_key      = var.HONEYCOMB_API_KEY // Honeycomb API key.
@@ -54,7 +54,7 @@ For more config options, see [USAGE.md](https://github.com/honeycombio/terraform
 ## Examples
 
 Examples of use of this module can be found
-in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples).
+in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples/cloudwatch-logs).
 
 ## Development
 
