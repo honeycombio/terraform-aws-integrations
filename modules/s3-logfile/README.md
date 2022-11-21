@@ -18,7 +18,7 @@ The minimal config is:
 
 ```hcl
 module "logs_from_a_bucket_integrations" {
-  source = "honeycombio/integrations/aws//s3-logfile"
+  source = "honeycombio/integrations/aws//modules/s3-logfile"
   name   = var.logs_integration_name
 
   parser_type   = var.parser_type // valid types are alb, elb, cloudfront, vpc-flow-log, s3-access, json, and keyval

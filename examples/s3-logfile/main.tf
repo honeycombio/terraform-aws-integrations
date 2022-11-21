@@ -1,5 +1,5 @@
 module "alb_logs" {
-  source = "honeycombio/integrations/aws//s3-logfile"
+  source = "honeycombio/integrations/aws//modules/s3-logfile"
 
   name               = "tf-integrations-alb-${random_pet.this.id}"
   parser_type        = "alb" # valid types are alb, elb, cloudfront, vpc-flow-log, s3-access, json, and keyval

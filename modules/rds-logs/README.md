@@ -16,7 +16,8 @@ Honeycomb can be created and managed via this module.
 The minimal config is:
 
 ```hcl
-  source = "../modules/rds-logs"
+module "honeycomb-aws-rds-logs-integration" {
+  source = "honeycombio/integrations/aws//modules/rds-logs"
 
   name                   = "rds-logs-integration"
   db_engine              = "mysql"
