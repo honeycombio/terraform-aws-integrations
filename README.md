@@ -18,12 +18,15 @@ in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) t
 * [CloudWatch Metrics](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-metrics)
 
 
-* [Load Balancer Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/lb-logs)
+* [S3 Logfile](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/s3-logfile)
+
+
+* [RDS Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/rds-logs)
 
 
 ## Use
 
-The minimal config is:
+The minimal config to turn all integrations on is:
 
 ```hcl
 module "honeycomb-aws-integrations" {
@@ -31,18 +34,27 @@ module "honeycomb-aws-integrations" {
 
   name = "terraform-honeycomb-aws-integrations" // A name for the Integration.
 
-  #aws lb integration
+  #aws s3 logfile integration
   s3_bucket_arn = "arn:aws:s3:::testing-alb" // The full ARN of the bucket storing load balancer access logs.
-  kms_key_arn   = "arn:aws:kms:us-east-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+  s3_parser_type = "alb"
 
-  #aws cloudwatch integration
+  #aws cloudwatch logs integration
   cloudwatch_log_groups = ["/aws/lambda/S3LambdaHandler-test"] // CloudWatch Log Group names to stream to Honeycomb.
-  s3_bucket_name        = "terraform-aws-integrations-test"
-  // A name for the S3 bucket that will store any logs that failed to be sent to Honeycomb.
+
+  #aws cloudwatch metrics integration - pro and enterprise Honeycomb teams only
+  enable_cloudwatch_metrics = true 
+
+  #aws rds logs integration
+  enable_rds_logs  = true
+  rds_db_name      = "test-rds"
+  rds_db_engine    = "mysql"
+  rds_db_log_types = ["slowquery"] // valid types include general, slowquery, error, and audit (audit will be unstructured)
 
   #honeycomb
   honeycomb_api_key      = var.HONEYCOMB_API_KEY // Honeycomb API key.
   honeycomb_dataset_name = "terraform-aws-integrations-test" // Your Honeycomb dataset name that will receive the logs.
+
+
 }
 ```
 
