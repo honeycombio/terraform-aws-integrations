@@ -5,7 +5,7 @@ to send CloudWatch Metrics to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
 
-![AWS CloudWatch metrics Integration overview](../../docs/cloudwatch-metrics-overview.png)
+![AWS CloudWatch metrics Integration overview](https://github.com/honeycombio/terraform-aws-integrations/blob/main/docs/cloudwatch-metrics-overview.png?raw=true)
 
 All required resources to setup an integration pipeline to take metrics from a CloudWatch Metrics group and send them to
 Honeycomb can be created and managed via this module.

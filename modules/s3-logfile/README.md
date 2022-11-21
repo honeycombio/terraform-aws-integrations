@@ -6,7 +6,7 @@ to send logs from an AWS S3 Bucket to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
 
-![AWS Logs from a bucket Integration overview](../../docs/s3-logs-overview.png)
+![AWS Logs from a bucket Integration overview](https://github.com/honeycombio/terraform-aws-integrations/blob/main/docs/s3-logfile-overview.png?raw=true)
 
 All required resources to setup an integration pipelines to take logs from a S3 bucket and send them to
 Honecyomb can be created and managed via this module.

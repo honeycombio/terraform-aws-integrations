@@ -9,7 +9,7 @@ to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
 
-![AWS Integrations architecture](docs/overview.png?raw=true)
+![AWS Integrations architecture](https://github.com/honeycombio/terraform-aws-integrations/blob/main/docs/overview.png?raw=true)
 
 **Integrations supported are:**
 
