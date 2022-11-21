@@ -2,26 +2,27 @@
 
 [![CI](https://github.com/honeycombio/terraform-aws-integrations/actions/workflows/test-terraform-module.yml/badge.svg)](https://github.com/honeycombio/terraform-aws-integrations/actions?query=Test%20Terraform%20Module)
 
-This repo contains a set of modules in the [modules folder](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules) for resources
-in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) to send observability data to [Honeycomb](https://www.honeycomb.io/).
+This repo contains a set of modules in
+the [modules folder](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules) for resources
+in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) to send observability data
+to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
 
 ![AWS Integrations architecture](docs/overview.png?raw=true)
 
-
 **Integrations supported are:**
 
 * [CloudWatch Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-logs)
- 
+
 
 * [CloudWatch Metrics](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-metrics)
 
 
-* [S3 Logfile](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/s3-logfile)
-
-
 * [RDS Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/rds-logs)
+
+
+* [Logs from a S3 Bucket](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/s3-logfile)
 
 
 ## Use
@@ -62,7 +63,9 @@ Set the API key used by Terraform setting the HONEYCOMB_API_KEY environment vari
 export TF_VAR_HONEYCOMB_API_KEY=$HONEYCOMB_API_KEY
 ```
 
-Setup AWS credentials for the intended AWS account where the resources will be created and managed. Please see for more [details and options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
+Setup AWS credentials for the intended AWS account where the resources will be created and managed. Please see for
+more [details and options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
+.
 
 ```bash
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
@@ -93,7 +96,9 @@ in [`tests/`](https://github.com/honeycombio/terraform-aws-integrations/tree/mai
 export TF_VAR_HONEYCOMB_API_KEY=$HONEYCOMB_API_KEY
 ```
 
-3. Setup AWS credentials. Please see for more [details and options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
+3. Setup AWS credentials. Please see for
+   more [details and options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
+   .
 
 ```bash
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
