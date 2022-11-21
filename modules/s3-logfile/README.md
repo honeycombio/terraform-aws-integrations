@@ -21,7 +21,7 @@ module "logs_from_a_bucket_integrations" {
   source = "honeycombio/integrations/aws//s3-logfile"
   name   = var.logs_integration_name
 
-  parser_type   = var.parser_type # valid types are alb, elb, cloudfront, vpc-flow-log, s3-access, json, and keyval
+  parser_type   = var.parser_type // valid types are alb, elb, cloudfront, vpc-flow-log, s3-access, json, and keyval
   s3_bucket_arn = var.s3_bucket_arn     // The full ARN of the bucket storing the logs.
 
 
