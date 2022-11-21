@@ -79,7 +79,7 @@ For more config options, see [USAGE.md](https://github.com/honeycombio/terraform
 ## Examples
 
 Examples of use of this module can be found
-in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples).
+in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples/complete).
 
 ## Development
 
