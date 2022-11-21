@@ -25,6 +25,7 @@ module "cloudwatch_logs" {
   source = "./modules/cloudwatch-logs"
   name   = "honeycomb-cloudwatch-logs"
 
+  count                 = length(var.cloudwatch_log_groups) > 0 ? 1 : 0
   cloudwatch_log_groups = var.cloudwatch_log_groups
 
   honeycomb_api_host     = var.honeycomb_api_host
