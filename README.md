@@ -36,7 +36,7 @@ module "honeycomb-aws-integrations" {
 
   #aws s3 logfile integration
   s3_bucket_arn = "arn:aws:s3:::testing-alb" // The full ARN of the bucket storing load balancer access logs.
-  s3_parser_type = "alb"
+  s3_parser_type = "alb" // alb, elb, cloudfront, vpc-flow-log, s3-access, json, or keyval
 
   #aws cloudwatch logs integration
   cloudwatch_log_groups = ["/aws/lambda/S3LambdaHandler-test"] // CloudWatch Log Group names to stream to Honeycomb.

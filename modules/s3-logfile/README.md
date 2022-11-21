@@ -1,14 +1,14 @@
-# TERRAFORM AWS LOAD BALANCER LOGS INTEGRATION
+# TERRAFORM AWS S3 LOGS IN A BUCKET
 
 This repo contains a module for resources in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/)
 to send logs from AWS Load Balancers to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
 
-![AWS CloudWatch Logs Integration overview](../../docs/loadbalancer-logs-overview.png)
+![AWS CloudWatch Logs Integration overview](../../docs/s3-logfile-overview.png)
 
-All required resources to setup an integration pipelines to take load balancer logs from a S3 bucket and send them to
-Honecyomb can be created and managed via this module.
+All required resources to setup an integration pipelines to logs from a S3 bucket and send them to
+Honeycomb can be created and managed via this module.
 
 
 ## Use
@@ -16,13 +16,17 @@ Honecyomb can be created and managed via this module.
 The minimal config is:
 
 ```hcl
-module "lb_logs_integrations" {
-  source = "./modules/lb-logs"
+module "alb_logs" {
+  source = "./modules/s3-logfile"
 
   name = var.lb_logs_integration_name
 
-  honeycomb_api_key = var.honeycomb_api_key // Your Honeycomb team's API key.
   s3_bucket_arn     = var.s3_bucket_arn     // The full ARN of the bucket storing load balancer access logs.
+  parser_type       = "alb" // alb, elb, cloudfront, vpc-flow-log, s3-access, json, or keyval
+
+  honeycomb_api_key      = var.honeycomb_api_key // Your Honeycomb team's API key.
+  honeycomb_dataset_name = "alb-logs" // Your Honeycomb dataset name that will receive the metrics.
+
 }
 ```
 
@@ -49,7 +53,7 @@ For more config options, see [USAGE.md](https://github.com/honeycombio/terraform
 ## Examples
 
 Examples of use of this module can be found
-in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples).
+in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples/s3-logfile).
 
 ## Development
 
