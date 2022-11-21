@@ -5,7 +5,7 @@ to send logs from AWS RDS to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
 
-![AWS RDS Integration overview](../../docs/rds-logs-overview.png)
+![AWS RDS Integration overview](https://github.com/honeycombio/terraform-aws-integrations/blob/main/docs/rds-logs-overview.png?raw=true)
 
 All required resources to setup an integration pipeline to take RDS logs from CloudWatch log groups and send them to
 Honeycomb can be created and managed via this module.

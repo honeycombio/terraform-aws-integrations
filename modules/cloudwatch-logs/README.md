@@ -5,7 +5,7 @@ to send CloudWatch Logs to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
 
-![AWS CloudWatch Logs Integration overview](../../docs/cloudwatch-logs-overview.png)
+![AWS CloudWatch Logs Integration overview](https://github.com/honeycombio/terraform-aws-integrations/blob/main/docs/cloudwatch-logs-overview.png?raw=true)
 
 All required resources to setup an integration pipeline to take logs from a CloudWatch Log group and send them to
 Honeycomb can be created and managed via this module.
