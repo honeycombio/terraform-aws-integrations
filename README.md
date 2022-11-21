@@ -24,7 +24,6 @@ to [Honeycomb](https://www.honeycomb.io/).
 
 * [Logs from a S3 Bucket](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/s3-logfile)
 
-
 ## Use
 
 The minimal config to turn all integrations on is:
@@ -33,27 +32,28 @@ The minimal config to turn all integrations on is:
 module "honeycomb-aws-integrations" {
   source = "honeycombio/integrations/aws"
 
-  name = "terraform-honeycomb-aws-integrations" // A name for the Integration.
+  # aws cloudwatch logs integration
+  cloudwatch_log_groups = [module.log_group.cloudwatch_log_group_name] // CloudWatch Log Group names to stream to Honeycomb.
 
-  #aws s3 logfile integration
-  s3_bucket_arn = "arn:aws:s3:::testing-alb" // The full ARN of the bucket storing load balancer access logs.
-  s3_parser_type = "alb" // alb, elb, cloudfront, vpc-flow-log, s3-access, json, or keyval
-
-  #aws cloudwatch logs integration
-  cloudwatch_log_groups = ["/aws/lambda/S3LambdaHandler-test"] // CloudWatch Log Group names to stream to Honeycomb.
-
-  #aws cloudwatch metrics integration - pro and enterprise Honeycomb teams only
-  enable_cloudwatch_metrics = true 
-
-  #aws rds logs integration
+  # aws rds logs integration
   enable_rds_logs  = true
-  rds_db_name      = "test-rds"
+  rds_db_name      = var.db_name
   rds_db_engine    = "mysql"
   rds_db_log_types = ["slowquery"] // valid types include general, slowquery, error, and audit (audit will be unstructured)
 
+  # aws metrics integration - pro/enterprise Honeycomb teams only
+  # enable_cloudwatch_metrics = true
+
+  # s3 logfile - alb access logs
+  s3_bucket_arn  = var.s3_bucket_arn
+  s3_parser_type = "alb" // valid types are alb, elb, cloudfront, vpc-flow-log, s3-access, json, and keyval
+
   #honeycomb
-  honeycomb_api_key      = var.HONEYCOMB_API_KEY // Honeycomb API key.
-  honeycomb_dataset_name = "terraform-aws-integrations-test" // Your Honeycomb dataset name that will receive the logs.
+  honeycomb_api_key = var.honeycomb_api_key             // Honeycomb API key.
+  honeycomb_dataset = "terraform-aws-integrations-test" // Your Honeycomb dataset name that will receive the logs.
+
+  # Users generally don't need to set this unless they're using Secure Tenancy
+  honeycomb_api_host = var.honeycomb_api_host
 }
 ```
 
