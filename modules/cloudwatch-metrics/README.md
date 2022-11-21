@@ -7,7 +7,7 @@ to send CloudWatch Metrics to [Honeycomb](https://www.honeycomb.io/).
 
 ![AWS CloudWatch metrics Integration overview](../../docs/cloudwatch-metrics-overview.png)
 
-All required resources to setup an integration pipelines to take metrics from a CloudWatch Metrics group and send them to
+All required resources to setup an integration pipeline to take metrics from a CloudWatch Metrics group and send them to
 Honeycomb can be created and managed via this module.
 
 ## Use
@@ -50,7 +50,7 @@ For more config options, see [USAGE.md](https://github.com/honeycombio/terraform
 ## Examples
 
 Examples of use of this module can be found
-in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples).
+in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples/cloudwatch-metrics).
 
 ## Development
 
