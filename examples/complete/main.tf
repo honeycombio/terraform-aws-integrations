@@ -3,7 +3,7 @@ locals {
 }
 
 module "honeycomb-aws-integrations" {
-  source = "../.."
+  source = "honeycombio/integrations/aws"
 
   # aws cloudwatch logs integration
   cloudwatch_log_groups = [module.log_group.cloudwatch_log_group_name] // CloudWatch Log Group names to stream to Honeycomb.
