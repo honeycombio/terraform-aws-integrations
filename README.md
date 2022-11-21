@@ -53,8 +53,6 @@ module "honeycomb-aws-integrations" {
   #honeycomb
   honeycomb_api_key      = var.HONEYCOMB_API_KEY // Honeycomb API key.
   honeycomb_dataset_name = "terraform-aws-integrations-test" // Your Honeycomb dataset name that will receive the logs.
-
-
 }
 ```
 
