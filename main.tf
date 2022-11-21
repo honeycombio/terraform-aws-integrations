@@ -32,6 +32,8 @@ module "cloudwatch_logs" {
   honeycomb_dataset_name = "cloudwatch-logs"
 
   s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
+
+  tags = var.tags
 }
 
 module "rds_logs" {
@@ -48,6 +50,8 @@ module "rds_logs" {
   honeycomb_dataset_name = "rds-${var.rds_db_engine}-logs"
 
   s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
+
+  tags = var.tags
 }
 
 module "cloudwatch_metrics" {
@@ -61,4 +65,24 @@ module "cloudwatch_metrics" {
   honeycomb_dataset_name = "cloudwatch-metrics"
 
   s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
+
+  tags = var.tags
+}
+
+module "s3_logfile" {
+  source = "./modules/s3-logfile"
+  name   = "honeycomb-s3-logfile"
+
+  count = var.s3_bucket_arn != "" ? 1 : 0
+
+  honeycomb_api_key  = var.honeycomb_api_key
+  honeycomb_api_host = var.honeycomb_api_host
+
+  parser_type      = var.s3_parser_type
+  s3_bucket_arn    = var.s3_bucket_arn
+  s3_filter_prefix = var.s3_filter_prefix
+  s3_filter_suffix = var.s3_filter_suffix
+  sample_rate      = var.sample_rate
+
+  tags = var.tags
 }

@@ -139,3 +139,44 @@ variable "rds_db_log_types" {
   type    = list(string)
   default = []
 }
+
+variable "s3_parser_type" {
+  type        = string
+  description = "The type of logfile to parse."
+  validation {
+    // ref: https://github.com/honeycombio/agentless-integrations-for-aws/blob/5f530c296035c61067a6a418d6a9ab14d34d7d79/common/common.go#L129-L153
+    condition     = contains(["alb", "elb", "s3-access", "vpc-flow", "cloudfront", "json", "keyval", ""], var.s3_parser_type)
+    error_message = "parser_type must be one of the allowed values"
+  }
+  default = ""
+}
+
+variable "s3_bucket_arn" {
+  type        = string
+  description = "The full ARN of the bucket storing logs - must pass s3_parser_type with this"
+  default     = ""
+}
+
+variable "s3_filter_prefix" {
+  type        = string
+  description = "Prefix within logs bucket to restrict processing."
+  default     = ""
+}
+
+variable "s3_filter_suffix" {
+  type        = string
+  description = "Suffix of files that should be processed."
+  default     = ".gz"
+}
+
+variable "sample_rate" {
+  type        = number
+  default     = 1
+  description = "Sample rate - used for S3 logfiles only. See https://honeycomb.io/docs/guides/sampling/."
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "Tags to add to resources created by this module."
+  default     = null
+}

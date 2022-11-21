@@ -3,11 +3,7 @@ locals {
 }
 
 module "honeycomb-aws-integrations" {
-  source = "honeycombio/integrations/aws"
-
-  depends_on = [
-    module.rds_mysql
-  ]
+  source = "../.."
 
   # aws cloudwatch logs integration
   cloudwatch_log_groups = [module.log_group.cloudwatch_log_group_name] // CloudWatch Log Group names to stream to Honeycomb.
@@ -20,6 +16,10 @@ module "honeycomb-aws-integrations" {
 
   # aws metrics integration - pro/enterprise Honeycomb teams only
   # enable_cloudwatch_metrics = true
+
+  # s3 logfile - alb access logs
+  s3_bucket_arn  = var.s3_bucket_arn
+  s3_parser_type = "alb" # valid types are alb, elb, cloudfront, vpc-flow-log, s3-access, json, and keyval
 
   #honeycomb
   honeycomb_api_key = var.honeycomb_api_key             // Honeycomb API key.
