@@ -1,3 +1,15 @@
+<a name="v0.2.6"></a>
+# [v0.2.6 🌈 (v0.2.6)](https://github.com/honeycombio/terraform-aws-honeycomb-integrations/releases/tag/v0.2.6) - 21 Nov 2022
+
+## Changes
+
+- Include readmes for the examples and OSS metadata [@mjayaram](https://github.com/mjayaram) ([#30](https://github.com/honeycombio/terraform-aws-honeycomb-integrations/issues/30))
+- fix postgresql example [@brookesargent](https://github.com/brookesargent) ([#29](https://github.com/honeycombio/terraform-aws-honeycomb-integrations/issues/29))
+
+
+[Changes][v0.2.6]
+
+
 <a name="v0.2.5"></a>
 # [v0.2.5 🌈 (v0.2.5)](https://github.com/honeycombio/terraform-aws-honeycomb-integrations/releases/tag/v0.2.5) - 21 Nov 2022
 
@@ -100,6 +112,7 @@ First release 🎉
 [Changes][v0.0.1]
 
 
+[v0.2.6]: https://github.com/honeycombio/terraform-aws-honeycomb-integrations/compare/v0.2.5...v0.2.6
 [v0.2.5]: https://github.com/honeycombio/terraform-aws-honeycomb-integrations/compare/v0.2.4...v0.2.5
 [v0.2.4]: https://github.com/honeycombio/terraform-aws-honeycomb-integrations/compare/v0.2.3...v0.2.4
 [v0.2.3]: https://github.com/honeycombio/terraform-aws-honeycomb-integrations/compare/v0.2.2...v0.2.3
