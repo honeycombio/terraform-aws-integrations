@@ -92,7 +92,7 @@ module "rds_postgres" {
     },
     {
       name  = "log_statement"
-      value = "all"
+      value = "none"
     },
     {
       name  = "log_min_duration_statement"
