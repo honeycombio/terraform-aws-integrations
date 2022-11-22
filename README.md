@@ -1,6 +1,7 @@
 # TERRAFORM AWS INTEGRATIONS
 
-[![CI](https://github.com/honeycombio/terraform-aws-integrations/actions/workflows/test-terraform-module.yml/badge.svg)](https://github.com/honeycombio/terraform-aws-integrations/actions?query=Test%20Terraform%20Module)
+[![OSS Lifecycle](https://img.shields.io/osslifecycle/honeycombio/terraform-aws-integrations)](https://github.com/honeycombio/home/blob/main/honeycomb-oss-lifecycle-and-practices.md)
+
 
 This repo contains a set of modules in
 the [modules folder](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules) for resources
