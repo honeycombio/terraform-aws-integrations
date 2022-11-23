@@ -1,5 +1,16 @@
+<a name="v0.2.7"></a>
+# [v0.2.7 🌈 (v0.2.7)](https://github.com/honeycombio/terraform-aws-honeycomb-integrations/releases/tag/v0.2.7) - 22 Nov 2022
+
+## Changes
+
+- README Improvements [@mjingle](https://github.com/mjingle) ([#32](https://github.com/honeycombio/terraform-aws-honeycomb-integrations/issues/32))
+
+
+[Changes][v0.2.7]
+
+
 <a name="v0.2.6"></a>
-# [v0.2.6 🌈 (v0.2.6)](https://github.com/honeycombio/terraform-aws-honeycomb-integrations/releases/tag/v0.2.6) - 21 Nov 2022
+# [v0.2.6 🌈 (v0.2.6)](https://github.com/honeycombio/terraform-aws-honeycomb-integrations/releases/tag/v0.2.6) - 22 Nov 2022
 
 ## Changes
 
@@ -112,6 +123,7 @@ First release 🎉
 [Changes][v0.0.1]
 
 
+[v0.2.7]: https://github.com/honeycombio/terraform-aws-honeycomb-integrations/compare/v0.2.6...v0.2.7
 [v0.2.6]: https://github.com/honeycombio/terraform-aws-honeycomb-integrations/compare/v0.2.5...v0.2.6
 [v0.2.5]: https://github.com/honeycombio/terraform-aws-honeycomb-integrations/compare/v0.2.4...v0.2.5
 [v0.2.4]: https://github.com/honeycombio/terraform-aws-honeycomb-integrations/compare/v0.2.3...v0.2.4
