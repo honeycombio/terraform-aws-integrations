@@ -17,8 +17,8 @@ Available supported integrations include:
 * [RDS Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/rds-logs)
 * [Logs from a S3 Bucket](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/s3-logfile)
 
-To install individual integrations, refer to each integration's README.
-Otherwise, refer to the [minimal configuration](#usage) to turn on all supported integrations.
+To use an individual Terraform integration, refer to the integration's README.
+Otherwise, refer to the [configuration instructions](#usage) below to configure all supported integrations.
 
 ## Usage
 
