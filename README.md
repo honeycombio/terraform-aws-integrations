@@ -22,7 +22,7 @@ Otherwise, refer to the [minimal configuration](#usage) to turn on all supported
 
 ## Usage
 
-First, add the minimal Terraform configuration, which includes the configuration and required fields for all [supported Terraform integrations](#supported-integrations):
+First, add the minimal Terraform configuration, which includes the required fields for all [supported Terraform integrations](#supported-integrations):
 
 ```hcl
 module "honeycomb-aws-integrations" {
@@ -70,7 +70,7 @@ export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
 
 Now you can run `terraform plan/apply` in sequence.
 
-For more configuration options, see [USAGE.md](https://github.com/honeycombio/terraform-aws-integrations/blob/main/USAGE.md).
+For more configuration options, refer to [USAGE.md](https://github.com/honeycombio/terraform-aws-integrations/blob/main/USAGE.md).
 
 ## Examples
 
