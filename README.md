@@ -22,7 +22,7 @@ Otherwise, refer to the [minimal configuration](#usage) to turn on all supported
 
 ## Usage
 
-The minimal Terraform configuration to turn on all [supported integrations](#supported-integrations) is:
+First, add the minimal Terraform configuration, which includes the configuration and required fields for all [supported Terraform integrations](#supported-integrations):
 
 ```hcl
 module "honeycomb-aws-integrations" {
@@ -53,13 +53,14 @@ module "honeycomb-aws-integrations" {
 }
 ```
 
-Set the API key, which Terraform will use, by setting the `HONEYCOMB_API_KEY` environment variable.
+Then, set the Honeycomb API key for Terraform to use, by setting the `HONEYCOMB_API_KEY` environment variable.
 
 ```bash
 export TF_VAR_HONEYCOMB_API_KEY=$HONEYCOMB_API_KEY
 ```
 
-Setup AWS credentials for the intended AWS account where the resources will be created and managed. Please see for more [details and options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
+Then, set up AWS credentials for the intended AWS account where the resources will be created and managed.
+Please refer to [Terraform documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration) for more details and options.
 
 ```bash
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
@@ -73,7 +74,7 @@ For more configuration options, see [USAGE.md](https://github.com/honeycombio/te
 
 ## Examples
 
-Examples of use of this module can be found in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples/complete).
+Examples that use this module can be found in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples/complete).
 
 ## Development
 
@@ -82,15 +83,14 @@ Examples of use of this module can be found in [`examples/`](https://github.com/
 Test cases that run against local code are in [`tests/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/tests).
 To set up:
 
-1. Set the API key used by Terraform setting the TF_VAR_HONEYCOMB_API_KEY environment variable.
+1. Set the API key used by Terraform setting the `TF_VAR_HONEYCOMB_API_KEY` environment variable.
 
 ```bash
 export TF_VAR_HONEYCOMB_API_KEY=$HONEYCOMB_API_KEY
 ```
 
-2. Setup AWS credentials. Please see for
-   more [details and options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
-   .
+2. Set up AWS credentials.
+   Please see [Terraform documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration) for more details and options.
 
 ```bash
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
@@ -98,7 +98,7 @@ export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
 ```
 
-3. Run `terraform init`
+3. Run `terraform init` to initialize the working directory.
 
 4. `terraform plan` and `terraform apply` will now work as expected, as will
    `terraform destroy`.
@@ -120,6 +120,7 @@ You can run `make terraform-format` to automatically fix formatting issues.
 
 ## Contributions
 
-Features, bug fixes and other changes to this module are gladly accepted. Please open issues or a pull request with your change.
+Features, bug fixes and other changes to this module are gladly accepted.
+Please open issues or a pull request with your change.
 
 All contributions will be released under the Apache License 2.0.
