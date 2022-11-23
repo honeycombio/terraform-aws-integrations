@@ -1,33 +1,28 @@
-# TERRAFORM AWS INTEGRATIONS
+# Honeycomb Terraform AWS Integrations
 
 [![OSS Lifecycle](https://img.shields.io/osslifecycle/honeycombio/terraform-aws-integrations)](https://github.com/honeycombio/home/blob/main/honeycomb-oss-lifecycle-and-practices.md)
 
-
-This repo contains a set of modules in
-the [modules folder](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules) for resources
-in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) to send observability data
-to [Honeycomb](https://www.honeycomb.io/).
+This repo contains a set of modules in the [modules folder](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules) for resources in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) to send observability data to [Honeycomb](https://www.honeycomb.io/).
 
 ## How does this work?
 
 ![AWS Integrations architecture](https://github.com/honeycombio/terraform-aws-integrations/blob/main/docs/overview.png?raw=true)
 
-**Integrations supported are:**
+## Supported Integrations
+
+Available supported integrations include:
 
 * [CloudWatch Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-logs)
-
-
 * [CloudWatch Metrics](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/cloudwatch-metrics)
-
-
 * [RDS Logs](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/rds-logs)
-
-
 * [Logs from a S3 Bucket](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules/s3-logfile)
 
-## Use
+To install individual integrations, refer to each integration's README.
+Otherwise, refer to the [minimal configuration](#usage) to turn on all supported integrations.
 
-The minimal config to turn all integrations on is:
+## Usage
+
+The minimal Terraform configuration to turn on all [supported integrations](#supported-integrations) is:
 
 ```hcl
 module "honeycomb-aws-integrations" {
@@ -58,15 +53,13 @@ module "honeycomb-aws-integrations" {
 }
 ```
 
-Set the API key used by Terraform setting the HONEYCOMB_API_KEY environment variable.
+Set the API key, which Terraform will use, by setting the `HONEYCOMB_API_KEY` environment variable.
 
 ```bash
 export TF_VAR_HONEYCOMB_API_KEY=$HONEYCOMB_API_KEY
 ```
 
-Setup AWS credentials for the intended AWS account where the resources will be created and managed. Please see for
-more [details and options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
-.
+Setup AWS credentials for the intended AWS account where the resources will be created and managed. Please see for more [details and options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
 
 ```bash
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
@@ -76,20 +69,18 @@ export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
 
 Now you can run `terraform plan/apply` in sequence.
 
-For more config options, see [USAGE.md](https://github.com/honeycombio/terraform-aws-integrations/blob/main/USAGE.md).
+For more configuration options, see [USAGE.md](https://github.com/honeycombio/terraform-aws-integrations/blob/main/USAGE.md).
 
 ## Examples
 
-Examples of use of this module can be found
-in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples/complete).
+Examples of use of this module can be found in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples/complete).
 
 ## Development
 
 ### Tests
 
-Test cases that run against local code are
-in [`tests/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/tests)
-. To set up:
+Test cases that run against local code are in [`tests/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/tests).
+To set up:
 
 1. Set the API key used by Terraform setting the TF_VAR_HONEYCOMB_API_KEY environment variable.
 
@@ -97,7 +88,7 @@ in [`tests/`](https://github.com/honeycombio/terraform-aws-integrations/tree/mai
 export TF_VAR_HONEYCOMB_API_KEY=$HONEYCOMB_API_KEY
 ```
 
-3. Setup AWS credentials. Please see for
+2. Setup AWS credentials. Please see for
    more [details and options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
    .
 
@@ -107,31 +98,28 @@ export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
 ```
 
-4. Run `terraform init`
+3. Run `terraform init`
 
-5. `terraform plan` and `terraform apply` will now work as expected, as will
+4. `terraform plan` and `terraform apply` will now work as expected, as will
    `terraform destroy`.
 
-6. Test cases also run as part of the pipeline.
+5. Test cases also run as part of the pipeline.
    See [test-terraform-module.yml](https://github.com/honeycombio/terraform-aws-integrations/blob/main/.github/workflows/test-terraform-module.yml)
 
 ### Docs
 
-Docs are autogenerated by running `make generate-docs`, and put
-in [USAGE.md](https://github.com/honeycombio/terraform-aws-integrations/blob/main/USAGE.md).
+Docs located on the Terraform website are autogenerated by running `make generate-docs`, and put in [USAGE.md](https://github.com/honeycombio/terraform-aws-integrations/blob/main/USAGE.md).
 
-Please regenerate and commit before merging.
+Please regenerate and commit before merging any changes to this repository.
 
 ### Linters
 
-We use [tflint](https://github.com/terraform-linters/tflint) and `terraform
-fmt`, and enforce this with a [github action](.github/workflows/tflint.yml).
+We use [tflint](https://github.com/terraform-linters/tflint) and `terraform fmt`, and enforce this linting with a [GitHub Action](.github/workflows/tflint.yml).
 
-You can run `make terraform-format` to auto fix formatting issues.
+You can run `make terraform-format` to automatically fix formatting issues.
 
 ## Contributions
 
-Features, bug fixes and other changes to this module are gladly accepted. Please open issues or a pull request with your
-change.
+Features, bug fixes and other changes to this module are gladly accepted. Please open issues or a pull request with your change.
 
 All contributions will be released under the Apache License 2.0.
