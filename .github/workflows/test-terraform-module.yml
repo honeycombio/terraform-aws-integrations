@@ -3,9 +3,9 @@ name: Test Terraform Modules
 on:
   workflow_dispatch:
   push:
-    paths-ignore:
-      - README.md
-      - CHANGELOG.md
+    paths:
+      - '**/*.tf'
+      - '!examples/**'
 env:
   TF_VAR_honeycomb_api_key: ${{ secrets.HONEYCOMB_API_KEY }}
   AWS_DEFAULT_REGION: us-east-1
