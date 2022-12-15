@@ -14,7 +14,7 @@ module "honeycomb-aws-integrations" {
   rds_db_engine    = "mysql"
   rds_db_log_types = ["slowquery"] # valid types include general, slowquery, error, and audit (audit will be unstructured)
 
-  # aws metrics integration - pro/enterprise Honeycomb teams only
+  # aws metrics integration
   # enable_cloudwatch_metrics = true
 
   # s3 logfile - alb access logs
