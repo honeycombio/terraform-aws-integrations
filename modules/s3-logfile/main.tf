@@ -9,16 +9,11 @@ data "aws_arn" "kms_key" {
 
 data "aws_region" "current" {}
 
-data "aws_caller_identity" "current" {}
-
 locals {
   tags = merge(var.tags, {
     "Honeycomb Agentless" = true,
     "Terraform"           = true,
   })
-
-  account_region = data.aws_region.current.name
-  account_id     = data.aws_caller_identity.current.account_id
 }
 
 data "aws_iam_policy_document" "lambda" {
@@ -31,27 +26,6 @@ data "aws_iam_policy_document" "lambda" {
     content {
       actions   = ["kms:Decrypt"]
       resources = [trimprefix(var.kms_key_arn, "key/")]
-    }
-  }
-
-  dynamic "statement" {
-    for_each = var.vpc_subnet_ids != null && var.vpc_security_group_ids != null ? ["allow_vpc"] : []
-    content {
-      actions   = ["ec2:DescribeNetworkInterfaces", "ec2:DeleteNetworkInterface"]
-      resources = ["*"]
-    }
-  }
-  dynamic "statement" {
-    for_each = var.vpc_subnet_ids != null && var.vpc_security_group_ids != null ? ["allow_vpc"] : []
-    content {
-      actions = ["ec2:CreateNetworkInterface"]
-      resources = concat([
-        for subnet_id in var.vpc_subnet_ids : "arn:aws:ec2:${local.account_region}:${local.account_id}:subnet/${subnet_id}"
-        ], [
-        for security_group_id in var.vpc_security_group_ids : "arn:aws:ec2:${local.account_region}:${local.account_id}:security-group/${security_group_id}"
-        ], [
-        "arn:aws:ec2:${local.account_region}:${local.account_id}:network-interface/*"
-      ])
     }
   }
 }
@@ -95,6 +69,7 @@ module "s3_processor" {
   attach_policy = true
   policy        = aws_iam_policy.lambda.arn
 
+  attach_network_policy  = var.vpc_subnet_ids != null ? true : false
   vpc_subnet_ids         = var.vpc_subnet_ids != null ? var.vpc_subnet_ids : null
   vpc_security_group_ids = var.vpc_security_group_ids != null ? var.vpc_security_group_ids : null
 
