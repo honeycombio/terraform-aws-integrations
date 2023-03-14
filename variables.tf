@@ -176,3 +176,15 @@ variable "tags" {
   description = "Tags to add to resources created by this module."
   default     = null
 }
+
+variable "vpc_security_group_ids" {
+  type        = list(string)
+  description = "List of security group ids when Lambda Function should run in the VPC."
+  default     = null
+}
+
+variable "vpc_subnet_ids" {
+  type        = list(string)
+  description = "List of subnet ids when Lambda Function should run in the VPC. Usually private or intra subnets."
+  default     = null
+}

@@ -56,6 +56,8 @@
 | <a name="input_s3_parser_type"></a> [s3\_parser\_type](#input\_s3\_parser\_type) | The type of logfile to parse. | `string` | `""` | no |
 | <a name="input_sample_rate"></a> [sample\_rate](#input\_sample\_rate) | Sample rate - used for S3 logfiles only. See https://honeycomb.io/docs/guides/sampling/. | `number` | `1` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to add to resources created by this module. | `map(string)` | `null` | no |
+| <a name="vpc_security_group_ids"></a> [vpc\_security\_group\_ids](#vpc\_security\_group\_ids) | List of security group ids when Lambda Function should run in the VPC. | `list(string)` | `[]` | no |
+| <a name="vpc_subnet_ids"></a> [vpc\_subnet\_ids](#vpc\_subnet\_ids) | List of subnet ids when Lambda Function should run in the VPC. Usually private or intra subnets. | `list(string)` | `[]` | no |
 
 ## Outputs
 
