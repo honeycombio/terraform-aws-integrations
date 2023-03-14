@@ -69,6 +69,10 @@ module "s3_processor" {
   attach_policy = true
   policy        = aws_iam_policy.lambda.arn
 
+  attach_network_policy  = var.vpc_subnet_ids != null ? true : false
+  vpc_subnet_ids         = var.vpc_subnet_ids != null ? var.vpc_subnet_ids : null
+  vpc_security_group_ids = var.vpc_security_group_ids != null ? var.vpc_security_group_ids : null
+
   tags = local.tags
 }
 

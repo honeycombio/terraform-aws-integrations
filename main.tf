@@ -85,5 +85,8 @@ module "s3_logfile" {
   s3_filter_suffix = var.s3_filter_suffix
   sample_rate      = var.sample_rate
 
+  vpc_subnet_ids         = var.vpc_subnet_ids != null ? var.vpc_subnet_ids : null
+  vpc_security_group_ids = var.vpc_security_group_ids != null ? var.vpc_security_group_ids : null
+
   tags = var.tags
 }
