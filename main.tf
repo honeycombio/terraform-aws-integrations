@@ -18,6 +18,9 @@ module "failure_bucket" {
 
   bucket = local.failure_bucket
   acl    = "private"
+
+  control_object_ownership = true
+  object_ownership         = "BucketOwnerPreferred"
 }
 
 
