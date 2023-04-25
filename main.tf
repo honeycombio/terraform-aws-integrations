@@ -17,7 +17,13 @@ module "failure_bucket" {
   version = "~> 3.0"
 
   bucket = local.failure_bucket
-  acl    = "private"
+
+  control_object_ownership = true
+  object_ownership = "BucketOwnerEnforced"
+  block_public_policy = true
+  block_public_acls = true
+  ignore_public_acls = true
+  restrict_public_buckets = true
 }
 
 
