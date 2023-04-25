@@ -19,11 +19,11 @@ module "failure_bucket" {
   bucket = local.failure_bucket
 
   control_object_ownership = true
-  object_ownership = "BucketOwnerEnforced"
-  block_public_policy = true
-  block_public_acls = true
-  ignore_public_acls = true
-  restrict_public_buckets = true
+  object_ownership         = "BucketOwnerEnforced"
+  block_public_policy      = true
+  block_public_acls        = true
+  ignore_public_acls       = true
+  restrict_public_buckets  = true
 }
 
 
