@@ -1,5 +1,5 @@
 <a name="v0.4.0"></a>
-# [v0.4.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.4.0) - 26 Apr 2023
+# [v0.4.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.4.0) - 11 May 2023
 
 ## Changes
 
