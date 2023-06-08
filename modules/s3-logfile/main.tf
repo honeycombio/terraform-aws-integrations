@@ -35,6 +35,11 @@ resource "aws_iam_policy" "lambda" {
   policy      = data.aws_iam_policy_document.lambda.json
 }
 
+data "aws_s3_object" "lambda_code" {
+  bucket = coalesce(var.lambda_package_bucket, "honeycomb-integrations-${data.aws_region.current.name}")
+  key    = coalesce(var.lambda_package_key, "agentless-integrations-for-aws/LATEST/ingest-handlers.zip")
+}
+
 module "s3_processor" {
   source  = "terraform-aws-modules/lambda/aws"
   version = "~> 4.2"
@@ -48,8 +53,9 @@ module "s3_processor" {
 
   create_package = false
   s3_existing_package = {
-    bucket = coalesce(var.lambda_package_bucket, "honeycomb-integrations-${data.aws_region.current.name}")
-    key    = coalesce(var.lambda_package_key, "agentless-integrations-for-aws/LATEST/ingest-handlers.zip")
+    bucket  = data.aws_s3_object.lambda_code.bucket
+    key     = data.aws_s3_object.lambda_code.key
+    version = data.aws_s3_object.lambda_code.version_id
   }
 
 
@@ -62,6 +68,7 @@ module "s3_processor" {
     API_HOST            = var.honeycomb_api_host
     DATASET             = var.honeycomb_dataset
     SAMPLE_RATE         = var.sample_rate
+    SAMPLE_RATE_RULES   = jsonencode(var.sample_rate_rules)
     FILTER_FIELDS       = join(",", var.filter_fields)
     RENAME_FIELDS       = join(",", [for k, v in var.rename_fields : "${k}=${v}"])
   }
