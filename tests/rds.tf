@@ -22,7 +22,7 @@ module "rds_mysql_logs" {
 
 
 data "aws_rds_engine_version" "rds_mysql" {
-  engine = "mysql"
+  engine       = "mysql"
   default_only = true
 }
 module "rds_mysql" {
