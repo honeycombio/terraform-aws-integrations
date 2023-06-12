@@ -131,3 +131,10 @@ variable "vpc_subnet_ids" {
   description = "List of subnet ids when Lambda Function should run in the VPC. Usually private or intra subnets."
   default     = null
 }
+
+variable "agentless_integrations_version" {
+  type = string
+  description = "Version of https://github.com/honeycombio/agentless-integrations-for-aws to use. Default is LATEST, but note that specifying this does not automatically update the lambda to use the newest versions as they are released."
+  default = "LATEST"
+
+}
