@@ -105,6 +105,15 @@ variable "sample_rate" {
   description = "Sample rate. See https://honeycomb.io/docs/guides/sampling/."
 }
 
+variable "sample_rate_rules" {
+  type = list(object({
+    Prefix : string,
+    SampleRate : number,
+  }))
+  default     = []
+  description = "Extra rules for determining sample rates. Prefix will match objects based on their prefix. Order matters - first matching rule wins."
+}
+
 variable "tags" {
   type        = map(string)
   description = "Tags to add to resources created by this module."
@@ -121,4 +130,10 @@ variable "vpc_subnet_ids" {
   type        = list(string)
   description = "List of subnet ids when Lambda Function should run in the VPC. Usually private or intra subnets."
   default     = null
+}
+
+variable "agentless_integrations_version" {
+  type        = string
+  description = "Version of https://github.com/honeycombio/agentless-integrations-for-aws to use. Default is LATEST, but note that specifying this does not automatically update the lambda to use the newest versions as they are released."
+  default     = "LATEST"
 }
