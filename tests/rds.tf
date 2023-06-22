@@ -20,6 +20,11 @@ module "rds_mysql_logs" {
 
 /*** RDS ***/
 
+
+data "aws_rds_engine_version" "rds_mysql" {
+  engine       = "mysql"
+  default_only = true
+}
 module "rds_mysql" {
   source = "terraform-aws-modules/rds/aws"
 
@@ -27,7 +32,7 @@ module "rds_mysql" {
 
   # All available versions: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html#MySQL.Concepts.VersionMgmt
   engine               = "mysql"
-  engine_version       = "8.0.27"
+  engine_version       = data.aws_rds_engine_version.rds_mysql.version
   family               = "mysql8.0"
   major_engine_version = "8.0"
   instance_class       = "db.t3.micro"

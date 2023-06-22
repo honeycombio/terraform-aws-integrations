@@ -7,6 +7,11 @@ module "alb_logs" {
   honeycomb_api_host = var.honeycomb_api_host
 
   s3_bucket_arn = data.aws_s3_bucket.log_bucket.arn
+
+  sample_rate_rules = [{
+    Prefix     = "sampled-2",
+    SampleRate = 2
+  }]
 }
 
 module "elb_logs" {
@@ -38,7 +43,7 @@ module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 7.0"
 
-  name               = random_pet.this.id
+  name               = "${random_pet.this.id}-sampled-2"
   load_balancer_type = "application"
 
   vpc_id          = data.aws_vpc.default.id
@@ -47,6 +52,7 @@ module "alb" {
 
   access_logs = {
     bucket = data.aws_s3_bucket.log_bucket.id
+    prefix = "sampled-2"
   }
 
   target_groups = [
