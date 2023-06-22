@@ -9,7 +9,7 @@ module "alb_logs" {
   s3_bucket_arn = data.aws_s3_bucket.log_bucket.arn
 
   sample_rate_rules = [{
-    Prefix = "sampled-2",
+    Prefix     = "sampled-2",
     SampleRate = 2
   }]
 }
