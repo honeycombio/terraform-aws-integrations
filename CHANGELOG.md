@@ -1,3 +1,23 @@
+<a name="v0.5.0"></a>
+# [v0.5.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.5.0) - 22 June 2023
+
+## Changes
+
+- feature: Provide interface to the sample rate rules to this module [@nlincoln](https://github.cim/nlincoln) ([#47](https://github.com/honeycombio/terraform-aws-integrations/issues/47))
+
+
+[Changes][v0.5.0]
+
+<a name="v0.4.0"></a>
+# [v0.4.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.4.0) - 11 May 2023
+
+## Changes
+
+- fix: be explicit about S3 access policies [@dstrelau](https://github.cim/dstrelau) ([#45](https://github.com/honeycombio/terraform-aws-integrations/issues/45))
+
+
+[Changes][v0.4.0]
+
 <a name="v0.3.0"></a>
 # [v0.3.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.3.0) - 16 Mar 2023
 
