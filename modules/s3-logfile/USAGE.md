@@ -4,13 +4,13 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.9.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0 |
 
 ## Modules
 
@@ -33,6 +33,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_agentless_integrations_version"></a> [agentless\_integrations\_version](#input\_agentless\_integrations\_version) | Version of https://github.com/honeycombio/agentless-integrations-for-aws to use. Default is LATEST, but note that specifying this does not automatically update the lambda to use the newest versions as they are released. | `string` | `"LATEST"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment this code is running in. If set, will be added as 'env' to each event. | `string` | `""` | no |
 | <a name="input_filter_fields"></a> [filter\_fields](#input\_filter\_fields) | Strings to specify which field names to remove from events. | `list(string)` | `[]` | no |
 | <a name="input_honeycomb_api_host"></a> [honeycomb\_api\_host](#input\_honeycomb\_api\_host) | Internal. Alternative Honeycomb API host. | `string` | `"https://api.honeycomb.io"` | no |
@@ -50,10 +51,10 @@
 | <a name="input_s3_filter_prefix"></a> [s3\_filter\_prefix](#input\_s3\_filter\_prefix) | Prefix within logs bucket to restrict processing. | `string` | `""` | no |
 | <a name="input_s3_filter_suffix"></a> [s3\_filter\_suffix](#input\_s3\_filter\_suffix) | Suffix of files that should be processed. | `string` | `".gz"` | no |
 | <a name="input_sample_rate"></a> [sample\_rate](#input\_sample\_rate) | Sample rate. See https://honeycomb.io/docs/guides/sampling/. | `number` | `1` | no |
+| <a name="input_sample_rate_rules"></a> [sample\_rate\_rules](#input\_sample\_rate\_rules) | Extra rules for determining sample rates. Prefix will match objects based on their prefix. Order matters - first matching rule wins. | <pre>list(object({<br>    Prefix : string,<br>    SampleRate : number,<br>  }))</pre> | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to add to resources created by this module. | `map(string)` | `null` | no |
-| <a name="vpc_security_group_ids"></a> [vpc\_security\_group\_ids](#vpc\_security\_group\_ids) | List of security group ids when Lambda Function should run in the VPC. | `list(string)` | `[]` | no |
-| <a name="vpc_subnet_ids"></a> [vpc\_subnet\_ids](#vpc\_subnet\_ids) | List of subnet ids when Lambda Function should run in the VPC. Usually private or intra subnets. | `list(string)` | `[]` | no |
-
+| <a name="input_vpc_security_group_ids"></a> [vpc\_security\_group\_ids](#input\_vpc\_security\_group\_ids) | List of security group ids when Lambda Function should run in the VPC. | `list(string)` | `null` | no |
+| <a name="input_vpc_subnet_ids"></a> [vpc\_subnet\_ids](#input\_vpc\_subnet\_ids) | List of subnet ids when Lambda Function should run in the VPC. Usually private or intra subnets. | `list(string)` | `null` | no |
 
 ## Outputs
 
