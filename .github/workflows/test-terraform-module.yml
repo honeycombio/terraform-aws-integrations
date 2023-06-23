@@ -7,6 +7,7 @@ on:
       - '**/*.tf'
       - '!examples/**'
 env:
+  TF_IN_AUTOMATION: 1
   TF_VAR_honeycomb_api_key: ${{ secrets.HONEYCOMB_API_KEY }}
   AWS_DEFAULT_REGION: us-east-1
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -25,7 +26,7 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -upgrade
 
       - name: Terraform Validate
         run: terraform validate -no-color
