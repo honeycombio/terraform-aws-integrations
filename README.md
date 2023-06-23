@@ -4,8 +4,9 @@
 
 This repo contains a set of modules in the [modules folder](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules) for resources in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) to send observability data to [Honeycomb](https://www.honeycomb.io/).
 
-Note: as of `v1.0.0` of this module, version 5 of the AWS Provider is required.
-If you still need support for version 4 of the provider, continue to use `v0.5.0` of this module.
+## 📣 Adopting version 1.0.0
+as of `v1.0.0` of this module, version 5 of the AWS Provider is required.
+If you still need support for version 4 of the AWS Provider, continue to use `v0.5.0`.
 
 ## How does this work?
 
