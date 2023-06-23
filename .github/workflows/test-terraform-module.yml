@@ -30,7 +30,7 @@ jobs:
         with:
           aws-region: us-east-1
           role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
-          role-duration-seconds: 900 # 15min - lowest possible value
+          role-duration-seconds: 1800 # 30min
 
       - uses: hashicorp/setup-terraform@v2
 
