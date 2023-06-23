@@ -4,6 +4,7 @@
 ## Changes
 
 - feature: support AWS Provider 5.x [@jharley](https://github.cim/jharley) ([#53](https://github.com/honeycombio/terraform-aws-integrations/issues/53))
+- feature: Moving `s3_configuration {}` from root block to `http_endpoint_configuration` [@ryan-keswick](https://github.com/ryan-keswick) | ([#49]https://github.com/honeycombio/terraform-aws-integrations/issues/49())
 
 Note: this drops support for AWS Provider 4.x. If you are still on v4 of the AWS provider, please continue to use v0.5.0 of this module.
 
