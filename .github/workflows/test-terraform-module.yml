@@ -8,9 +8,7 @@ on:
       - '!examples/**'
 env:
   TF_VAR_honeycomb_api_key: ${{ secrets.HONEYCOMB_API_KEY }}
-  AWS_DEFAULT_REGION: us-east-1
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: us-east-2
 
 jobs:
   tf-apply:
@@ -21,6 +19,13 @@ jobs:
         working-directory: ./tests
     steps:
       - uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: us-east-2
+          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
+          role-duration-seconds: 900 # 15min - lowest possible value
 
       - uses: hashicorp/setup-terraform@v2
 
