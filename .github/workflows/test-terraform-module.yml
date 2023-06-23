@@ -25,7 +25,7 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -upgrade
 
       - name: Terraform Validate
         run: terraform validate -no-color
