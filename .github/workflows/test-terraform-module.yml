@@ -8,7 +8,7 @@ on:
       - '!examples/**'
 env:
   TF_VAR_honeycomb_api_key: ${{ secrets.HONEYCOMB_API_KEY }}
-  AWS_DEFAULT_REGION: us-east-2
+  AWS_DEFAULT_REGION: us-east-1
 
 jobs:
   tf-apply:
@@ -27,7 +27,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-region: us-east-2
+          aws-region: us-east-1
           role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
           role-duration-seconds: 900 # 15min - lowest possible value
 
