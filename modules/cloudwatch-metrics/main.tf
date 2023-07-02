@@ -1,3 +1,13 @@
+locals {
+  // until we remove the "namespace_" variables, we'll reconcile the inputs here
+  // by converting the deprecated input into a similar looking object
+  include_filters = length(var.include_filters) > 0 ? var.include_filters : [
+    for f in var.namespace_include_filters : { namespace = f, metric_names = [] }
+  ]
+  exclude_filters = length(var.exclude_filters) > 0 ? var.exclude_filters : [
+    for f in var.namespace_exclude_filters : { namespace = f, metric_names = [] }
+  ]
+}
 module "kfh" {
   source = "../kinesis-firehose-honeycomb"
 
@@ -25,21 +35,25 @@ resource "aws_cloudwatch_metric_stream" "metric-stream" {
   firehose_arn  = module.kfh.kinesis_firehose_delivery_stream_arn
   output_format = var.output_format
 
+  include_linked_accounts_metrics = var.include_linked_accounts_metrics
+
   # NOTE: include and exclude filters are _mutually exclusive_, you may not have
   # both (though this is difficult to enforce in variable validation.
   dynamic "include_filter" {
-    for_each = var.namespace_include_filters
+    for_each = local.include_filters
 
     content {
-      namespace = include_filter.value
+      namespace    = include_filter.value.namespace
+      metric_names = include_filter.value.metric_names
     }
   }
 
   dynamic "exclude_filter" {
-    for_each = var.namespace_exclude_filters
+    for_each = local.exclude_filters
 
     content {
-      namespace = exclude_filter.value
+      namespace    = exclude_filter.value.namespace
+      metric_names = exclude_filter.value.metric_names
     }
   }
 

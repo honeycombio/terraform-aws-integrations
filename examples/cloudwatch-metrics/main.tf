@@ -11,17 +11,36 @@ module "cloudwatch_metric_stream" {
   # firehose failure logs can be found here for troubleshooting
   s3_failure_bucket_arn = module.firehose_failure_bucket.s3_bucket_arn
 
-  # optional filters to include or exclude AWS services - without them all metrics will be turned on
   # include and exclude cannot be used together, they are mutually exclusive
-  namespace_include_filters = ["AWS/RDS", "AWS/ELB"]
-  # namespace_exclude_filters = ["AWS/Lambda"]
+  # ONLY send these namepaces and metrics
+  include_filters = [
+    {
+      namespace = "AWS/EC2"
+      metric_names = [
+        "CPUUtilization",
+        "CPUCreditBalance",
+        "NetworkIn",
+        "NetworkOut",
+      ]
+    },
+    {
+      namespace    = "AWS/ELB"
+      metric_names = [] # include all metrics
+    }
+  ]
+
+  # send all namespaces and metrics EXCEPT these
+  # exclude_filters = [
+  #   {
+  #     namespace = "AWS/Lambda"
+  #     metric_names = [] # exclude all metrics
+  #   }
+  # ]
 
   tags = {
     Environment = "sandbox"
   }
 }
-
-# dependencies
 
 resource "random_pet" "this" {
   length = 2
