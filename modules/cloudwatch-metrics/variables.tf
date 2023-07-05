@@ -34,16 +34,58 @@ variable "tags" {
   description = "A map of tags to apply to resources created by this module."
 }
 
+variable "include_filters" {
+  type = list(object({
+    namespace    = string
+    metric_names = list(string)
+  }))
+  default     = []
+  description = <<EOH
+An optional list of inclusive CloudWatch Metric filters. If set, we'll only stream metrics matching these namespace and metric names.
+Pass an empty list (`[]`) to `metric_names` to include all metrics for the namespace.
+Mututally exclusive with `exclude_filters`.
+EOH
+}
+
+variable "exclude_filters" {
+  type = list(object({
+    namespace    = string
+    metric_names = list(string)
+  }))
+  default     = []
+  description = <<EOH
+An optional list of exclusive CloudWatch Metric filters. If set, we'll only stream metrics that do not match these namespace and metric names.
+Pass an empty list (`[]`) to `metric_names` to exclude all metrics for the namespace.
+Mututally exclusive with `exclude_filters`.
+EOH
+}
+
 variable "namespace_include_filters" {
   type        = list(string)
   default     = []
-  description = "An optional list of CloudWatch Metric namespaces to include. If set, we'll only stream metrics from these namespaces. Mutually exclusive with `namespace_exclude_filters`."
+  description = <<EOH
+DEPRECATED: use `include_filters` instead.
+
+An optional list of CloudWatch Metric namespaces to include. If set, we'll only stream metrics from these namespaces.
+Mutually exclusive with `namespace_exclude_filters`.
+EOH
 }
 
 variable "namespace_exclude_filters" {
   type        = list(string)
   default     = []
-  description = "An optional list of CloudWatch Metric namespaces to exclude. If set, we'll only stream metrics that are not in these namespaces. Mutually exclusive with `namespace_include_filters`."
+  description = <<EOH
+DEPRECATED: use `include_filters` instead.
+
+An optional list of CloudWatch Metric namespaces to exclude. If set, we'll only stream metrics that are not in these namespaces.
+Mutually exclusive with `namespace_include_filters`.
+EOH
+}
+
+variable "include_linked_accounts_metrics" {
+  type        = bool
+  default     = false
+  description = "If you are creating a metric stream in a monitoring account, specify true to include metrics from source accounts that are linked to this monitoring account, in the metric stream."
 }
 
 variable "s3_failure_bucket_arn" {

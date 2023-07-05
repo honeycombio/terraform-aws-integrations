@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0 |
 
 ## Providers
@@ -32,14 +32,17 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_exclude_filters"></a> [exclude\_filters](#input\_exclude\_filters) | An optional list of exclusive CloudWatch Metric filters. If set, we'll only stream metrics that do not match these namespace and metric names.<br>Pass an empty list (`[]`) to `metric_names` to exclude all metrics for the namespace.<br>Mututally exclusive with `exclude_filters`. | <pre>list(object({<br>    namespace    = string<br>    metric_names = list(string)<br>  }))</pre> | `[]` | no |
 | <a name="input_honeycomb_api_host"></a> [honeycomb\_api\_host](#input\_honeycomb\_api\_host) | If you use a Secure Tenancy or other proxy, put its schema://host[:port] here. | `string` | `"https://api.honeycomb.io"` | no |
 | <a name="input_honeycomb_api_key"></a> [honeycomb\_api\_key](#input\_honeycomb\_api\_key) | Your Honeycomb team's API key. | `string` | n/a | yes |
 | <a name="input_honeycomb_dataset_name"></a> [honeycomb\_dataset\_name](#input\_honeycomb\_dataset\_name) | Your Honeycomb dataset name. | `string` | n/a | yes |
 | <a name="input_http_buffering_interval"></a> [http\_buffering\_interval](#input\_http\_buffering\_interval) | Kinesis Firehose http buffer interval, in seconds. | `number` | `60` | no |
 | <a name="input_http_buffering_size"></a> [http\_buffering\_size](#input\_http\_buffering\_size) | Kinesis Firehose http buffer size, in MiB. | `number` | `15` | no |
+| <a name="input_include_filters"></a> [include\_filters](#input\_include\_filters) | An optional list of inclusive CloudWatch Metric filters. If set, we'll only stream metrics matching these namespace and metric names.<br>Pass an empty list (`[]`) to `metric_names` to include all metrics for the namespace.<br>Mututally exclusive with `exclude_filters`. | <pre>list(object({<br>    namespace    = string<br>    metric_names = list(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_include_linked_accounts_metrics"></a> [include\_linked\_accounts\_metrics](#input\_include\_linked\_accounts\_metrics) | If you are creating a metric stream in a monitoring account, specify true to include metrics from source accounts that are linked to this monitoring account, in the metric stream. | `bool` | `false` | no |
 | <a name="input_name"></a> [name](#input\_name) | A unique name for this CloudWatch Metric Stream. | `string` | `"honeycomb-cloudwatch-metrics"` | no |
-| <a name="input_namespace_exclude_filters"></a> [namespace\_exclude\_filters](#input\_namespace\_exclude\_filters) | An optional list of CloudWatch Metric namespaces to exclude. If set, we'll only stream metrics that are not in these namespaces. Mutually exclusive with `namespace_include_filters`. | `list(string)` | `[]` | no |
-| <a name="input_namespace_include_filters"></a> [namespace\_include\_filters](#input\_namespace\_include\_filters) | An optional list of CloudWatch Metric namespaces to include. If set, we'll only stream metrics from these namespaces. Mutually exclusive with `namespace_exclude_filters`. | `list(string)` | `[]` | no |
+| <a name="input_namespace_exclude_filters"></a> [namespace\_exclude\_filters](#input\_namespace\_exclude\_filters) | DEPRECATED: use `include_filters` instead.<br><br>An optional list of CloudWatch Metric namespaces to exclude. If set, we'll only stream metrics that are not in these namespaces.<br>Mutually exclusive with `namespace_include_filters`. | `list(string)` | `[]` | no |
+| <a name="input_namespace_include_filters"></a> [namespace\_include\_filters](#input\_namespace\_include\_filters) | DEPRECATED: use `include_filters` instead.<br><br>An optional list of CloudWatch Metric namespaces to include. If set, we'll only stream metrics from these namespaces.<br>Mutually exclusive with `namespace_exclude_filters`. | `list(string)` | `[]` | no |
 | <a name="input_output_format"></a> [output\_format](#input\_output\_format) | Output format of metrics. You should probably not modify this value; the default format is supported, but others may not be. | `string` | `"opentelemetry0.7"` | no |
 | <a name="input_s3_backup_mode"></a> [s3\_backup\_mode](#input\_s3\_backup\_mode) | Should we only backup to S3 data that failed delivery, or all data? | `string` | `"FailedDataOnly"` | no |
 | <a name="input_s3_buffer_interval"></a> [s3\_buffer\_interval](#input\_s3\_buffer\_interval) | In seconds. See https://docs.aws.amazon.com/firehose/latest/dev/create-configure.html | `number` | `400` | no |
