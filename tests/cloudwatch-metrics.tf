@@ -1,7 +1,7 @@
 module "cloudwatch_metrics_defaults" {
   source = "../modules/cloudwatch-metrics"
 
-  name = "cwmetrics-defaults-${random_pet.this.id}"
+  name = "cwm-default-${random_pet.this.id}"
 
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
@@ -13,7 +13,7 @@ module "cloudwatch_metrics_defaults" {
 module "cloudwatch_metrics_legacy" {
   source = "../modules/cloudwatch-metrics"
 
-  name = "cwmetrics-legacy-${random_pet.this.id}"
+  name = "cwm-legacy-${random_pet.this.id}"
 
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
@@ -27,7 +27,7 @@ module "cloudwatch_metrics_legacy" {
 module "cloudwatch_metrics" {
   source = "../modules/cloudwatch-metrics"
 
-  name = "cwmetrics-${random_pet.this.id}"
+  name = "cwm-${random_pet.this.id}"
 
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
