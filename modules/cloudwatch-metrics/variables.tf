@@ -42,6 +42,7 @@ variable "include_filters" {
   default     = []
   description = <<EOH
 An optional list of inclusive CloudWatch Metric filters. If set, we'll only stream metrics matching these namespace and metric names.
+Pass an empty list (`[]`) to `metric_names` to include all metrics for the namespace.
 Mututally exclusive with `exclude_filters`.
 EOH
 }
@@ -54,6 +55,7 @@ variable "exclude_filters" {
   default     = []
   description = <<EOH
 An optional list of exclusive CloudWatch Metric filters. If set, we'll only stream metrics that do not match these namespace and metric names.
+Pass an empty list (`[]`) to `metric_names` to exclude all metrics for the namespace.
 Mututally exclusive with `exclude_filters`.
 EOH
 }
