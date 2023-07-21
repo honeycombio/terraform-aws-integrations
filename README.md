@@ -1,6 +1,7 @@
 # Honeycomb Terraform AWS Integrations
 
 [![OSS Lifecycle](https://img.shields.io/osslifecycle/honeycombio/terraform-aws-integrations)](https://github.com/honeycombio/home/blob/main/honeycomb-oss-lifecycle-and-practices.md)
+[![Terraform Registry](https://img.shields.io/github/v/release/honeycombio/terraform-aws-integrations?color=5e4fe3&label=Terraform%20Registry&logo=terraform&sort=semver)](https://registry.terraform.io/modules/honeycombio/integrations/aws/latest)
 
 This repo contains a set of modules in the [modules folder](https://github.com/honeycombio/terraform-aws-integrations/tree/main/modules) for resources in [AWS](https://aws.amazon.com/) using [Terraform](https://www.terraform.io/) to send observability data to [Honeycomb](https://www.honeycomb.io/).
 
