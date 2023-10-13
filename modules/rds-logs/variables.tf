@@ -134,12 +134,12 @@ variable "http_buffering_interval" {
 }
 
 variable "lambda_function_architecture" {
-  type = string
-  default = "arm64"
+  type        = string
+  default     = "arm64"
   description = "Instruction set architecture for your Lambda function."
   validation {
     condition = contains(["amd64", "arm64"],
-      var.lambda_function_architecture)
+    var.lambda_function_architecture)
     error_message = "Not an allowed Lambda architecture."
   }
 }
