@@ -150,6 +150,6 @@ variable "agentless_integrations_version" {
 
   validation {
     error_message = "Version must be at least 4.0.0"
-    condition     = can(regex("^([4-9]|[1-9][0-9]+)\.[0-9]+\.[0-9]+$", var.agentless_integrations_version))
+    condition     = can(regex("^([4-9]|[1-9][0-9]+)\\.[0-9]+\\.[0-9]+$", var.agentless_integrations_version))
   }
 }
