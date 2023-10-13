@@ -42,6 +42,17 @@ variable "kms_key_arn" {
   default     = ""
 }
 
+variable "lambda_function_architecture" {
+  type = string
+  default = "arm64"
+  description = "Instruction set architecture for your Lambda function."
+  validation {
+    condition = contains(["amd64", "arm64"],
+      var.lambda_function_architecture)
+    error_message = "Not an allowed Lambda architecture."
+  }
+}
+
 variable "lambda_function_memory" {
   type        = number
   default     = 192
@@ -136,4 +147,9 @@ variable "agentless_integrations_version" {
   type        = string
   description = "Version of https://github.com/honeycombio/agentless-integrations-for-aws to use. Default is LATEST, but note that specifying this does not automatically update the lambda to use the newest versions as they are released."
   default     = "LATEST"
+
+  validation {
+    error_message = "Version must be at least 4.0.0"
+    condition     = can(regex("^([4-9]|[1-9][0-9]+)\.[0-9]+\.[0-9]+$", var.agentless_integrations_version))
+  }
 }
