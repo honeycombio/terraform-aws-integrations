@@ -135,7 +135,7 @@ variable "http_buffering_interval" {
 
 variable "lambda_function_architecture" {
   type        = string
-  default     = "arm64"
+  default     = "amd64"
   description = "Instruction set architecture for your Lambda function."
   validation {
     condition = contains(["amd64", "arm64"],
