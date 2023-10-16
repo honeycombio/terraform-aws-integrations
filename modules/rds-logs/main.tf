@@ -36,14 +36,15 @@ module "rds_lambda_transform" {
   function_name = "${var.name}-honeycomb-rds-${var.db_engine}-log-parser"
   description   = "Parses RDS logs coming off of Kinesis Firehose, sending them back to the Firehose as structured JSON events."
   handler       = "rds-${var.db_engine}-kfh-transform"
-  runtime       = "go1.x"
+  runtime       = "provided.al2"
+  architectures = var.lambda_function_architecture == "amd64" ? ["x86_64"] : ["arm64"]
   memory_size   = var.lambda_function_memory
   timeout       = var.lambda_function_timeout
 
   create_package = false
   s3_existing_package = {
     bucket = coalesce(var.lambda_package_bucket, "honeycomb-integrations-${data.aws_region.current.name}")
-    key    = coalesce(var.lambda_package_key, "agentless-integrations-for-aws/LATEST/ingest-handlers.zip")
+    key    = coalesce(var.lambda_package_key, "agentless-integrations-for-aws/${var.agentless_integrations_version}/rds-${var.db_engine}-kfh-transform-${var.lambda_function_architecture}.zip")
   }
 
   attach_policy = true
