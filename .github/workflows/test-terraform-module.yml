@@ -40,9 +40,21 @@ jobs:
       - name: Terraform Validate
         run: terraform validate -no-color
 
-      - name: Terraform Apply
+      - name: Terraform Apply (1st run)
         run: terraform apply -auto-approve -no-color -input=false
+
+      # This should fail if the kinesis thing flaps
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: Check if plan has changes
+        run: |
+          if [ $(terraform show -json tfplan | jq '.resource_changes | length') -ne 0 ]; then
+            echo "Terraform plan has detected changes after apply. This means the configuration is flapping."
+            exit 1
+          fi
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve -no-color -input=false
         if: 'always()'
+
