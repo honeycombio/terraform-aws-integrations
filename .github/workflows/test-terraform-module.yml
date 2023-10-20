@@ -49,8 +49,16 @@ jobs:
 
       - name: Check if plan has changes
         run: |
-          if [ $(terraform show -json tfplan | jq '.resource_changes | length') -ne 0 ]; then
-            echo "Terraform plan has detected changes after apply. This means the configuration is flapping."
+          PLAN_OUTPUT=$(terraform show -json tfplan || echo "{}")
+
+          # Output the JSON for debugging purposes
+          echo "=== TERRAFORM PLAN JSON OUTPUT ==="
+          echo "$PLAN_OUTPUT"
+          echo "=================================="
+
+          NUM_CHANGES=$(echo "$PLAN_OUTPUT" | jq '.resource_changes | length' || echo "0")
+          if [ -z "$NUM_CHANGES" ] || [ "$NUM_CHANGES" -ne 0 ]; then
+            echo "Terraform plan has detected changes after apply. This means the configuration isn't idempotent."
             exit 1
           fi
 
