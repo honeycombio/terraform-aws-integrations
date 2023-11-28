@@ -42,14 +42,15 @@ module "s3_processor" {
   function_name = var.name
   description   = "Parses LB access logs from S3, sending them to Honeycomb as structured events"
   handler       = "s3-handler"
-  runtime       = "go1.x"
+  runtime       = "provided.al2"
+  architectures = var.lambda_function_architecture == "amd64" ? ["x86_64"] : ["arm64"]
   memory_size   = var.lambda_function_memory
   timeout       = var.lambda_function_timeout
 
   create_package = false
   s3_existing_package = {
     bucket = coalesce(var.lambda_package_bucket, "honeycomb-integrations-${data.aws_region.current.name}")
-    key    = coalesce(var.lambda_package_key, "agentless-integrations-for-aws/${var.agentless_integrations_version}/ingest-handlers.zip")
+    key    = coalesce(var.lambda_package_key, "agentless-integrations-for-aws/${var.agentless_integrations_version}/s3-handler-${var.lambda_function_architecture}.zip")
   }
 
 

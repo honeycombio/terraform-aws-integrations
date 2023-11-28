@@ -1,29 +1,43 @@
+<a name="v1.2.0"></a>
+# [v1.2.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.2.0) - 16 Oct 2023
+
+## Changes
+
+- maint: upgrade from go1.x to provided.al2 [@brookesargent](https://github.com/brookesargent) ([#65](https://github.com/honeycombio/terraform-aws-integrations/issues/65))
+
+
+[Changes][v1.2.0]
+
+
 <a name="v1.1.0"></a>
-# [v1.1.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.1.0) - 5 July 2023
+# [v1.1.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.1.0) - 05 Jul 2023
 
 ## Changes
 
 - feature: CloudWatch Metrics metric-level filter support [@jharley](https://github.com/jharley) ([#58](https://github.com/honeycombio/terraform-aws-integrations/issues/58))
 
+[Changes][v1.1.0]
+
+
 <a name="v1.0.0"></a>
-# [v1.0.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.0.0) - 23 June 2023
+# [v1.0.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.0.0) - 23 Jun 2023
 
 ## Changes
 
-- feature: support AWS Provider 5.x [@jharley](https://github.com/jharley) ([#53](https://github.com/honeycombio/terraform-aws-integrations/issues/53))
-- feature: Moving `s3_configuration {}` from root block to `http_endpoint_configuration` [@ryan-keswick](https://github.com/ryan-keswick) | ([#49]https://github.com/honeycombio/terraform-aws-integrations/issues/49())
+- feature: support AWS Provider 5.x [@jharley](https://github.cim/jharley) | ([#53](https://github.com/honeycombio/terraform-aws-integrations/issues/53))
+- feature: Moving `s3_configuration {}` from root block to `http_endpoint_configuration` [@ryan-keswick](https://github.com/ryan-keswick) | ([#49](https://github.com/honeycombio/terraform-aws-integrations/issues/49))
 
-Note: this drops support for AWS Provider 4.x. If you are still on v4 of the AWS provider, please continue to use v0.5.0 of this module.
-
+📣 This drops support for AWS Provider 4.x. If you are still on v4 of the AWS provider, please continue to use `v0.5.0` of this module.
 
 [Changes][v1.0.0]
 
+
 <a name="v0.5.0"></a>
-# [v0.5.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.5.0) - 22 June 2023
+# [v0.5.0🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.5.0) - 22 Jun 2023
 
 ## Changes
 
-- feature: Provide interface to the sample rate rules to this module [@nlincoln](https://github.com/nlincoln) ([#47](https://github.com/honeycombio/terraform-aws-integrations/issues/47))
+- feat: Provide interface to the sample rate rules to this module [@NLincoln](https://github.com/NLincoln) ([#47](https://github.com/honeycombio/terraform-aws-integrations/issues/47))
 
 
 [Changes][v0.5.0]
@@ -35,8 +49,8 @@ Note: this drops support for AWS Provider 4.x. If you are still on v4 of the AWS
 ## Changes
 
 - fix: be explicit about S3 access policies [@dstrelau](https://github.com/dstrelau) ([#45](https://github.com/honeycombio/terraform-aws-integrations/issues/45))
-  - This is technically a breaking change, in that it changes the exact resources created by the root module, but AWS changed the defaults of S3 buckets such that the old version does not work. The new resources match the new AWS defaults and are functionally equivalent to the old ones (ensuring the S3 is completely private). Only users of the root module should see a diff. Individual sub-modules are not effected.
-
+  - This is technically a breaking change, in that it changes the exact resources created by the root module, but
+AWS changed the defaults of S3 buckets such that the old version does not work. The new resources match the new AWS defaults and are functionally equivalent to the old ones (ensuring the S3 is completely private). Only users of the root module should see a diff. Individual sub-modules are not effected.
 
 [Changes][v0.4.0]
 
@@ -191,6 +205,10 @@ First release 🎉
 [Changes][v0.0.1]
 
 
+[v1.2.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.1.0...v1.2.0
+[v1.1.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.0.0...v1.1.0
+[v1.0.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v0.5.0...v1.0.0
+[v0.5.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v0.4.0...v0.5.0
 [v0.4.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v0.2.8...v0.3.0
 [v0.2.8]: https://github.com/honeycombio/terraform-aws-integrations/compare/v0.2.7...v0.2.8
