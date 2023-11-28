@@ -1,3 +1,14 @@
+<a name="v1.2.1"></a>
+# [v1.2.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.2.1) - 28 Nov 2023
+
+## Changes
+
+- Give lambda parameters a fixed order [@RainofTerra](https://github.com/RainofTerra) ([#64](https://github.com/honeycombio/terraform-aws-integrations/issues/64))
+
+
+[Changes][v1.2.1]
+
+
 <a name="v1.2.0"></a>
 # [v1.2.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.2.0) - 16 Oct 2023
 
@@ -205,6 +216,7 @@ First release 🎉
 [Changes][v0.0.1]
 
 
+[v1.2.1]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v0.5.0...v1.0.0
