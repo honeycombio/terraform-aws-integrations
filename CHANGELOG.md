@@ -8,7 +8,7 @@ If you had overridden this value consider making the same change to avoid losing
 
 ## 🚀 Features
 
-- fix: cloudwatch-metrics - stream opentelemetry1.0 [@jharley](https://github.com/jharley) ([#70](https://github.com/honeycombio/terraform-aws-integrations/issues/70))
+- cloudwatch-metrics - stream opentelemetry1.0 [@jharley](https://github.com/jharley) ([#70](https://github.com/honeycombio/terraform-aws-integrations/issues/70))
 
 
 [Changes][v1.3.0]
@@ -19,7 +19,7 @@ If you had overridden this value consider making the same change to avoid losing
 
 ## Changes
 
-- bug: give lambda parameters a fixed order [@RainofTerra](https://github.com/RainofTerra) ([#64](https://github.com/honeycombio/terraform-aws-integrations/issues/64))
+- give lambda parameters a fixed order [@RainofTerra](https://github.com/RainofTerra) ([#64](https://github.com/honeycombio/terraform-aws-integrations/issues/64))
 
 
 [Changes][v1.2.1]
