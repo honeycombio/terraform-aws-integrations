@@ -1,3 +1,19 @@
+<a name="v1.3.0"></a>
+# [v1.3.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.3.0) - 18 Apr 2024
+
+NOTE: the default output format of the cloudwatch-metrics stream has be updated to `opentelemetry1.0`.
+If you had overridden this value consider making the same change to avoid losing metric stream events in the future.
+
+## Changes
+
+## 🚀 Features
+
+- cloudwatch-metrics - stream opentelemetry1.0 [@jharley](https://github.com/jharley) ([#70](https://github.com/honeycombio/terraform-aws-integrations/issues/70))
+
+
+[Changes][v1.3.0]
+
+
 <a name="v1.2.1"></a>
 # [v1.2.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.2.1) - 28 Nov 2023
 
@@ -10,7 +26,7 @@
 
 
 <a name="v1.2.0"></a>
-# [v1.2.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.2.0) - 16 Oct 2023
+# [v1.2.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.2.0) - 17 Oct 2023
 
 ## Changes
 
@@ -216,6 +232,7 @@ First release 🎉
 [Changes][v0.0.1]
 
 
+[v1.3.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.2.1...v1.3.0
 [v1.2.1]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.0.0...v1.1.0
