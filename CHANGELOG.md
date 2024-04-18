@@ -1,7 +1,7 @@
 <a name="v1.3.0"></a>
 # [v1.3.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.3.0) - 18 Apr 2024
 
-NOTE: the default transport of the cloudwatch-metrics stream has be updated to `opentelemetry1.0`.
+NOTE: the default output format of the cloudwatch-metrics stream has be updated to `opentelemetry1.0`.
 If you had overridden this value consider making the same change to avoid losing metric stream events in the future.
 
 ## Changes
