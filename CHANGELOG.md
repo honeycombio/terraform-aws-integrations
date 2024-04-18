@@ -19,7 +19,7 @@ If you had overridden this value consider making the same change to avoid losing
 
 ## Changes
 
-- give lambda parameters a fixed order [@RainofTerra](https://github.com/RainofTerra) ([#64](https://github.com/honeycombio/terraform-aws-integrations/issues/64))
+- Give lambda parameters a fixed order [@RainofTerra](https://github.com/RainofTerra) ([#64](https://github.com/honeycombio/terraform-aws-integrations/issues/64))
 
 
 [Changes][v1.2.1]
