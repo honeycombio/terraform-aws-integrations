@@ -54,7 +54,7 @@ module "s3_processor" {
   }
 
 
-  environment_variables = {
+  environment_variables = merge({
     PARSER_TYPE         = var.parser_type
     FORCE_GUNZIP        = true
     ENVIRONMENT         = var.environment
@@ -66,7 +66,9 @@ module "s3_processor" {
     SAMPLE_RATE_RULES   = jsonencode(var.sample_rate_rules)
     FILTER_FIELDS       = join(",", var.filter_fields)
     RENAME_FIELDS       = join(",", [for k, v in var.rename_fields : "${k}=${v}"])
-  }
+    REDACT_PATTERN      = var.redact_pattern
+    REGEX_PATTERN       = var.regex_pattern
+  }, var.extra_env_vars)
 
   attach_policy = true
   policy        = aws_iam_policy.lambda.arn
