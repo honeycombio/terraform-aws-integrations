@@ -16,8 +16,8 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_log_bucket"></a> [log\_bucket](#module\_log\_bucket) | terraform-aws-modules/s3-bucket/aws//modules/notification | ~> 3.0 |
-| <a name="module_s3_processor"></a> [s3\_processor](#module\_s3\_processor) | terraform-aws-modules/lambda/aws | ~> 4.2 |
+| <a name="module_log_bucket"></a> [log\_bucket](#module\_log\_bucket) | terraform-aws-modules/s3-bucket/aws//modules/notification | 3.15.2 |
+| <a name="module_s3_processor"></a> [s3\_processor](#module\_s3\_processor) | terraform-aws-modules/lambda/aws | 4.18.0 |
 
 ## Resources
 
