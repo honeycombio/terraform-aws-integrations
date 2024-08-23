@@ -17,7 +17,7 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_cloudwatch_logs"></a> [cloudwatch\_logs](#module\_cloudwatch\_logs) | ../cloudwatch-logs | n/a |
-| <a name="module_rds_lambda_transform"></a> [rds\_lambda\_transform](#module\_rds\_lambda\_transform) | terraform-aws-modules/lambda/aws | ~> 4.2 |
+| <a name="module_rds_lambda_transform"></a> [rds\_lambda\_transform](#module\_rds\_lambda\_transform) | terraform-aws-modules/lambda/aws | 4.18.0 |
 
 ## Resources
 

@@ -37,7 +37,7 @@ resource "aws_iam_policy" "lambda" {
 
 module "s3_processor" {
   source  = "terraform-aws-modules/lambda/aws"
-  version = "~> 4.2"
+  version = "4.18.0"
 
   function_name = var.name
   description   = "Parses LB access logs from S3, sending them to Honeycomb as structured events"
@@ -80,7 +80,7 @@ module "s3_processor" {
 
 module "log_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws//modules/notification"
-  version = "~> 3.0"
+  version = "3.15.2"
 
   bucket = data.aws_arn.s3_bucket.resource
 
