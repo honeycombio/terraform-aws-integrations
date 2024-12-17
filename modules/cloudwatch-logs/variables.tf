@@ -136,3 +136,9 @@ variable "tags" {
   default     = {}
   description = "A map of tags to apply to resources created by this module."
 }
+
+variable "use_order_independent_filter_resource_naming" {
+  type        = bool
+  description = "Use order-independent naming for log group subscription filter resources."
+  default     = false
+}
