@@ -24,7 +24,6 @@ module "kfh" {
 
 resource "aws_cloudwatch_log_subscription_filter" "this" {
   count           = !var.use_order_independent_filter_resource_naming ? length(var.cloudwatch_log_groups) : 0
-
   name            = "${var.cloudwatch_log_groups[count.index]}-logs_subscription_filter"
   role_arn        = aws_iam_role.this.arn
   log_group_name  = var.cloudwatch_log_groups[count.index]
