@@ -29,4 +29,4 @@ Follow these steps to create a new release:
 * PUBLISH the Release. 🎉
 
 
-* Validate & Celebrate - https://registry.terraform.io/modules/honeycombio/{{cookiecutter.module_name}}/{{cookiecutter.provider}}/latest.
+* Validate & Celebrate - https://registry.terraform.io/modules/honeycombio/integrations/aws/latest.
