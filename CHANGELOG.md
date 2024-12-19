@@ -1,15 +1,12 @@
 <a id="v1.3.1"></a>
-# [v1.3.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.3.1) - 2024-04-24
+# [v1.3.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.3.1) - 2024-12-19
 
 ## Changes
 
 - maint: Fix formating in cloudwatch logs [@MikeGoldsmith](https://github.com/MikeGoldsmith) ([#79](https://github.com/honeycombio/terraform-aws-integrations/issues/79))
 - fix: Add opt-in config to create order independent log filters [@aburgel](https://github.com/aburgel) ([#78](https://github.com/honeycombio/terraform-aws-integrations/issues/78))
-- docs: update vulnerability reporting process [@robbkidd](https://github.com/robbkidd) ([#75](https://github.com/honeycombio/terraform-aws-integrations/issues/75))
-
-## 🐛 Bug Fixes
-
 - fix: pin dependant modules to reduce churn [@jharley](https://github.com/jharley) ([#76](https://github.com/honeycombio/terraform-aws-integrations/issues/76))
+- docs: update vulnerability reporting process [@robbkidd](https://github.com/robbkidd) ([#75](https://github.com/honeycombio/terraform-aws-integrations/issues/75))
 
 
 [Changes][v1.3.1]
