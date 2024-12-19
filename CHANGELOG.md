@@ -1,10 +1,24 @@
-<a name="v1.3.0"></a>
-# [v1.3.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.3.0) - 18 Apr 2024
+<a id="v1.3.1"></a>
+# [v1.3.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.3.1) - 2024-12-19
+
+## Changes
+
+- maint: Fix formating in cloudwatch logs [@MikeGoldsmith](https://github.com/MikeGoldsmith) ([#79](https://github.com/honeycombio/terraform-aws-integrations/issues/79))
+- fix: Add opt-in config to create order independent log filters [@aburgel](https://github.com/aburgel) ([#78](https://github.com/honeycombio/terraform-aws-integrations/issues/78))
+- fix: pin dependant modules to reduce churn [@jharley](https://github.com/jharley) ([#76](https://github.com/honeycombio/terraform-aws-integrations/issues/76))
+- docs: update vulnerability reporting process [@robbkidd](https://github.com/robbkidd) ([#75](https://github.com/honeycombio/terraform-aws-integrations/issues/75))
+
+
+[Changes][v1.3.1]
+
+
+<a id="v1.3.0"></a>
+# [v1.3.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.3.0) - 2024-04-18
+
+## Changes
 
 NOTE: the default output format of the cloudwatch-metrics stream has be updated to `opentelemetry1.0`.
 If you had overridden this value consider making the same change to avoid losing metric stream events in the future.
-
-## Changes
 
 ## 🚀 Features
 
@@ -14,19 +28,19 @@ If you had overridden this value consider making the same change to avoid losing
 [Changes][v1.3.0]
 
 
-<a name="v1.2.1"></a>
-# [v1.2.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.2.1) - 28 Nov 2023
+<a id="v1.2.1"></a>
+# [v1.2.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.2.1) - 2023-11-28
 
 ## Changes
 
-- Give lambda parameters a fixed order [@RainofTerra](https://github.com/RainofTerra) ([#64](https://github.com/honeycombio/terraform-aws-integrations/issues/64))
+- bug: give lambda parameters a fixed order [@RainofTerra](https://github.com/RainofTerra) ([#64](https://github.com/honeycombio/terraform-aws-integrations/issues/64))
 
 
 [Changes][v1.2.1]
 
 
-<a name="v1.2.0"></a>
-# [v1.2.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.2.0) - 17 Oct 2023
+<a id="v1.2.0"></a>
+# [v1.2.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.2.0) - 2023-10-17
 
 ## Changes
 
@@ -36,8 +50,8 @@ If you had overridden this value consider making the same change to avoid losing
 [Changes][v1.2.0]
 
 
-<a name="v1.1.0"></a>
-# [v1.1.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.1.0) - 05 Jul 2023
+<a id="v1.1.0"></a>
+# [v1.1.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.1.0) - 2023-07-05
 
 ## Changes
 
@@ -46,8 +60,8 @@ If you had overridden this value consider making the same change to avoid losing
 [Changes][v1.1.0]
 
 
-<a name="v1.0.0"></a>
-# [v1.0.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.0.0) - 23 Jun 2023
+<a id="v1.0.0"></a>
+# [v1.0.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.0.0) - 2023-06-23
 
 ## Changes
 
@@ -59,8 +73,8 @@ If you had overridden this value consider making the same change to avoid losing
 [Changes][v1.0.0]
 
 
-<a name="v0.5.0"></a>
-# [v0.5.0🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.5.0) - 22 Jun 2023
+<a id="v0.5.0"></a>
+# [v0.5.0🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.5.0) - 2023-06-22
 
 ## Changes
 
@@ -70,8 +84,8 @@ If you had overridden this value consider making the same change to avoid losing
 [Changes][v0.5.0]
 
 
-<a name="v0.4.0"></a>
-# [v0.4.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.4.0) - 11 May 2023
+<a id="v0.4.0"></a>
+# [v0.4.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.4.0) - 2023-05-11
 
 ## Changes
 
@@ -82,8 +96,8 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 [Changes][v0.4.0]
 
 
-<a name="v0.3.0"></a>
-# [v0.3.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.3.0) - 16 Mar 2023
+<a id="v0.3.0"></a>
+# [v0.3.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.3.0) - 2023-03-16
 
 ## Changes
 
@@ -94,8 +108,8 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 [Changes][v0.3.0]
 
 
-<a name="v0.2.8"></a>
-# [v0.2.8 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.8) - 15 Dec 2022
+<a id="v0.2.8"></a>
+# [v0.2.8 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.8) - 2022-12-15
 
 ## Changes
 
@@ -107,8 +121,8 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 [Changes][v0.2.8]
 
 
-<a name="v0.2.7"></a>
-# [v0.2.7 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.7) - 23 Nov 2022
+<a id="v0.2.7"></a>
+# [v0.2.7 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.7) - 2022-11-23
 
 ## Changes
 
@@ -118,8 +132,8 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 [Changes][v0.2.7]
 
 
-<a name="v0.2.6"></a>
-# [v0.2.6 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.6) - 22 Nov 2022
+<a id="v0.2.6"></a>
+# [v0.2.6 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.6) - 2022-11-22
 
 ## Changes
 
@@ -130,8 +144,8 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 [Changes][v0.2.6]
 
 
-<a name="v0.2.5"></a>
-# [v0.2.5 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.5) - 21 Nov 2022
+<a id="v0.2.5"></a>
+# [v0.2.5 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.5) - 2022-11-21
 
 ## Changes
 
@@ -141,8 +155,8 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 [Changes][v0.2.5]
 
 
-<a name="v0.2.4"></a>
-# [v0.2.4 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.4) - 21 Nov 2022
+<a id="v0.2.4"></a>
+# [v0.2.4 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.4) - 2022-11-21
 
 ## Changes
 
@@ -157,8 +171,8 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 [Changes][v0.2.4]
 
 
-<a name="v0.2.3"></a>
-# [v0.2.3 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.3) - 18 Nov 2022
+<a id="v0.2.3"></a>
+# [v0.2.3 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.3) - 2022-11-18
 
 ## Changes
 
@@ -172,8 +186,8 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 [Changes][v0.2.3]
 
 
-<a name="v0.2.2"></a>
-# [v0.2.2 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.2) - 14 Nov 2022
+<a id="v0.2.2"></a>
+# [v0.2.2 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.2) - 2022-11-14
 
 ## Fixes
 
@@ -183,8 +197,8 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 [Changes][v0.2.2]
 
 
-<a name="v0.2.1"></a>
-# [v0.2.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.1) - 14 Nov 2022
+<a id="v0.2.1"></a>
+# [v0.2.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.1) - 2022-11-14
 
 ## Changes
 
@@ -194,8 +208,8 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 [Changes][v0.2.1]
 
 
-<a name="v0.2.0"></a>
-# [v0.2.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.0) - 11 Nov 2022
+<a id="v0.2.0"></a>
+# [v0.2.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.2.0) - 2022-11-11
 
 ## Changes
 
@@ -205,8 +219,8 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 [Changes][v0.2.0]
 
 
-<a name="v0.1.0"></a>
-# [v0.1.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.1.0) - 08 Nov 2022
+<a id="v0.1.0"></a>
+# [v0.1.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.1.0) - 2022-11-08
 
 ## Changes
 
@@ -224,14 +238,15 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 [Changes][v0.1.0]
 
 
-<a name="v0.0.1"></a>
-# [v0.0.1](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.0.1) - 02 Nov 2022
+<a id="v0.0.1"></a>
+# [v0.0.1](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.0.1) - 2022-11-02
 
 First release 🎉 
 
 [Changes][v0.0.1]
 
 
+[v1.3.1]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.3.0...v1.3.1
 [v1.3.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.2.1...v1.3.0
 [v1.2.1]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.1.0...v1.2.0
@@ -252,4 +267,4 @@ First release 🎉
 [v0.1.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v0.0.1...v0.1.0
 [v0.0.1]: https://github.com/honeycombio/terraform-aws-integrations/tree/v0.0.1
 
-<!-- Generated by https://github.com/rhysd/changelog-from-release v3.7.1 -->
+<!-- Generated by https://github.com/rhysd/changelog-from-release v3.8.1 -->
