@@ -148,7 +148,7 @@ variable "output_format" {
   description = "Output format of metrics. You should probably not modify this value; the default format is supported, but others may not be."
 
   validation {
-    condition     = contains(["json", "opentelemetry0.7", "opentelemetry1.0"], var.output_format)
+    condition     = contains(["json", "opentelemetry1.0"], var.output_format)
     error_message = "Not an allowed output format."
   }
 }
