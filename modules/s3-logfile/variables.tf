@@ -82,8 +82,18 @@ variable "parser_type" {
   description = "The type of logfile to parse."
   validation {
     // ref: https://github.com/honeycombio/agentless-integrations-for-aws/blob/5f530c296035c61067a6a418d6a9ab14d34d7d79/common/common.go#L129-L153
-    condition     = contains(["alb", "elb", "s3-access", "vpc-flow", "cloudfront", "json", "keyval"], var.parser_type)
-    error_message = "parser_type must be one of the allowed values"
+    condition     = contains(["alb", "elb", "s3-access", "vpc-flow", "cloudfront", "json", "keyval", "regex"], var.parser_type)
+    error_message = "parser_type must be one of the allowed values."
+  }
+}
+
+variable "regex_pattern" {
+  type        = string
+  description = "Arbitrary regex pattern used to parse logfile."
+  default     = ""
+  validation {
+    condition     = var.regex_pattern == "" ||  var.parser_type == "regex"
+    error_message = "parser_type must be set to regex in order to use arbitrary regex pattern."
   }
 }
 
