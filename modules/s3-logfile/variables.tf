@@ -88,13 +88,10 @@ variable "parser_type" {
 }
 
 variable "regex_pattern" {
+  # This variable depends on "parser_type". In tf < 1.9, validation cannot use another variable.
   type        = string
   description = "Arbitrary regex pattern used to parse logfile."
   default     = ""
-  validation {
-    condition     = var.regex_pattern == "" ||  var.parser_type == "regex"
-    error_message = "parser_type must be set to regex in order to use arbitrary regex pattern."
-  }
 }
 
 variable "rename_fields" {
