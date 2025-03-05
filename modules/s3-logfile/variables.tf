@@ -90,7 +90,7 @@ variable "parser_type" {
 variable "regex_pattern" {
   # This variable depends on "parser_type". In tf < 1.9, validation cannot use another variable.
   type        = string
-  description = "Arbitrary regex pattern used to parse logfile."
+  description = "Arbitrary regex pattern used to parse logfile. parser_type must be set to regex for this pattern to be used."
   default     = ""
 }
 
