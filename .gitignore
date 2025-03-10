@@ -4,3 +4,6 @@
 *.tfstate
 *.tfstate.backup
 terraform.tfvars
+
+# Temporary output directory
+tempouts/
