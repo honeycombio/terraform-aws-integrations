@@ -29,7 +29,7 @@ module "failure_bucket" {
 
 module "cloudwatch_logs" {
   source = "./modules/cloudwatch-logs"
-  name   = "honeycomb-cloudwatch-logs"
+  name   = var.cloudwatch_logs_name
 
   count                 = length(var.cloudwatch_log_groups) > 0 ? 1 : 0
   cloudwatch_log_groups = var.cloudwatch_log_groups
@@ -45,7 +45,7 @@ module "cloudwatch_logs" {
 
 module "rds_logs" {
   source = "./modules/rds-logs"
-  name   = "honeycomb-rds-cloudwatch-logs"
+  name   = var.rds_logs_name
 
   count = var.enable_rds_logs ? 1 : 0
 
@@ -63,7 +63,7 @@ module "rds_logs" {
 
 module "cloudwatch_metrics" {
   source = "./modules/cloudwatch-metrics"
-  name   = "honeycomb-cloudwatch-metrics"
+  name   = var.cloudwatch_metrics_name
 
   count = var.enable_cloudwatch_metrics ? 1 : 0
 
@@ -78,7 +78,7 @@ module "cloudwatch_metrics" {
 
 module "s3_logfile" {
   source = "./modules/s3-logfile"
-  name   = "honeycomb-s3-logfile"
+  name   = var.s3_logfile_name
 
   count = var.s3_bucket_arn != "" ? 1 : 0
 

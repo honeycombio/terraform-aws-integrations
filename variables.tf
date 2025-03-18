@@ -188,3 +188,27 @@ variable "vpc_subnet_ids" {
   description = "List of subnet ids when Lambda Function should run in the VPC. Usually private or intra subnets."
   default     = null
 }
+
+variable "cloudwatch_logs_name" {
+  type        = string
+  description = "Name for the CloudWatch Logs integration resources"
+  default     = "honeycomb-cloudwatch-logs"
+}
+
+variable "rds_logs_name" {
+  type        = string
+  description = "Name for the RDS Logs integration resources"
+  default     = "honeycomb-rds-cloudwatch-logs"
+}
+
+variable "cloudwatch_metrics_name" {
+  type        = string
+  description = "Name for the CloudWatch Metrics integration resources"
+  default     = "honeycomb-cloudwatch-metrics"
+}
+
+variable "s3_logfile_name" {
+  type        = string
+  description = "Name for the S3 Logfile integration resources"
+  default     = "honeycomb-s3-logfile"
+}
