@@ -9,6 +9,24 @@
 - docs: update vulnerability reporting process [@robbkidd](https://github.com/robbkidd) ([#75](https://github.com/honeycombio/terraform-aws-integrations/issues/75))
 
 
+[Changes][v1.4.0]
+
+
+<a id="v1.4.0"></a>
+# [v1.4.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.4.0) - 2025-03-18
+
+## Changes
+
+NOTE: the cloudwatch-metrics output format `opentelemetry0.7` has been removed.
+If you previously used this output format value, you will need to update to the newer `opentelemetry1.0` format.
+
+- maint: Remove OpenTelemetry 0.7 data format [@MikeGoldsmith] ([#83](https://github.com/honeycombio/terraform-aws-integrations/issues/83))
+
+## 🚀 Features
+
+- feat: Allow resource names to be overridden when installing top-level module [@yotamat] ([#85](https://github.com/honeycombio/terraform-aws-integrations/issues/85))
+
+
 [Changes][v1.3.1]
 
 
