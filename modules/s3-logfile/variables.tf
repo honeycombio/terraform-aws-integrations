@@ -110,6 +110,16 @@ variable "s3_filter_suffix" {
   default     = ".gz"
 }
 
+variable "line_filter_rules" {
+  type = list(object({
+    Prefix : string,
+    MatchPatterns : list(string),
+    FilterPatterns : list(string),
+  }))
+  default     = []
+  description = "Rules for filtering lines. MatchPatterns will keep lines based on their content. FilterPatterns will drop lines based on their content."
+}
+
 variable "sample_rate" {
   type        = number
   default     = 1

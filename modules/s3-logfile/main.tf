@@ -66,6 +66,7 @@ module "s3_processor" {
     SAMPLE_RATE_RULES   = jsonencode(var.sample_rate_rules)
     FILTER_FIELDS       = join(",", var.filter_fields)
     RENAME_FIELDS       = join(",", [for k, v in var.rename_fields : "${k}=${v}"])
+    LINE_FILTER_RULES   = jsonencode(var.line_filter_rules)
   }
 
   attach_policy = true
