@@ -68,8 +68,11 @@ line_filter_rules = [{
 ```
 
 Once a prefix is matched, the match and filter patterns will be applied to the contents of the S3 object.
-It will not apply multiple rules for the same prefix. To use a FilterRule, the MatchRule has to be applied first.
-These regex evaluations are applied to the raw string before it's parsed into fields.
+The Match- and FieldLinePatterns objects are arrays so you can put in multiple match patterns and multiple filter patterns.
+These are applied in order and as soon as it matches a MatchLinePattern, it keeps it. 
+As soon as it matches a FilterLinePattern, it drops the line and moves on.
+
+When the Lambda finishes, it emits a log to stdout which says the number of processed lines and number of kept lines.
 
 ## Development
 
