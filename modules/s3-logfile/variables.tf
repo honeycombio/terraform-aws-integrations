@@ -113,11 +113,11 @@ variable "s3_filter_suffix" {
 variable "line_filter_rules" {
   type = list(object({
     Prefix : string,
-    MatchPatterns : list(string),
-    FilterPatterns : list(string),
+    MatchLinePatterns : list(string),
+    FilterLinePatterns : list(string),
   }))
   default     = []
-  description = "Rules for filtering lines. MatchPatterns will keep lines based on their content. FilterPatterns will drop lines based on their content."
+  description = "Rules for filtering lines. MatchLinePatterns will keep lines based on their content. FilterLinePatterns will drop lines based on their content."
 }
 
 variable "sample_rate" {
