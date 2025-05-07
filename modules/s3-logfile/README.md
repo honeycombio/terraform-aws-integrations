@@ -50,6 +50,30 @@ For more configuration options, refer to [USAGE.md](https://github.com/honeycomb
 
 Examples that use this module can be found in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples/s3-logfile).
 
+### Line Filter Rules
+
+The Line Filter Rules configuration is handled via a JSON object that is passed into the lambda.
+Here's an example of what that should look like:
+
+```hcl
+line_filter_rules = [{
+    Prefix             = "alb-log-bucket-prefix",
+    MatchLinePatterns  = ["target_status_code=500", "error"]
+    FilterLinePatterns = [".*\/health.*"]
+  },{
+    Prefix             = "alb-log-other-prefix",
+    MatchLinePatterns  = [".*"],
+    FilterLinePatterns = [".*GET.*"]
+  }]
+```
+
+Once a prefix is matched, the match and filter patterns will be applied to the contents of the S3 object.
+The MatchLinePatterns and FieldLinePatterns objects are arrays so you can put in multiple match patterns and multiple filter patterns.
+These are applied in order and as soon as it matches a MatchLinePattern, it keeps it. 
+As soon as it matches a FilterLinePattern, it drops the line and moves on.
+
+When the Lambda finishes, it emits a log to stdout which says the number of processed lines and number of kept lines.
+
 ## Development
 
 Refer to our [development documentation](https://github.com/honeycombio/terraform-aws-integrations#development) for details.
