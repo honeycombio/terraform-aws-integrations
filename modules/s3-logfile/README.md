@@ -68,7 +68,7 @@ line_filter_rules = [{
 ```
 
 Once a prefix is matched, the match and filter patterns will be applied to the contents of the S3 object.
-The Match- and FieldLinePatterns objects are arrays so you can put in multiple match patterns and multiple filter patterns.
+The MatchLinePatterns and FieldLinePatterns objects are arrays so you can put in multiple match patterns and multiple filter patterns.
 These are applied in order and as soon as it matches a MatchLinePattern, it keeps it. 
 As soon as it matches a FilterLinePattern, it drops the line and moves on.
 
