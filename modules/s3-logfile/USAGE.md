@@ -50,6 +50,7 @@
 | <a name="input_s3_bucket_arn"></a> [s3\_bucket\_arn](#input\_s3\_bucket\_arn) | The full ARN of the bucket storing load balancer access logs. | `string` | n/a | yes |
 | <a name="input_s3_filter_prefix"></a> [s3\_filter\_prefix](#input\_s3\_filter\_prefix) | Prefix within logs bucket to restrict processing. | `string` | `""` | no |
 | <a name="input_s3_filter_suffix"></a> [s3\_filter\_suffix](#input\_s3\_filter\_suffix) | Suffix of files that should be processed. | `string` | `".gz"` | no |
+| <a name="input_line_filter_rules"></a> [line\_filter\_rules](#input\_line\_filter\_rules) | Line filter rules | <pre>list(object({<br>    Prefix : string,<br>    MatchPatterns : string,<br>    FilterPatterns : string<br>  }))</pre> | `[]` | no |
 | <a name="input_sample_rate"></a> [sample\_rate](#input\_sample\_rate) | Sample rate. See https://honeycomb.io/docs/guides/sampling/. | `number` | `1` | no |
 | <a name="input_sample_rate_rules"></a> [sample\_rate\_rules](#input\_sample\_rate\_rules) | Extra rules for determining sample rates. Prefix will match objects based on their prefix. Order matters - first matching rule wins. | <pre>list(object({<br>    Prefix : string,<br>    SampleRate : number,<br>  }))</pre> | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to add to resources created by this module. | `map(string)` | `null` | no |
