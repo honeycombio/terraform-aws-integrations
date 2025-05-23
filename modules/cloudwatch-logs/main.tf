@@ -3,9 +3,10 @@ module "kfh" {
 
   name = var.name
 
-  honeycomb_api_host     = var.honeycomb_api_host
-  honeycomb_api_key      = var.honeycomb_api_key
-  honeycomb_dataset_name = var.honeycomb_dataset_name
+  honeycomb_api_host      = var.honeycomb_api_host
+  honeycomb_api_key       = var.honeycomb_api_key
+  honeycomb_dataset_name  = var.honeycomb_dataset_name
+  additional_destinations = var.additional_destinations
 
   enable_lambda_transform = var.enable_lambda_transform
   lambda_transform_arn    = var.lambda_transform_arn
