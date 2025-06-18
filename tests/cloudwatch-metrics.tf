@@ -32,6 +32,11 @@ module "cloudwatch_metrics" {
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "cloudwatch-metrics"
+  additional_destinations = [{
+    honeycomb_dataset_name = "cloudwatch-metrics-2"
+    honeycomb_api_host     = var.honeycomb_api_host
+    honeycomb_api_key      = var.honeycomb_api_key
+  }]
 
   s3_failure_bucket_arn = module.firehose_failure_bucket.s3_bucket_arn
 
