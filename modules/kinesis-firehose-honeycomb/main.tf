@@ -10,16 +10,30 @@ locals {
     local.default_lambda_parameters,
     local.user_lambda_parameters
   )
+
+  destinations = concat([{
+    honeycomb_dataset_name = var.honeycomb_dataset_name
+    honeycomb_api_key      = var.honeycomb_api_key
+    honeycomb_api_host     = var.honeycomb_api_host
+    }],
+    var.additional_destinations
+  )
+}
+
+moved {
+  from = aws_kinesis_firehose_delivery_stream.http_stream
+  to   = aws_kinesis_firehose_delivery_stream.http_stream[0]
 }
 
 resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
-  name        = var.name
+  count       = length(local.destinations)
+  name        = count.index == 0 ? var.name : "${var.name}_${count.index}"
   destination = "http_endpoint"
 
   http_endpoint_configuration {
-    url                = "${var.honeycomb_api_host}/1/kinesis_events/${var.honeycomb_dataset_name}"
+    url                = "${local.destinations[count.index].honeycomb_api_host}/1/kinesis_events/${local.destinations[count.index].honeycomb_dataset_name}"
     name               = "honeycomb"
-    access_key         = var.honeycomb_api_key
+    access_key         = local.destinations[count.index].honeycomb_api_key
     role_arn           = aws_iam_role.firehose_s3_role.arn
     s3_backup_mode     = var.s3_backup_mode
     buffering_size     = var.http_buffering_size

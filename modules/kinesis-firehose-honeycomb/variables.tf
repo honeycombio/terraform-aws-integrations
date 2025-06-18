@@ -26,6 +26,17 @@ variable "honeycomb_api_host" {
   description = "If you use a Secure Tenancy or other proxy, put its schema://host[:port] here."
 }
 
+# Additional sinks can be configured here.
+variable "additional_destinations" {
+  type = list(object({
+    honeycomb_dataset_name = string,
+    honeycomb_api_key      = string,
+    honeycomb_api_host     = string,
+  }))
+  sensitive = true
+  default   = []
+}
+
 variable "enable_lambda_transform" {
   type        = bool
   default     = false
