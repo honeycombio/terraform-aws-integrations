@@ -32,6 +32,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_destinations"></a> [additional\_destinations](#input\_additional\_destinations) | Additional sinks can be configured here. | <pre>list(object({<br>    honeycomb_dataset_name = string,<br>    honeycomb_api_key      = string,<br>    honeycomb_api_host     = string,<br>  }))</pre> | `[]` | no |
 | <a name="input_exclude_filters"></a> [exclude\_filters](#input\_exclude\_filters) | An optional list of exclusive CloudWatch Metric filters. If set, we'll only stream metrics that do not match these namespace and metric names.<br>Pass an empty list (`[]`) to `metric_names` to exclude all metrics for the namespace.<br>Mututally exclusive with `exclude_filters`. | <pre>list(object({<br>    namespace    = string<br>    metric_names = list(string)<br>  }))</pre> | `[]` | no |
 | <a name="input_honeycomb_api_host"></a> [honeycomb\_api\_host](#input\_honeycomb\_api\_host) | If you use a Secure Tenancy or other proxy, put its schema://host[:port] here. | `string` | `"https://api.honeycomb.io"` | no |
 | <a name="input_honeycomb_api_key"></a> [honeycomb\_api\_key](#input\_honeycomb\_api\_key) | Your Honeycomb team's API key. | `string` | n/a | yes |

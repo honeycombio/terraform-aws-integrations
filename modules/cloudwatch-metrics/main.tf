@@ -13,9 +13,10 @@ module "kfh" {
 
   name = var.name
 
-  honeycomb_api_host     = var.honeycomb_api_host
-  honeycomb_api_key      = var.honeycomb_api_key
-  honeycomb_dataset_name = var.honeycomb_dataset_name
+  honeycomb_api_host      = var.honeycomb_api_host
+  honeycomb_api_key       = var.honeycomb_api_key
+  honeycomb_dataset_name  = var.honeycomb_dataset_name
+  additional_destinations = var.additional_destinations
 
   http_buffering_size     = var.http_buffering_size
   http_buffering_interval = var.http_buffering_interval

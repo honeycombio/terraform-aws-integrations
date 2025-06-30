@@ -21,6 +21,17 @@ variable "honeycomb_api_key" {
   sensitive   = true
 }
 
+# Additional sinks can be configured here.
+variable "additional_destinations" {
+  type = list(object({
+    honeycomb_dataset_name = string,
+    honeycomb_api_key      = string,
+    honeycomb_api_host     = string,
+  }))
+  sensitive = true
+  default   = []
+}
+
 # Optional variables for customer configuration
 variable "honeycomb_api_host" {
   type        = string
