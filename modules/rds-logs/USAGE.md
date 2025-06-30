@@ -32,6 +32,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_agentless_integrations_version"></a> [agentless\_integrations\_version](#input\_agentless\_integrations\_version) | Version of https://github.com/honeycombio/agentless-integrations-for-aws to use. Default is LATEST, but note that specifying this does not automatically update the lambda to use the newest versions as they are released. | `string` | `"LATEST"` | no |
 | <a name="input_db_engine"></a> [db\_engine](#input\_db\_engine) | Engine type on your RDS database | `string` | n/a | yes |
 | <a name="input_db_log_types"></a> [db\_log\_types](#input\_db\_log\_types) | n/a | `list(string)` | n/a | yes |
 | <a name="input_db_name"></a> [db\_name](#input\_db\_name) | Name of your RDS database. | `string` | n/a | yes |
@@ -40,6 +41,7 @@
 | <a name="input_honeycomb_dataset_name"></a> [honeycomb\_dataset\_name](#input\_honeycomb\_dataset\_name) | Your Honeycomb dataset name. | `string` | n/a | yes |
 | <a name="input_http_buffering_interval"></a> [http\_buffering\_interval](#input\_http\_buffering\_interval) | Kinesis Firehose http buffer interval, in seconds. | `number` | `60` | no |
 | <a name="input_http_buffering_size"></a> [http\_buffering\_size](#input\_http\_buffering\_size) | Kinesis Firehose http buffer size, in MiB. | `number` | `15` | no |
+| <a name="input_lambda_function_architecture"></a> [lambda\_function\_architecture](#input\_lambda\_function\_architecture) | Instruction set architecture for your Lambda function. | `string` | `"amd64"` | no |
 | <a name="input_lambda_function_memory"></a> [lambda\_function\_memory](#input\_lambda\_function\_memory) | Memory allocated to the Lambda function in MB. Must be between 128 and 10,240 (10GB), in 64MB increments. | `number` | `192` | no |
 | <a name="input_lambda_function_timeout"></a> [lambda\_function\_timeout](#input\_lambda\_function\_timeout) | Timeout in seconds for lambda function. | `number` | `600` | no |
 | <a name="input_lambda_package_bucket"></a> [lambda\_package\_bucket](#input\_lambda\_package\_bucket) | Internal. Override S3 bucket where lambda function zip is located. | `string` | `""` | no |
