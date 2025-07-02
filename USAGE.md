@@ -33,6 +33,8 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_cloudwatch_log_groups"></a> [cloudwatch\_log\_groups](#input\_cloudwatch\_log\_groups) | CloudWatch Log Group names to stream to Honeycomb | `list(string)` | `[]` | no |
+| <a name="input_cloudwatch_logs_name"></a> [cloudwatch\_logs\_name](#input\_cloudwatch\_logs\_name) | Name for the CloudWatch Logs integration resources | `string` | `"honeycomb-cloudwatch-logs"` | no |
+| <a name="input_cloudwatch_metrics_name"></a> [cloudwatch\_metrics\_name](#input\_cloudwatch\_metrics\_name) | Name for the CloudWatch Metrics integration resources | `string` | `"honeycomb-cloudwatch-metrics"` | no |
 | <a name="input_delivery_failure_s3_bucket_name"></a> [delivery\_failure\_s3\_bucket\_name](#input\_delivery\_failure\_s3\_bucket\_name) | Name for S3 bucket that will be created to hold Kinesis Firehose delivery failures. | `string` | `"honeycomb-firehose-failures-{REGION}"` | no |
 | <a name="input_enable_cloudwatch_metrics"></a> [enable\_cloudwatch\_metrics](#input\_enable\_cloudwatch\_metrics) | n/a | `bool` | `false` | no |
 | <a name="input_enable_rds_logs"></a> [enable\_rds\_logs](#input\_enable\_rds\_logs) | n/a | `bool` | `false` | no |
@@ -45,6 +47,7 @@
 | <a name="input_rds_db_engine"></a> [rds\_db\_engine](#input\_rds\_db\_engine) | n/a | `string` | `""` | no |
 | <a name="input_rds_db_log_types"></a> [rds\_db\_log\_types](#input\_rds\_db\_log\_types) | n/a | `list(string)` | `[]` | no |
 | <a name="input_rds_db_name"></a> [rds\_db\_name](#input\_rds\_db\_name) | n/a | `string` | `""` | no |
+| <a name="input_rds_logs_name"></a> [rds\_logs\_name](#input\_rds\_logs\_name) | Name for the RDS Logs integration resources | `string` | `"honeycomb-rds-cloudwatch-logs"` | no |
 | <a name="input_s3_backup_mode"></a> [s3\_backup\_mode](#input\_s3\_backup\_mode) | Should we only backup to S3 data that failed delivery, or all data? | `string` | `"FailedDataOnly"` | no |
 | <a name="input_s3_bucket_arn"></a> [s3\_bucket\_arn](#input\_s3\_bucket\_arn) | The full ARN of the bucket storing logs - must pass s3\_parser\_type with this | `string` | `""` | no |
 | <a name="input_s3_buffer_interval"></a> [s3\_buffer\_interval](#input\_s3\_buffer\_interval) | The Firehose S3 buffer interval (in seconds). See https://docs.aws.amazon.com/firehose/latest/dev/create-configure.html | `number` | `400` | no |
@@ -53,6 +56,7 @@
 | <a name="input_s3_filter_prefix"></a> [s3\_filter\_prefix](#input\_s3\_filter\_prefix) | Prefix within logs bucket to restrict processing. | `string` | `""` | no |
 | <a name="input_s3_filter_suffix"></a> [s3\_filter\_suffix](#input\_s3\_filter\_suffix) | Suffix of files that should be processed. | `string` | `".gz"` | no |
 | <a name="input_s3_force_destroy"></a> [s3\_force\_destroy](#input\_s3\_force\_destroy) | By default, AWS will decline to delete S3 buckets that are not empty:<br> `BucketNotEmpty: The bucket you tried to delete is not empty`.  These buckets<br> are used for backup if delivery or processing fail.<br> #<br> To allow this module's resources to be removed, we've set force\_destroy =<br> true, allowing non-empty buckets to be deleted. If you want to block this and<br> preserve those failed deliveries, you can set this value to false, though that<br> will leave terraform unable to cleanly destroy the module. | `bool` | `true` | no |
+| <a name="input_s3_logfile_name"></a> [s3\_logfile\_name](#input\_s3\_logfile\_name) | Name for the S3 Logfile integration resources | `string` | `"honeycomb-s3-logfile"` | no |
 | <a name="input_s3_parser_type"></a> [s3\_parser\_type](#input\_s3\_parser\_type) | The type of logfile to parse. | `string` | `""` | no |
 | <a name="input_sample_rate"></a> [sample\_rate](#input\_sample\_rate) | Sample rate - used for S3 logfiles only. See https://honeycomb.io/docs/guides/sampling/. | `number` | `1` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to add to resources created by this module. | `map(string)` | `null` | no |
