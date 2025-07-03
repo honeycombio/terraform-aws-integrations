@@ -1,3 +1,14 @@
+# [v1.5.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.5.0) - 2025-07-03
+
+## Changes
+
+- feat(kinesis): allow multiple sinks for one firehose (#89) | @lizthegrey
+- feat: implements terraform to set LINE_FILTER_RULES (#87) | @mterhar
+- maint: Limit hashicorp/aws provider to 5.x versions (#91) | @MikeGoldsmith
+- maint: Update generated usage docs (#90) | @MikeGoldsmith
+
+[Changes][v1.5.0]
+
 <a id="v1.3.1"></a>
 # [v1.3.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.3.1) - 2024-12-19
 
