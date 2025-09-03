@@ -23,7 +23,7 @@ locals {
   compact_config = "receivers:\n  awsfirehose:\n    endpoint: 0.0.0.0:4433\n    record_type: otlp_v1\nexporters:\n${join("\n", [for idx, dest in local.destinations : "  otlphttp/${idx}:\n    endpoint: ${dest.honeycomb_api_host}/v1/metrics\n    headers:\n      x-honeycomb-team: ${dest.honeycomb_api_key}\n      x-honeycomb-dataset: ${dest.honeycomb_dataset_name}"])}\nprocessors:\n  batch:\n    timeout: 300s\n    send_batch_size: 100000\nservice:\n  pipelines:\n    metrics:\n      receivers: [awsfirehose]\n      processors: [batch]\n      exporters: [${join(", ", [for idx, dest in local.destinations : "otlphttp/${idx}"])}]"
 
   collector_env_vars = {
-    OTEL_CONFIG = local.compact_config
+    OTEL_CONFIG = jsonencode(local.compact_config)
   }
 }
 
