@@ -20,7 +20,7 @@ module "kinesis_firehose_multi" {
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "kinesis-primary"
-  
+
   additional_destinations = [
     {
       honeycomb_dataset_name = "kinesis-secondary"
@@ -47,11 +47,11 @@ output "multi_destination_stream_arn" {
 }
 
 output "otel_collector_service_url" {
-  value = module.kinesis_firehose_multi.otel_collector_service_url
+  value       = module.kinesis_firehose_multi.otel_collector_service_url
   description = "Should be non-null for multi-destination scenario"
 }
 
 output "otel_collector_service_arn" {
-  value = module.kinesis_firehose_multi.otel_collector_service_arn
+  value       = module.kinesis_firehose_multi.otel_collector_service_arn
   description = "Should be non-null for multi-destination scenario"
 }

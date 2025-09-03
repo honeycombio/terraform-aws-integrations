@@ -21,7 +21,7 @@ locals {
 
   # Create a compact YAML configuration string for all destinations
   compact_config = "receivers:\n  awsfirehose:\n    endpoint: 0.0.0.0:4433\n    record_type: otlp_v1\nexporters:\n${join("\n", [for idx, dest in local.destinations : "  otlphttp/${idx}:\n    endpoint: ${dest.honeycomb_api_host}/v1/metrics\n    headers:\n      x-honeycomb-team: ${dest.honeycomb_api_key}\n      x-honeycomb-dataset: ${dest.honeycomb_dataset_name}"])}\nprocessors:\n  batch: {}\nservice:\n  pipelines:\n    metrics:\n      receivers: [awsfirehose]\n      processors: [batch]\n      exporters: [${join(", ", [for idx, dest in local.destinations : "otlphttp/${idx}"])}]"
-  
+
   collector_env_vars = {
     OTEL_CONFIG = local.compact_config
   }
@@ -76,15 +76,15 @@ resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
 }
 
 resource "aws_apprunner_service" "otel_collector" {
-  count       = length(local.destinations) > 1 ? 1 : 0
+  count        = length(local.destinations) > 1 ? 1 : 0
   service_name = "${var.name}-otel-collector"
 
   source_configuration {
     image_repository {
       image_configuration {
-        port = "4433"
+        port                          = "4433"
         runtime_environment_variables = local.collector_env_vars
-        start_command = "/honeycomb-opentelemetry-collector --config env:OTEL_CONFIG"
+        start_command                 = "/honeycomb-opentelemetry-collector --config env:OTEL_CONFIG"
       }
       image_identifier      = "public.ecr.aws/honeycombio/honeycomb-opentelemetry-collector:v0.0.19"
       image_repository_type = "ECR_PUBLIC"
