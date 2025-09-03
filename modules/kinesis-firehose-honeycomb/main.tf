@@ -18,22 +18,102 @@ locals {
     }],
     var.additional_destinations
   )
-}
 
-moved {
-  from = aws_kinesis_firehose_delivery_stream.http_stream
-  to   = aws_kinesis_firehose_delivery_stream.http_stream[0]
+  # Create a compact YAML configuration string for all destinations
+  compact_config = "receivers:\n  awsfirehose:\n    endpoint: 0.0.0.0:4433\n    record_type: otlp_v1\nexporters:\n${join("\n", [for idx, dest in local.destinations : "  otlphttp/${idx}:\n    endpoint: ${dest.honeycomb_api_host}/v1/metrics\n    headers:\n      x-honeycomb-team: ${dest.honeycomb_api_key}\n      x-honeycomb-dataset: ${dest.honeycomb_dataset_name}"])}\nprocessors:\n  batch: {}\nservice:\n  pipelines:\n    metrics:\n      receivers: [awsfirehose]\n      processors: [batch]\n      exporters: [${join(", ", [for idx, dest in local.destinations : "otlphttp/${idx}"])}]"
+  
+  collector_env_vars = {
+    OTEL_CONFIG = local.compact_config
+  }
 }
 
 resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
-  count       = length(local.destinations)
-  name        = count.index == 0 ? var.name : "${var.name}_${count.index}"
+  count       = length(local.destinations) == 1 ? 1 : 0
+  name        = var.name
   destination = "http_endpoint"
 
   http_endpoint_configuration {
     url                = "${local.destinations[count.index].honeycomb_api_host}/1/kinesis_events/${local.destinations[count.index].honeycomb_dataset_name}"
     name               = "honeycomb"
     access_key         = local.destinations[count.index].honeycomb_api_key
+    role_arn           = aws_iam_role.firehose_s3_role.arn
+    s3_backup_mode     = var.s3_backup_mode
+    buffering_size     = var.http_buffering_size
+    buffering_interval = var.http_buffering_interval
+
+    s3_configuration {
+      role_arn   = aws_iam_role.firehose_s3_role.arn
+      bucket_arn = var.s3_failure_bucket_arn
+
+      buffering_size     = var.s3_buffer_size
+      buffering_interval = var.s3_buffer_interval
+      compression_format = var.s3_compression_format
+    }
+
+    request_configuration {
+      content_encoding = "GZIP"
+    }
+
+    dynamic "processing_configuration" {
+      for_each = var.lambda_transform_arn != "" ? ["allow_transform"] : []
+      content {
+        enabled = var.enable_lambda_transform
+
+        processors {
+          type = "Lambda"
+
+          dynamic "parameters" {
+            for_each = local.lambda_parameters
+            content {
+              parameter_name  = parameters.value.name
+              parameter_value = parameters.value.value
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "aws_apprunner_service" "otel_collector" {
+  count       = length(local.destinations) > 1 ? 1 : 0
+  service_name = "${var.name}-otel-collector"
+
+  source_configuration {
+    image_repository {
+      image_configuration {
+        port = "4433"
+        runtime_environment_variables = local.collector_env_vars
+        start_command = "/honeycomb-opentelemetry-collector --config env:OTEL_CONFIG"
+      }
+      image_identifier      = "public.ecr.aws/honeycombio/honeycomb-opentelemetry-collector:v0.0.19"
+      image_repository_type = "ECR_PUBLIC"
+    }
+  }
+
+  instance_configuration {
+    cpu    = "0.25 vCPU"
+    memory = "0.5 GB"
+  }
+
+  network_configuration {
+    ip_address_type = "IPV4"
+    ingress_configuration {
+      is_publicly_accessible = true
+    }
+  }
+
+  tags = var.tags
+}
+
+resource "aws_kinesis_firehose_delivery_stream" "collector_stream" {
+  count       = length(local.destinations) > 1 ? 1 : 0
+  name        = "${var.name}-collector"
+  destination = "http_endpoint"
+
+  http_endpoint_configuration {
+    url                = "https://${aws_apprunner_service.otel_collector[0].service_url}/"
+    name               = "otel-collector"
     role_arn           = aws_iam_role.firehose_s3_role.arn
     s3_backup_mode     = var.s3_backup_mode
     buffering_size     = var.http_buffering_size
