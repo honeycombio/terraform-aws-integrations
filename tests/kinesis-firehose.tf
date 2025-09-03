@@ -39,19 +39,19 @@ module "kinesis_firehose_multi" {
 
 # Output to verify App Runner service is created for multi-destination
 output "single_destination_stream_arn" {
-  value = module.kinesis_firehose_single.kinesis_firehose_delivery_stream_arn
+  value = nonsensitive(module.kinesis_firehose_single.kinesis_firehose_delivery_stream_arn)
 }
 
 output "multi_destination_stream_arn" {
-  value = module.kinesis_firehose_multi.kinesis_firehose_delivery_stream_arn
+  value = nonsensitive(module.kinesis_firehose_multi.kinesis_firehose_delivery_stream_arn)
 }
 
 output "otel_collector_service_url" {
-  value       = module.kinesis_firehose_multi.otel_collector_service_url
+  value       = nonsensitive(module.kinesis_firehose_multi.otel_collector_service_url)
   description = "Should be non-null for multi-destination scenario"
 }
 
 output "otel_collector_service_arn" {
-  value       = module.kinesis_firehose_multi.otel_collector_service_arn
+  value       = nonsensitive(module.kinesis_firehose_multi.otel_collector_service_arn)
   description = "Should be non-null for multi-destination scenario"
 }
