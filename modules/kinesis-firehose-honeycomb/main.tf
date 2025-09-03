@@ -80,6 +80,7 @@ resource "aws_apprunner_service" "otel_collector" {
   service_name = "${var.name}-otel-collector"
 
   source_configuration {
+    auto_deployments_enabled = false
     image_repository {
       image_configuration {
         port                          = "4433"
