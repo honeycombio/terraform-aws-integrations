@@ -66,15 +66,36 @@ locals {
   }
 }
 
-resource "aws_kinesis_firehose_delivery_stream" "http_stream" {
-  count       = length(local.destinations) == 1 ? 1 : 0
-  name        = var.name
+moved {
+  from = aws_kinesis_firehose_delivery_stream.http_stream[0]
+  to   = aws_kinesis_firehose_delivery_stream.stream
+}
+
+moved {
+  from = aws_kinesis_firehose_delivery_stream.http_stream
+  to   = aws_kinesis_firehose_delivery_stream.stream
+}
+
+resource "aws_kinesis_firehose_delivery_stream" "stream" {
+  name        = length(local.destinations) == 1 ? var.name : "${var.name}-collector"
   destination = "http_endpoint"
 
   http_endpoint_configuration {
-    url                = "${local.destinations[count.index].honeycomb_api_host}/1/kinesis_events/${local.destinations[count.index].honeycomb_dataset_name}"
-    name               = "honeycomb"
-    access_key         = local.destinations[count.index].honeycomb_api_key
+    # Single destination: direct to Honeycomb, Multiple destinations: via collector
+    url = length(local.destinations) == 1 ? (
+      "${local.destinations[0].honeycomb_api_host}/1/kinesis_events/${local.destinations[0].honeycomb_dataset_name}"
+      ) : (
+      "https://${aws_apprunner_service.otel_collector[0].service_url}/"
+    )
+
+    name = length(local.destinations) == 1 ? "honeycomb" : "otel-collector"
+
+    access_key = length(local.destinations) == 1 ? (
+      local.destinations[0].honeycomb_api_key
+      ) : (
+      local.actual_otel_access_key
+    )
+
     role_arn           = aws_iam_role.firehose_s3_role.arn
     s3_backup_mode     = var.s3_backup_mode
     buffering_size     = var.http_buffering_size
@@ -128,7 +149,7 @@ resource "aws_apprunner_service" "otel_collector" {
         }
         start_command = "--config env:OTEL_CONFIG"
       }
-      image_identifier      = "public.ecr.aws/honeycombio/honeycomb-opentelemetry-collector:v0.0.19"
+      image_identifier      = "public.ecr.aws/honeycombio/honeycomb-opentelemetry-collector:${var.otel_collector_version}"
       image_repository_type = "ECR_PUBLIC"
     }
   }
@@ -152,53 +173,6 @@ resource "aws_apprunner_service" "otel_collector" {
   tags = var.tags
 }
 
-resource "aws_kinesis_firehose_delivery_stream" "collector_stream" {
-  count       = length(local.destinations) > 1 ? 1 : 0
-  name        = "${var.name}-collector"
-  destination = "http_endpoint"
-
-  http_endpoint_configuration {
-    url                = "https://${aws_apprunner_service.otel_collector[0].service_url}/"
-    name               = "otel-collector"
-    access_key         = local.actual_otel_access_key
-    role_arn           = aws_iam_role.firehose_s3_role.arn
-    s3_backup_mode     = var.s3_backup_mode
-    buffering_size     = var.http_buffering_size
-    buffering_interval = var.http_buffering_interval
-
-    s3_configuration {
-      role_arn   = aws_iam_role.firehose_s3_role.arn
-      bucket_arn = var.s3_failure_bucket_arn
-
-      buffering_size     = var.s3_buffer_size
-      buffering_interval = var.s3_buffer_interval
-      compression_format = var.s3_compression_format
-    }
-
-    request_configuration {
-      content_encoding = "GZIP"
-    }
-
-    dynamic "processing_configuration" {
-      for_each = var.lambda_transform_arn != "" ? ["allow_transform"] : []
-      content {
-        enabled = var.enable_lambda_transform
-
-        processors {
-          type = "Lambda"
-
-          dynamic "parameters" {
-            for_each = local.lambda_parameters
-            content {
-              parameter_name  = parameters.value.name
-              parameter_value = parameters.value.value
-            }
-          }
-        }
-      }
-    }
-  }
-}
 
 data "aws_iam_policy_document" "firehose-assume-role-policy" {
   statement {

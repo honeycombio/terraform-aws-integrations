@@ -138,3 +138,9 @@ variable "otel_access_key" {
   default     = ""
   sensitive   = true
 }
+
+variable "otel_collector_version" {
+  type        = string
+  description = "The version tag of the Honeycomb OpenTelemetry collector image to use."
+  default     = "v0.0.19"
+}

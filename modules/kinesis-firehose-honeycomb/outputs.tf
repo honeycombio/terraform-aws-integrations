@@ -1,5 +1,5 @@
 output "kinesis_firehose_delivery_stream_arn" {
-  value = length(local.destinations) == 1 ? aws_kinesis_firehose_delivery_stream.http_stream[0].arn : aws_kinesis_firehose_delivery_stream.collector_stream[0].arn
+  value = aws_kinesis_firehose_delivery_stream.stream.arn
 }
 
 output "otel_collector_service_url" {
