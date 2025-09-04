@@ -67,11 +67,6 @@ locals {
 }
 
 moved {
-  from = aws_kinesis_firehose_delivery_stream.http_stream[0]
-  to   = aws_kinesis_firehose_delivery_stream.stream
-}
-
-moved {
   from = aws_kinesis_firehose_delivery_stream.http_stream
   to   = aws_kinesis_firehose_delivery_stream.stream
 }
