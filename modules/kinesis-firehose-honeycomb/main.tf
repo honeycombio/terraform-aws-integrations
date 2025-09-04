@@ -145,6 +145,10 @@ resource "aws_apprunner_service" "otel_collector" {
     }
   }
 
+  observability_configuration {
+    observability_enabled = false
+  }
+
   tags = var.tags
 }
 
