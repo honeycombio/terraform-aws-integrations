@@ -131,3 +131,10 @@ variable "tags" {
   default     = {}
   description = "A map of tags to apply to resources created by this module."
 }
+
+variable "otel_access_key" {
+  type        = string
+  description = "Access key for OpenTelemetry collector awsfirehose receiver authentication. Generated randomly if not provided."
+  default     = ""
+  sensitive   = true
+}

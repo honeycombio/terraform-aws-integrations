@@ -1,7 +1,15 @@
 data "aws_region" "current" {}
 
+# Generate access key for OpenTelemetry collector if not provided
+resource "random_password" "otel_access_key" {
+  count   = length(local.destinations) > 1 && var.otel_access_key == "" ? 1 : 0
+  length  = 32
+  special = false
+}
+
 locals {
   region                    = data.aws_region.current.name
+  actual_otel_access_key    = var.otel_access_key != "" ? var.otel_access_key : (length(local.destinations) > 1 ? random_password.otel_access_key[0].result : "")
   default_lambda_parameters = [{ "name" = "BufferSizeInMBs", "value" = 2 }, { "name" = "BufferIntervalInSeconds", "value" = 61 }]
   user_lambda_parameters    = [for k, v in var.lambda_processor_parameters : { "name" = k, "value" = v }]
 
@@ -25,6 +33,7 @@ locals {
       awsfirehose = {
         endpoint    = "0.0.0.0:4433"
         record_type = "otlp_v1"
+        access_key  = local.actual_otel_access_key
       }
     }
 
@@ -54,10 +63,6 @@ locals {
         }
       }
     }
-  }
-
-  collector_env_vars = {
-    OTEL_CONFIG = jsonencode(local.otel_config)
   }
 }
 
@@ -117,9 +122,11 @@ resource "aws_apprunner_service" "otel_collector" {
     auto_deployments_enabled = false
     image_repository {
       image_configuration {
-        port                          = "4433"
-        runtime_environment_variables = local.collector_env_vars
-        start_command                 = "/honeycomb-opentelemetry-collector --config env:OTEL_CONFIG"
+        port = "4433"
+        runtime_environment_variables = {
+          OTEL_CONFIG = jsonencode(local.otel_config)
+        }
+        start_command = "/honeycomb-opentelemetry-collector --config env:OTEL_CONFIG"
       }
       image_identifier      = "public.ecr.aws/honeycombio/honeycomb-opentelemetry-collector:v0.0.19"
       image_repository_type = "ECR_PUBLIC"
@@ -149,6 +156,7 @@ resource "aws_kinesis_firehose_delivery_stream" "collector_stream" {
   http_endpoint_configuration {
     url                = "https://${aws_apprunner_service.otel_collector[0].service_url}/"
     name               = "otel-collector"
+    access_key         = local.actual_otel_access_key
     role_arn           = aws_iam_role.firehose_s3_role.arn
     s3_backup_mode     = var.s3_backup_mode
     buffering_size     = var.http_buffering_size
