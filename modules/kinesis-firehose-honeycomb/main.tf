@@ -126,7 +126,7 @@ resource "aws_apprunner_service" "otel_collector" {
         runtime_environment_variables = {
           OTEL_CONFIG = jsonencode(local.otel_config)
         }
-        start_command = "/honeycomb-opentelemetry-collector --config env:OTEL_CONFIG"
+        start_command = "--config env:OTEL_CONFIG"
       }
       image_identifier      = "public.ecr.aws/honeycombio/honeycomb-opentelemetry-collector:v0.0.19"
       image_repository_type = "ECR_PUBLIC"
