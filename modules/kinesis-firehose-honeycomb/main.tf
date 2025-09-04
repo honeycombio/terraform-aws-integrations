@@ -19,11 +19,45 @@ locals {
     var.additional_destinations
   )
 
-  # Create a compact YAML configuration string for all destinations with optimized batch processor
-  compact_config = "receivers:\n  awsfirehose:\n    endpoint: 0.0.0.0:4433\n    record_type: otlp_v1\nexporters:\n${join("\n", [for idx, dest in local.destinations : "  otlphttp/${idx}:\n    endpoint: ${dest.honeycomb_api_host}/v1/metrics\n    headers:\n      x-honeycomb-team: ${dest.honeycomb_api_key}\n      x-honeycomb-dataset: ${dest.honeycomb_dataset_name}"])}\nprocessors:\n  batch:\n    timeout: 300s\n    send_batch_size: 100000\nservice:\n  pipelines:\n    metrics:\n      receivers: [awsfirehose]\n      processors: [batch]\n      exporters: [${join(", ", [for idx, dest in local.destinations : "otlphttp/${idx}"])}]"
+  # Create OpenTelemetry collector configuration as a structured object
+  otel_config = {
+    receivers = {
+      awsfirehose = {
+        endpoint    = "0.0.0.0:4433"
+        record_type = "otlp_v1"
+      }
+    }
+
+    exporters = {
+      for idx, dest in local.destinations : "otlphttp/${idx}" => {
+        endpoint = "${dest.honeycomb_api_host}/v1/metrics"
+        headers = {
+          "x-honeycomb-team"    = dest.honeycomb_api_key
+          "x-honeycomb-dataset" = dest.honeycomb_dataset_name
+        }
+      }
+    }
+
+    processors = {
+      batch = {
+        timeout         = "300s"
+        send_batch_size = 100000
+      }
+    }
+
+    service = {
+      pipelines = {
+        metrics = {
+          receivers  = ["awsfirehose"]
+          processors = ["batch"]
+          exporters  = [for idx, dest in local.destinations : "otlphttp/${idx}"]
+        }
+      }
+    }
+  }
 
   collector_env_vars = {
-    OTEL_CONFIG = jsonencode(local.compact_config)
+    OTEL_CONFIG = jsonencode(local.otel_config)
   }
 }
 
