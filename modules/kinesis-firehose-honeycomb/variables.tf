@@ -131,3 +131,16 @@ variable "tags" {
   default     = {}
   description = "A map of tags to apply to resources created by this module."
 }
+
+variable "otel_access_key" {
+  type        = string
+  description = "Access key for OpenTelemetry collector awsfirehose receiver authentication. Generated randomly if not provided."
+  default     = ""
+  sensitive   = true
+}
+
+variable "otel_collector_version" {
+  type        = string
+  description = "The version tag of the Honeycomb OpenTelemetry collector image to use."
+  default     = "v0.0.19"
+}

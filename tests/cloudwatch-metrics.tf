@@ -56,3 +56,46 @@ module "cloudwatch_metrics" {
     }
   ]
 }
+
+# Test with three destinations to verify App Runner multiplexing
+module "cloudwatch_metrics_multi" {
+  source = "../modules/cloudwatch-metrics"
+
+  name = "cwm-multi-${random_pet.this.id}"
+
+  honeycomb_api_host     = var.honeycomb_api_host
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "cloudwatch-metrics-primary"
+  additional_destinations = [
+    {
+      honeycomb_dataset_name = "cloudwatch-metrics-secondary"
+      honeycomb_api_host     = var.honeycomb_api_host
+      honeycomb_api_key      = var.honeycomb_api_key
+    },
+    {
+      honeycomb_dataset_name = "cloudwatch-metrics-tertiary"
+      honeycomb_api_host     = var.honeycomb_api_host
+      honeycomb_api_key      = var.honeycomb_api_key
+    }
+  ]
+
+  s3_failure_bucket_arn = module.firehose_failure_bucket.s3_bucket_arn
+
+  include_filters = [
+    {
+      namespace    = "AWS/RDS"
+      metric_names = []
+    }
+  ]
+}
+
+# Outputs to verify App Runner service creation
+output "cwm_multi_otel_collector_url" {
+  value       = nonsensitive(module.cloudwatch_metrics_multi.otel_collector_service_url)
+  description = "Should be non-null when using multiple destinations"
+}
+
+output "cwm_multi_otel_collector_arn" {
+  value       = nonsensitive(module.cloudwatch_metrics_multi.otel_collector_service_arn)
+  description = "Should be non-null when using multiple destinations"
+}
