@@ -71,6 +71,9 @@ module "cloudwatch_metrics" {
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "cloudwatch-metrics"
 
+  include_filters = var.cloudwatch_metrics_include_filters
+  exclude_filters = var.cloudwatch_metrics_exclude_filters
+
   s3_failure_bucket_arn = module.failure_bucket.s3_bucket_arn
 
   tags = var.tags
