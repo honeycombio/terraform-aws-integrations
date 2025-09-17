@@ -207,8 +207,35 @@ variable "cloudwatch_metrics_name" {
   default     = "honeycomb-cloudwatch-metrics"
 }
 
+variable "cloudwatch_metrics_include_filters" {
+  type = list(object({
+    namespace    = string
+    metric_names = list(string)
+  }))
+  default     = []
+  description = <<EOH
+An optional list of inclusive CloudWatch Metric filters. If set, we'll only stream metrics matching these namespace and metric names.
+Pass an empty list (`[]`) to `metric_names` to include all metrics for the namespace.
+Mutually exclusive with exclude filters.
+EOH
+}
+
+variable "cloudwatch_metrics_exclude_filters" {
+  type = list(object({
+    namespace    = string
+    metric_names = list(string)
+  }))
+  default     = []
+  description = <<EOH
+An optional list of exclusive CloudWatch Metric filters. If set, we'll only stream metrics that do not match these namespace and metric names.
+Pass an empty list (`[]`) to `metric_names` to exclude all metrics for the namespace.
+Mutually exclusive with include filters.
+EOH
+}
+
 variable "s3_logfile_name" {
   type        = string
   description = "Name for the S3 Logfile integration resources"
   default     = "honeycomb-s3-logfile"
 }
+
