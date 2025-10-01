@@ -114,7 +114,7 @@ module "elb" {
   internal        = false
 
   number_of_instances = 1
-  instances           = module.ec2_instances.id
+  instances           = [module.ec2_instances.id]
 
   health_check = {
     target              = "HTTP:80/"
