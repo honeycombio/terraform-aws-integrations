@@ -1,7 +1,7 @@
 data "aws_region" "current" {}
 
 locals {
-  region                    = data.aws_region.current.name
+  region                    = data.aws_region.current.region
   default_lambda_parameters = [{ "name" = "BufferSizeInMBs", "value" = 2 }, { "name" = "BufferIntervalInSeconds", "value" = 61 }]
   user_lambda_parameters    = [for k, v in var.lambda_processor_parameters : { "name" = k, "value" = v }]
 
