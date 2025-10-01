@@ -150,9 +150,7 @@ data "aws_ami" "latest" {
 
 module "ec2_instances" {
   source  = "terraform-aws-modules/ec2-instance/aws"
-  version = "~> 2.0"
-
-  instance_count = 1
+  version = "~> 6.0"
 
   name                        = random_pet.this.id
   ami                         = data.aws_ami.latest.id
