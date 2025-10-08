@@ -9,7 +9,7 @@
 data "aws_region" "current" {}
 
 locals {
-  failure_bucket = replace(var.delivery_failure_s3_bucket_name, "{REGION}", data.aws_region.current.name)
+  failure_bucket = replace(var.delivery_failure_s3_bucket_name, "{REGION}", data.aws_region.current.region)
 }
 
 module "failure_bucket" {

@@ -8,7 +8,7 @@ resource "random_password" "otel_access_key" {
 }
 
 locals {
-  region                    = data.aws_region.current.name
+  region                    = data.aws_region.current.region
   actual_otel_access_key    = var.otel_access_key != "" ? var.otel_access_key : (length(local.destinations) > 1 ? random_password.otel_access_key[0].result : "")
   default_lambda_parameters = [{ "name" = "BufferSizeInMBs", "value" = 2 }, { "name" = "BufferIntervalInSeconds", "value" = 61 }]
   user_lambda_parameters    = [for k, v in var.lambda_processor_parameters : { "name" = k, "value" = v }]
