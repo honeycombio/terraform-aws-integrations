@@ -1,3 +1,14 @@
+<a id="v1.5.1"></a>
+# [v1.5.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.5.1) - 2025-10-06
+
+## Changes
+
+- maint: remove upper bound on hashicorp/aws provider version constraint (#94) | @robbkidd 
+- feat(kinesis): add App Runner OpenTelemetry collector for multiplexing (#95) | @lizthegrey
+
+[Changes][v1.5.1]
+
+<a id="v1.5.0"></a>
 # [v1.5.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.5.0) - 2025-07-03
 
 ## Changes
