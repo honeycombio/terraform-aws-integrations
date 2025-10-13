@@ -3,7 +3,7 @@ data "aws_region" "current" {}
 
 locals {
   account_id              = data.aws_caller_identity.current.account_id
-  region                  = data.aws_region.current.name
+  region                  = data.aws_region.current.region
   is_aurora               = trimprefix(var.db_engine, "aurora") != var.db_engine // startswith() only available in TF >=1.3
   log_group_prefix        = local.is_aurora ? "aws/rds/cluster" : "aws/rds/instance"
   log_groups              = [for log_type in var.db_log_types : "/${local.log_group_prefix}/${var.db_name}/${log_type}"]
@@ -43,7 +43,7 @@ module "rds_lambda_transform" {
 
   create_package = false
   s3_existing_package = {
-    bucket = coalesce(var.lambda_package_bucket, "honeycomb-integrations-${data.aws_region.current.name}")
+    bucket = coalesce(var.lambda_package_bucket, "honeycomb-integrations-${data.aws_region.current.region}")
     key    = coalesce(var.lambda_package_key, "agentless-integrations-for-aws/${var.agentless_integrations_version}/rds-${var.db_engine}-kfh-transform-${var.lambda_function_architecture}.zip")
   }
 

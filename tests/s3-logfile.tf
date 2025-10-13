@@ -114,7 +114,7 @@ module "elb" {
   internal        = false
 
   number_of_instances = 1
-  instances           = module.ec2_instances.id
+  instances           = [module.ec2_instances.id]
 
   health_check = {
     target              = "HTTP:80/"
@@ -150,14 +150,15 @@ data "aws_ami" "latest" {
 
 module "ec2_instances" {
   source  = "terraform-aws-modules/ec2-instance/aws"
-  version = "~> 2.0"
+  version = "~> 6.0"
 
-  instance_count = 1
-
-  name                        = random_pet.this.id
   ami                         = data.aws_ami.latest.id
   instance_type               = "t2.micro"
   vpc_security_group_ids      = [aws_security_group.allow_http.id]
   subnet_id                   = element(data.aws_subnets.default.ids, 0)
   associate_public_ip_address = true
+
+  tags = {
+    Name = random_pet.this.id
+  }
 }
