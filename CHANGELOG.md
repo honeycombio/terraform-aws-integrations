@@ -3,8 +3,8 @@
 
 ⚠️
 This release updates the hashicorp/aws dependency from v5.0 ~> v6.0 which introduces breaking changes to the AWS module's API.
-There are no changes to the API of the honeycomb module itself.
-Upgrade to this release of the honeycomb module when you are ready to [migrate to v6 of the AWS module](https://registry.terraform.io/providers/hashicorp/aws/6.16.0/docs/guides/version-6-upgrade).
+There are no changes to the API of the Honeycomb module itself.
+Upgrade to this release of the Honeycomb module when you are ready to [migrate to v6 of the AWS module](https://registry.terraform.io/providers/hashicorp/aws/6.16.0/docs/guides/version-6-upgrade).
 
 ## Changes
 
