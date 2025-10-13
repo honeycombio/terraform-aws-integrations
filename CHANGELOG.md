@@ -1,3 +1,12 @@
+<a id="v1.5.2"></a>
+# [v1.5.2 🛠️](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.5.2) - 2025-10-13
+
+## Changes
+
+- maint(deps): revert upgrade to hashicorp/AWS module v6 (#99) | @MikeGoldsmith
+
+[Changes][v1.5.2]
+
 <a id="v1.5.1"></a>
 # [v1.5.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.5.1) - 2025-10-06
 
