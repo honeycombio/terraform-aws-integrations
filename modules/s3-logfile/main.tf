@@ -49,7 +49,7 @@ module "s3_processor" {
 
   create_package = false
   s3_existing_package = {
-    bucket = coalesce(var.lambda_package_bucket, "honeycomb-integrations-${data.aws_region.current.region}")
+    bucket = coalesce(var.lambda_package_bucket, "honeycomb-integrations-${data.aws_region.current.name}")
     key    = coalesce(var.lambda_package_key, "agentless-integrations-for-aws/${var.agentless_integrations_version}/s3-handler-${var.lambda_function_architecture}.zip")
   }
 
