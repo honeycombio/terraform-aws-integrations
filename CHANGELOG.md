@@ -1,3 +1,17 @@
+<a id="v2.0.0"></a>
+# [v2.0.0 🛠️](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.0.0) - 2025-10-13
+
+⚠️
+This release updates the hashicorp/aws dependency from v5.0 ~> v6.0 which introduces breaking changes to the AWS module's API.
+There are no changes to the API of the Honeycomb module itself.
+Upgrade to this release of the Honeycomb module when you are ready to [migrate to v6 of the AWS module](https://registry.terraform.io/providers/hashicorp/aws/6.16.0/docs/guides/version-6-upgrade).
+
+## Changes
+
+- maint(deps): Update hashicorp/AWS to v6 (#101) | @MikeGoldsmith
+
+[Changes][v2.0.0]
+
 <a id="v1.5.2"></a>
 # [v1.5.2 🛠️](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.5.2) - 2025-10-13
 
