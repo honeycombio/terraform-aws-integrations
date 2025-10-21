@@ -91,11 +91,22 @@ module "cloudwatch_metrics_multi" {
 
 # Outputs to verify App Runner service creation
 output "cwm_multi_otel_collector_url" {
-  value       = nonsensitive(module.cloudwatch_metrics_multi.otel_collector_service_url)
+  value       = module.cloudwatch_metrics_multi.otel_collector_service_url
   description = "Should be non-null when using multiple destinations"
 }
 
 output "cwm_multi_otel_collector_arn" {
-  value       = nonsensitive(module.cloudwatch_metrics_multi.otel_collector_service_arn)
+  value       = module.cloudwatch_metrics_multi.otel_collector_service_arn
   description = "Should be non-null when using multiple destinations"
+}
+
+# Test outputs for single destination (should be null)
+output "cwm_default_otel_collector_url" {
+  value       = module.cloudwatch_metrics_defaults.otel_collector_service_url
+  description = "Should be null when using single destination"
+}
+
+output "cwm_default_otel_collector_arn" {
+  value       = module.cloudwatch_metrics_defaults.otel_collector_service_arn
+  description = "Should be null when using single destination"
 }
