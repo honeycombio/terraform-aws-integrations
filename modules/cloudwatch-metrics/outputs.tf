@@ -7,11 +7,11 @@ output "cloudwatch_metric_stream_name" {
 }
 
 output "otel_collector_service_url" {
-  value       = nonsensitive(module.kfh.otel_collector_service_url)
+  value       = length(var.additional_destinations) > 0 ? nonsensitive(module.kfh.otel_collector_service_url) : null
   description = "The URL of the OpenTelemetry collector App Runner service (only available when using multiple destinations)"
 }
 
 output "otel_collector_service_arn" {
-  value       = nonsensitive(module.kfh.otel_collector_service_arn)
+  value       = length(var.additional_destinations) > 0 ? nonsensitive(module.kfh.otel_collector_service_arn) : null
   description = "The ARN of the OpenTelemetry collector App Runner service (only available when using multiple destinations)"
 }
