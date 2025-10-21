@@ -102,11 +102,11 @@ output "cwm_multi_otel_collector_arn" {
 
 # Test outputs for single destination (should be null)
 output "cwm_default_otel_collector_url" {
-  value       = module.cloudwatch_metrics_defaults.otel_collector_service_url
+  value       = nonsensitive(module.cloudwatch_metrics_defaults.otel_collector_service_url)
   description = "Should be null when using single destination"
 }
 
 output "cwm_default_otel_collector_arn" {
-  value       = module.cloudwatch_metrics_defaults.otel_collector_service_arn
+  value       = nonsensitive(module.cloudwatch_metrics_defaults.otel_collector_service_arn)
   description = "Should be null when using single destination"
 }
