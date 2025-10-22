@@ -1,3 +1,10 @@
+<a id="v2.0.1"></a>
+# [v2.0.1 🛠️](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.0.1) - 2025-10-22
+
+## Changes
+
+- fix: Wrap nonsensitive in a condition so it doesn't error if null (#103) | @kentquirk
+
 <a id="v2.0.0"></a>
 # [v2.0.0 🛠️](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.0.0) - 2025-10-13
 
@@ -26,7 +33,7 @@ Upgrade to this release of the Honeycomb module when you are ready to [migrate t
 
 ## Changes
 
-- maint: remove upper bound on hashicorp/aws provider version constraint (#94) | @robbkidd 
+- maint: remove upper bound on hashicorp/aws provider version constraint (#94) | @robbkidd
 - feat(kinesis): add App Runner OpenTelemetry collector for multiplexing (#95) | @lizthegrey
 
 [Changes][v1.5.1]
@@ -304,7 +311,7 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 <a id="v0.0.1"></a>
 # [v0.0.1](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.0.1) - 2022-11-02
 
-First release 🎉 
+First release 🎉
 
 [Changes][v0.0.1]
 
