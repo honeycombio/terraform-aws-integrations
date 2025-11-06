@@ -1,3 +1,10 @@
+<a id="v2.1.0"></a>
+# [v2.1.0 🛠️](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.1.0) - 2025-11-06
+
+## Changes
+
+- feat: Add cloudwatch metrics filters variable to top level module (#96) | @mterhar
+
 <a id="v2.0.1"></a>
 # [v2.0.1 🛠️](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.0.1) - 2025-10-22
 
