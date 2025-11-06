@@ -16,6 +16,22 @@ module "honeycomb-aws-integrations" {
 
   # aws metrics integration
   # enable_cloudwatch_metrics = true
+  # Only stream specific EC2 metrics and all ELB metrics to Honeycomb
+  # cloudwatch_metrics_include_filters = [
+  #   {
+  #     namespace = "AWS/EC2"
+  #     metric_names = [
+  #       "CPUUtilization",
+  #       "DiskWriteOps",
+  #       "NetworkIn",
+  #       "NetworkOut"
+  #     ]
+  #   },
+  #   {
+  #     namespace    = "AWS/ELB"
+  #     metric_names = [] # include all metrics for this namespace
+  #   }
+  # ]
 
   # s3 logfile - alb access logs
   s3_bucket_arn  = var.s3_bucket_arn
