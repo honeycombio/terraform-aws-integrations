@@ -56,6 +56,7 @@ module "s3_processor" {
 
   environment_variables = {
     PARSER_TYPE         = var.parser_type
+    REGEX_PATTERN       = var.regex_pattern
     FORCE_GUNZIP        = true
     ENVIRONMENT         = var.environment
     HONEYCOMB_WRITE_KEY = var.honeycomb_api_key
