@@ -34,7 +34,7 @@ module "elb_logs" {
 //   cty.StringVal("honeycomb-tf-integrations-logs-decent-sunbird").
 
 data "aws_s3_bucket" "log_bucket" {
-  bucket = "honeycomb-tf-integrations-logs"
+  bucket = "terraform-integrations-test-logs"
 }
 
 /*** ALB ***/
