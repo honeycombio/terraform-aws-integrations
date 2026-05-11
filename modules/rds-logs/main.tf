@@ -36,7 +36,7 @@ module "rds_lambda_transform" {
   function_name = "${var.name}-honeycomb-rds-${var.db_engine}-log-parser"
   description   = "Parses RDS logs coming off of Kinesis Firehose, sending them back to the Firehose as structured JSON events."
   handler       = "rds-${var.db_engine}-kfh-transform"
-  runtime       = "provided.al2"
+  runtime       = "provided.al2023"
   architectures = var.lambda_function_architecture == "amd64" ? ["x86_64"] : ["arm64"]
   memory_size   = var.lambda_function_memory
   timeout       = var.lambda_function_timeout
