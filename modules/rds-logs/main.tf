@@ -29,7 +29,7 @@ resource "aws_iam_policy" "lambda" {
 
 module "rds_lambda_transform" {
   source  = "terraform-aws-modules/lambda/aws"
-  version = "4.18.0"
+  version = "8.8.0"
 
   count = local.enable_lambda_transform ? 1 : 0
 
