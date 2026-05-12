@@ -37,12 +37,12 @@ resource "aws_iam_policy" "lambda" {
 
 module "s3_processor" {
   source  = "terraform-aws-modules/lambda/aws"
-  version = "4.18.0"
+  version = "8.8.0"
 
   function_name = var.name
   description   = "Parses LB access logs from S3, sending them to Honeycomb as structured events"
   handler       = "s3-handler"
-  runtime       = "provided.al2"
+  runtime       = "provided.al2023"
   architectures = var.lambda_function_architecture == "amd64" ? ["x86_64"] : ["arm64"]
   memory_size   = var.lambda_function_memory
   timeout       = var.lambda_function_timeout

@@ -1,5 +1,11 @@
+data "aws_rds_engine_version" "rds_mysql" {
+  engine       = "mysql"
+  default_only = true
+}
+
 locals {
-  rds_mysql_db_name = "tf-integrations-rds-mysql-${random_pet.this.id}"
+  rds_mysql_db_name     = "tf-integrations-rds-mysql-${random_pet.this.id}"
+  rds_mysql_major_minor = join(".", slice(split(".", data.aws_rds_engine_version.rds_mysql.version_actual), 0, 2))
 }
 
 module "rds_mysql_logs" {
@@ -20,21 +26,15 @@ module "rds_mysql_logs" {
 
 /*** RDS ***/
 
-
-data "aws_rds_engine_version" "rds_mysql" {
-  engine       = "mysql"
-  default_only = true
-}
 module "rds_mysql" {
   source = "terraform-aws-modules/rds/aws"
 
   identifier = local.rds_mysql_db_name
 
-  # All available versions: http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_MySQL.html#MySQL.Concepts.VersionMgmt
   engine               = "mysql"
-  engine_version       = data.aws_rds_engine_version.rds_mysql.version
-  family               = "mysql8.0"
-  major_engine_version = "8.0"
+  engine_version       = local.rds_mysql_major_minor
+  family               = "mysql${local.rds_mysql_major_minor}"
+  major_engine_version = local.rds_mysql_major_minor
   instance_class       = "db.t3.micro"
 
 
