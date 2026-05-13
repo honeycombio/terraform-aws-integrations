@@ -1,19 +1,64 @@
-<a id="v2.1.0"></a>
-# [v2.1.0 🛠️](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.1.0) - 2025-11-06
+<a id="v2.2.0"></a>
+# [v2.2.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.2.0) - 2026-05-12
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### 🛠 Maintenance
+* maint(rds-logs, s3-logfile): update Lambda runtime from al2 (EOL) to al2023 by [@robbkidd](https://github.com/robbkidd) in [#111](https://github.com/honeycombio/terraform-aws-integrations/pull/111)
+### 🤷 Other Changes
+* maint: oss-maintainers on point for this project by [@robbkidd](https://github.com/robbkidd) in [#110](https://github.com/honeycombio/terraform-aws-integrations/pull/110)
+* fix: bump terraform-aws-modules/lambda to 8.8.0 for AWS provider v6 compatibility by [@jasonyoung-pearl](https://github.com/jasonyoung-pearl) in [#108](https://github.com/honeycombio/terraform-aws-integrations/pull/108)
+* maint(deps): bump default honeycomb-otelcol image to v0.0.29 by [@lizthegrey](https://github.com/lizthegrey) in [#107](https://github.com/honeycombio/terraform-aws-integrations/pull/107)
+
+## New Contributors
+* [@jasonyoung-pearl](https://github.com/jasonyoung-pearl) made their first contribution in [#108](https://github.com/honeycombio/terraform-aws-integrations/pull/108)
+
+**Full Changelog**: https://github.com/honeycombio/terraform-aws-integrations/compare/v2.1.0...v2.2.0
+
+[Changes][v2.2.0]
+
+
+<a id="v2.1.1"></a>
+# [v2.1.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.1.1) - 2026-05-08
 
 ## Changes
 
-- feat: Add cloudwatch metrics filters variable to top level module (#96) | @mterhar
+- maint(deps): bump default honeycomb-otelcol image to v0.0.29 [@lizthegrey](https://github.com/lizthegrey) ([#107](https://github.com/honeycombio/terraform-aws-integrations/issues/107))
+- maint(rds-logs, s3-logfile): update Lambda runtime from al2 (EOL) to al2023 [@robbkidd](https://github.com/robbkidd) ([#111](https://github.com/honeycombio/terraform-aws-integrations/issues/111))
+- fix: bump terraform-aws-modules/lambda to 8.8.0 for AWS provider v6 compatibility [@jasonyoung-pearl](https://github.com/jasonyoung-pearl) ([#108](https://github.com/honeycombio/terraform-aws-integrations/issues/108))
+- maint: oss-maintainers on point for this project [@robbkidd](https://github.com/robbkidd) ([#110](https://github.com/honeycombio/terraform-aws-integrations/issues/110))
+- ci: upgrade actions used in workflows [@robbkidd](https://github.com/robbkidd) ([#109](https://github.com/honeycombio/terraform-aws-integrations/issues/109))
+
+
+[Changes][v2.1.1]
+
+
+<a id="v2.1.0"></a>
+# [v2.1.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.1.0) - 2025-11-06
+
+## Changes
+
+- feat: Add cloudwatch metrics filters variable to top level module [@mterhar](https://github.com/mterhar) ([#96](https://github.com/honeycombio/terraform-aws-integrations/issues/96))
+
+
+[Changes][v2.1.0]
+
 
 <a id="v2.0.1"></a>
-# [v2.0.1 🛠️](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.0.1) - 2025-10-22
+# [v2.0.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.0.1) - 2025-10-22
 
 ## Changes
 
-- fix: Wrap nonsensitive in a condition so it doesn't error if null (#103) | @kentquirk
+- rel: Prep changelog for v2.0.1 release [@kentquirk](https://github.com/kentquirk) ([#104](https://github.com/honeycombio/terraform-aws-integrations/issues/104))
+- fix: Wrap nonsensitive in a condition so it doesn't error if null [@kentquirk](https://github.com/kentquirk) ([#103](https://github.com/honeycombio/terraform-aws-integrations/issues/103))
+
+
+[Changes][v2.0.1]
+
 
 <a id="v2.0.0"></a>
-# [v2.0.0 🛠️](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.0.0) - 2025-10-13
+# [v2.0.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v2.0.0) - 2025-10-13
 
 ⚠️
 This release updates the hashicorp/aws dependency from v5.0 ~> v6.0 which introduces breaking changes to the AWS module's API.
@@ -22,40 +67,61 @@ Upgrade to this release of the Honeycomb module when you are ready to [migrate t
 
 ## Changes
 
-- maint(deps): Update hashicorp/AWS to v6 (#101) | @MikeGoldsmith
+- maint(deps): Update hashicorp/AWS to v6 | [@MikeGoldsmith](https://github.com/MikeGoldsmith) ([#101](https://github.com/honeycombio/terraform-aws-integrations/issues/101))
+
 
 [Changes][v2.0.0]
 
+
 <a id="v1.5.2"></a>
-# [v1.5.2 🛠️](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.5.2) - 2025-10-13
+# [v1.5.2 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.5.2) - 2025-10-13
 
 ## Changes
 
-- maint(deps): revert upgrade to hashicorp/AWS module v6 (#99) | @MikeGoldsmith
+- maint(deps): revert upgrade to hashicorp/AWS module v6 [@MikeGoldsmith](https://github.com/MikeGoldsmith) ([#99](https://github.com/honeycombio/terraform-aws-integrations/issues/99))
+
 
 [Changes][v1.5.2]
 
+
 <a id="v1.5.1"></a>
-# [v1.5.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.5.1) - 2025-10-06
+# [v1.5.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.5.1) - 2025-10-10
 
 ## Changes
 
-- maint: remove upper bound on hashicorp/aws provider version constraint (#94) | @robbkidd
-- feat(kinesis): add App Runner OpenTelemetry collector for multiplexing (#95) | @lizthegrey
+- maint: remove upper bound on hashicorp/aws provider version constraint [@robbkidd](https://github.com/robbkidd) ([#94](https://github.com/honeycombio/terraform-aws-integrations/issues/94))
+- feat(kinesis): add App Runner OpenTelemetry collector for multiplexing [@lizthegrey](https://github.com/lizthegrey) ([#95](https://github.com/honeycombio/terraform-aws-integrations/issues/95))
+
 
 [Changes][v1.5.1]
 
-<a id="v1.5.0"></a>
-# [v1.5.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.5.0) - 2025-07-03
+
+<a id="v1.4.1"></a>
+# [v1.5.0 🌈 (v1.4.1)](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.4.1) - 2025-07-04
 
 ## Changes
 
-- feat(kinesis): allow multiple sinks for one firehose (#89) | @lizthegrey
-- feat: implements terraform to set LINE_FILTER_RULES (#87) | @mterhar
-- maint: Limit hashicorp/aws provider to 5.x versions (#91) | @MikeGoldsmith
-- maint: Update generated usage docs (#90) | @MikeGoldsmith
+- maint: Limit hashicorp/aws provider to 5.x versions [@MikeGoldsmith](https://github.com/MikeGoldsmith) ([#91](https://github.com/honeycombio/terraform-aws-integrations/issues/91))
+- maint: Update generated usage docs [@MikeGoldsmith](https://github.com/MikeGoldsmith) ([#90](https://github.com/honeycombio/terraform-aws-integrations/issues/90))
+- feat(kinesis): allow multiple sinks for one firehose [@lizthegrey](https://github.com/lizthegrey) ([#89](https://github.com/honeycombio/terraform-aws-integrations/issues/89))
+- feat: implements terraform to set LINE\_FILTER\_RULES [@mterhar](https://github.com/mterhar) ([#87](https://github.com/honeycombio/terraform-aws-integrations/issues/87))
 
-[Changes][v1.5.0]
+
+[Changes][v1.4.1]
+
+
+<a id="v1.4.0"></a>
+# [v1.4.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.4.0) - 2025-04-10
+
+
+## Changes
+
+- feat: Allow resource names to be overridden when installing top-level module [@yotamat](https://github.com/yotamat) ([#85](https://github.com/honeycombio/terraform-aws-integrations/issues/85))
+- maint: Remove OpenTelemetry 0.7 data format [@MikeGoldsmith](https://github.com/MikeGoldsmith) ([#83](https://github.com/honeycombio/terraform-aws-integrations/issues/83))
+
+
+[Changes][v1.4.0]
+
 
 <a id="v1.3.1"></a>
 # [v1.3.1 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.3.1) - 2024-12-19
@@ -66,24 +132,6 @@ Upgrade to this release of the Honeycomb module when you are ready to [migrate t
 - fix: Add opt-in config to create order independent log filters [@aburgel](https://github.com/aburgel) ([#78](https://github.com/honeycombio/terraform-aws-integrations/issues/78))
 - fix: pin dependant modules to reduce churn [@jharley](https://github.com/jharley) ([#76](https://github.com/honeycombio/terraform-aws-integrations/issues/76))
 - docs: update vulnerability reporting process [@robbkidd](https://github.com/robbkidd) ([#75](https://github.com/honeycombio/terraform-aws-integrations/issues/75))
-
-
-[Changes][v1.4.0]
-
-
-<a id="v1.4.0"></a>
-# [v1.4.0 🌈](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v1.4.0) - 2025-03-18
-
-## Changes
-
-NOTE: the cloudwatch-metrics output format `opentelemetry0.7` has been removed.
-If you previously used this output format value, you will need to update to the newer `opentelemetry1.0` format.
-
-- maint: Remove OpenTelemetry 0.7 data format [@MikeGoldsmith] ([#83](https://github.com/honeycombio/terraform-aws-integrations/issues/83))
-
-## 🚀 Features
-
-- feat: Allow resource names to be overridden when installing top-level module [@yotamat] ([#85](https://github.com/honeycombio/terraform-aws-integrations/issues/85))
 
 
 [Changes][v1.3.1]
@@ -318,11 +366,20 @@ AWS changed the defaults of S3 buckets such that the old version does not work. 
 <a id="v0.0.1"></a>
 # [v0.0.1](https://github.com/honeycombio/terraform-aws-integrations/releases/tag/v0.0.1) - 2022-11-02
 
-First release 🎉
+First release 🎉 
 
 [Changes][v0.0.1]
 
 
+[v2.2.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v2.1.1...v2.2.0
+[v2.1.1]: https://github.com/honeycombio/terraform-aws-integrations/compare/v2.1.0...v2.1.1
+[v2.1.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v2.0.1...v2.1.0
+[v2.0.1]: https://github.com/honeycombio/terraform-aws-integrations/compare/v2.0.0...v2.0.1
+[v2.0.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.5.2...v2.0.0
+[v1.5.2]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.5.1...v1.5.2
+[v1.5.1]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.4.1...v1.5.1
+[v1.4.1]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.4.0...v1.4.1
+[v1.4.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.3.1...v1.4.0
 [v1.3.1]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.3.0...v1.3.1
 [v1.3.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.2.1...v1.3.0
 [v1.2.1]: https://github.com/honeycombio/terraform-aws-integrations/compare/v1.2.0...v1.2.1
@@ -344,4 +401,4 @@ First release 🎉
 [v0.1.0]: https://github.com/honeycombio/terraform-aws-integrations/compare/v0.0.1...v0.1.0
 [v0.0.1]: https://github.com/honeycombio/terraform-aws-integrations/tree/v0.0.1
 
-<!-- Generated by https://github.com/rhysd/changelog-from-release v3.8.1 -->
+<!-- Generated by https://github.com/rhysd/changelog-from-release v3.9.1 -->
