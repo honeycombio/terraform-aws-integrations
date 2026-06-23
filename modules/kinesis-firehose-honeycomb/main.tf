@@ -54,8 +54,14 @@ locals {
         ]
       }
       batch = {
-        timeout         = "300s"
-        send_batch_size = 100000
+        # Honeycomb's OTLP /v1/metrics rejects oversized request bodies with HTTP 400
+        # "request body is too large". send_batch_max_size hard-caps each export so a
+        # single flush never exceeds that limit (the old send_batch_size=100000 with no
+        # max produced multi-MB posts that were dropped wholesale). Smaller timeout also
+        # bounds delivery latency and the collector's in-memory buffer.
+        timeout             = "10s"
+        send_batch_size     = 8192
+        send_batch_max_size = 8192
       }
     }
 
