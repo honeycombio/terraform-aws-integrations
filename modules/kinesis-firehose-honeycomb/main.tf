@@ -31,15 +31,39 @@ locals {
   otel_config = {
     receivers = {
       awsfirehose = {
-        endpoint    = "0.0.0.0:4433"
+        endpoint = "0.0.0.0:4433"
+        # record_type is deprecated in favor of the awscloudwatchmetricstreams_encoding
+        # extension, but the honeycomb-opentelemetry-collector distro does not bundle
+        # that extension yet (valid extensions: health_check pprof zpages bearertokenauth
+        # headers_setter), so we keep the still-supported record_type form.
         record_type = "otlp_v1"
         access_key  = local.actual_otel_access_key
       }
     }
 
+    processors = {
+      # Drop the redundant MetricName datapoint attribute: it duplicates the OTLP
+      # metric name (e.g. amazonaws.com/AWS/Lambda/Invocations), matching the
+      # behavior of Honeycomb's native CloudWatch (kinesis_events) ingest endpoint.
+      "transform/drop_metric_name" = {
+        metric_statements = [
+          {
+            context    = "datapoint"
+            statements = ["delete_key(attributes, \"MetricName\")"]
+          }
+        ]
+      }
+      batch = {
+        timeout         = "300s"
+        send_batch_size = 100000
+      }
+    }
+
     exporters = {
-      for idx, dest in local.destinations : "otlphttp/${idx}" => {
-        endpoint = "${dest.honeycomb_api_host}/v1/metrics"
+      # metrics_endpoint is used verbatim; setting endpoint would make the exporter
+      # append /v1/metrics again, producing /v1/metrics/v1/metrics (404).
+      for idx, dest in local.destinations : "otlp_http/${idx}" => {
+        metrics_endpoint = "${dest.honeycomb_api_host}/v1/metrics"
         headers = {
           "x-honeycomb-team"    = dest.honeycomb_api_key
           "x-honeycomb-dataset" = dest.honeycomb_dataset_name
@@ -47,19 +71,12 @@ locals {
       }
     }
 
-    processors = {
-      batch = {
-        timeout         = "300s"
-        send_batch_size = 100000
-      }
-    }
-
     service = {
       pipelines = {
         metrics = {
           receivers  = ["awsfirehose"]
-          processors = ["batch"]
-          exporters  = [for idx, dest in local.destinations : "otlphttp/${idx}"]
+          processors = ["transform/drop_metric_name", "batch"]
+          exporters  = [for idx, dest in local.destinations : "otlp_http/${idx}"]
         }
       }
     }
