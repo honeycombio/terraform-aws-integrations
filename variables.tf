@@ -237,7 +237,7 @@ variable "rds_logs_lambda_role_permissions_boundary" {
   default     = null
 }
 
-variable "rds_logs_cloudwatch_role_name" {
+variable "rds_logs_cloudwatch_logs_role_name" {
   type        = string
   description = "Name for the IAM role used by CloudWatch Logs in the RDS Logs integration. If null, Terraform generates a name using rds_logs_name as a prefix."
   default     = null
