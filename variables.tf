@@ -243,7 +243,7 @@ variable "rds_logs_cloudwatch_role_name" {
   default     = null
 }
 
-variable "rds_logs_cloudwatch_role_permissions_boundary" {
+variable "rds_logs_cloudwatch_logs_role_permissions_boundary" {
   type        = string
   description = "ARN of the permissions boundary policy to attach to the RDS Logs integration's CloudWatch Logs IAM role."
   default     = null
