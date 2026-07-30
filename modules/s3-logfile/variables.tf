@@ -8,7 +8,7 @@ DESC
 
 variable "lambda_role_name" {
   type        = string
-  description = "Name for the IAM role used by the S3 log processor Lambda function. If null, the Lambda function name is used."
+  description = "Name for the IAM role used by the S3 log processor Lambda function. If null, the Lambda function name is used. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 

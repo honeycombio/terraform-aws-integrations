@@ -24,6 +24,32 @@ module "rds_mysql_logs" {
   s3_failure_bucket_arn = module.firehose_failure_bucket.s3_bucket_arn
 }
 
+// Same database, a different log type, and every IAM role named explicitly
+// with a permissions boundary. rds_mysql_logs above covers the same module
+// with all of those inputs left null.
+module "rds_mysql_error_logs" {
+  source = "../modules/rds-logs"
+  depends_on = [
+    module.rds_mysql
+  ]
+  name                   = "rds-err-${random_pet.this.id}"
+  db_engine              = "mysql"
+  db_name                = local.rds_mysql_db_name
+  db_log_types           = ["error"]
+  honeycomb_api_host     = var.honeycomb_api_host
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "rds-mysql-logs"
+
+  lambda_role_name                          = "rds-err-${random_pet.this.id}-lambda"
+  lambda_role_permissions_boundary          = aws_iam_policy.permissions_boundary.arn
+  cloudwatch_logs_role_name                 = "rds-err-${random_pet.this.id}-logs"
+  cloudwatch_logs_role_permissions_boundary = aws_iam_policy.permissions_boundary.arn
+  firehose_role_name                        = "rds-err-${random_pet.this.id}-firehose"
+  firehose_role_permissions_boundary        = aws_iam_policy.permissions_boundary.arn
+
+  s3_failure_bucket_arn = module.firehose_failure_bucket.s3_bucket_arn
+}
+
 /*** RDS ***/
 
 module "rds_mysql" {
@@ -51,7 +77,7 @@ module "rds_mysql" {
 
   maintenance_window              = "Mon:00:00-Mon:03:00"
   backup_window                   = "03:00-06:00"
-  enabled_cloudwatch_logs_exports = ["slowquery"]
+  enabled_cloudwatch_logs_exports = ["slowquery", "error"]
   create_cloudwatch_log_group     = true
 
   backup_retention_period = 0

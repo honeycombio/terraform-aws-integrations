@@ -15,6 +15,13 @@ module "cloudwatch_metrics_legacy" {
 
   name = "cwm-legacy-${random_pet.this.id}"
 
+  // explicitly named roles with a permissions boundary; the other
+  // cloudwatch-metrics test cases leave both inputs null
+  cloudwatch_metrics_role_name                 = "cwm-legacy-${random_pet.this.id}-metrics"
+  cloudwatch_metrics_role_permissions_boundary = aws_iam_policy.permissions_boundary.arn
+  firehose_role_name                           = "cwm-legacy-${random_pet.this.id}-firehose"
+  firehose_role_permissions_boundary           = aws_iam_policy.permissions_boundary.arn
+
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "cloudwatch-metrics"

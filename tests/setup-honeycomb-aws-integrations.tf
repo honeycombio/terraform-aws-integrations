@@ -34,6 +34,27 @@ variable "honeycomb_api_key" {
   type = string
 }
 
+// Shared permissions boundary for the test cases that exercise the
+// *_role_name and *_role_permissions_boundary inputs. Every module is
+// instantiated at least once with those inputs left null (the pre-existing
+// behavior) and at least once with them set.
+//
+// The boundary intentionally does not restrict anything: we're testing that
+// the modules attach a boundary, not what a boundary does.
+data "aws_iam_policy_document" "permissions_boundary" {
+  statement {
+    effect    = "Allow"
+    actions   = ["*"]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "permissions_boundary" {
+  name        = "tf-integrations-boundary-${random_pet.this.id}"
+  description = "Permissions boundary used by the terraform-aws-integrations test cases."
+  policy      = data.aws_iam_policy_document.permissions_boundary.json
+}
+
 // shared s3 bucket for cloudwatch-logs and cloudwatch-metrics
 // kinesis failure messages
 module "firehose_failure_bucket" {

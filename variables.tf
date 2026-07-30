@@ -197,7 +197,7 @@ variable "cloudwatch_logs_name" {
 
 variable "cloudwatch_logs_role_name" {
   type        = string
-  description = "Name for the IAM role used by the CloudWatch Logs integration. If null, Terraform generates a name using cloudwatch_logs_name as a prefix."
+  description = "Name for the IAM role used by the CloudWatch Logs integration. If null, Terraform generates a name using cloudwatch_logs_name as a prefix. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 
@@ -209,7 +209,7 @@ variable "cloudwatch_logs_role_permissions_boundary" {
 
 variable "cloudwatch_logs_firehose_role_name" {
   type        = string
-  description = "Name for the IAM role used by the CloudWatch Logs integration's Kinesis Data Firehose. If null, Terraform generates a name using cloudwatch_logs_name as a prefix."
+  description = "Name for the IAM role used by the CloudWatch Logs integration's Kinesis Data Firehose. If null, Terraform generates a name using cloudwatch_logs_name as a prefix. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 
@@ -227,7 +227,7 @@ variable "rds_logs_name" {
 
 variable "rds_logs_lambda_role_name" {
   type        = string
-  description = "Name for the IAM role used by the RDS log transform Lambda function. If null, the Lambda function name is used."
+  description = "Name for the IAM role used by the RDS log transform Lambda function. If null, the Lambda function name is used. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 
@@ -239,7 +239,7 @@ variable "rds_logs_lambda_role_permissions_boundary" {
 
 variable "rds_logs_cloudwatch_logs_role_name" {
   type        = string
-  description = "Name for the IAM role used by CloudWatch Logs in the RDS Logs integration. If null, Terraform generates a name using rds_logs_name as a prefix."
+  description = "Name for the IAM role used by CloudWatch Logs in the RDS Logs integration. If null, Terraform generates a name using rds_logs_name as a prefix. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 
@@ -251,7 +251,7 @@ variable "rds_logs_cloudwatch_logs_role_permissions_boundary" {
 
 variable "rds_logs_firehose_role_name" {
   type        = string
-  description = "Name for the IAM role used by the RDS Logs integration's Kinesis Data Firehose. If null, Terraform generates a name using rds_logs_name as a prefix."
+  description = "Name for the IAM role used by the RDS Logs integration's Kinesis Data Firehose. If null, Terraform generates a name using rds_logs_name as a prefix. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 
@@ -269,7 +269,7 @@ variable "cloudwatch_metrics_name" {
 
 variable "cloudwatch_metrics_role_name" {
   type        = string
-  description = "Name for the IAM role used by the CloudWatch Metrics integration. If null, Terraform generates a name using cloudwatch_metrics_name as a prefix."
+  description = "Name for the IAM role used by the CloudWatch Metrics integration. If null, Terraform generates a name using cloudwatch_metrics_name as a prefix. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 
@@ -281,7 +281,7 @@ variable "cloudwatch_metrics_role_permissions_boundary" {
 
 variable "cloudwatch_metrics_firehose_role_name" {
   type        = string
-  description = "Name for the IAM role used by the CloudWatch Metrics integration's Kinesis Data Firehose. If null, Terraform generates a name using cloudwatch_metrics_name as a prefix."
+  description = "Name for the IAM role used by the CloudWatch Metrics integration's Kinesis Data Firehose. If null, Terraform generates a name using cloudwatch_metrics_name as a prefix. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 
@@ -325,7 +325,7 @@ variable "s3_logfile_name" {
 
 variable "s3_logfile_lambda_role_name" {
   type        = string
-  description = "Name for the IAM role used by the S3 log processor Lambda function. If null, the Lambda function name is used."
+  description = "Name for the IAM role used by the S3 log processor Lambda function. If null, the Lambda function name is used. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 

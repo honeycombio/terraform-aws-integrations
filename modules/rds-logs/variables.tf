@@ -10,7 +10,7 @@ variable "name" {
 
 variable "lambda_role_name" {
   type        = string
-  description = "Name for the IAM role used by the RDS log transform Lambda function. If null, the Lambda function name is used."
+  description = "Name for the IAM role used by the RDS log transform Lambda function. If null, the Lambda function name is used. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 
@@ -22,7 +22,7 @@ variable "lambda_role_permissions_boundary" {
 
 variable "cloudwatch_logs_role_name" {
   type        = string
-  description = "Name for the IAM role used by CloudWatch Logs. If null, Terraform generates a name using var.name as a prefix."
+  description = "Name for the IAM role used by CloudWatch Logs. If null, Terraform generates a name using var.name as a prefix. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 
@@ -34,7 +34,7 @@ variable "cloudwatch_logs_role_permissions_boundary" {
 
 variable "firehose_role_name" {
   type        = string
-  description = "Name for the IAM role used by Kinesis Data Firehose. If null, Terraform generates a name using var.name as a prefix."
+  description = "Name for the IAM role used by Kinesis Data Firehose. If null, Terraform generates a name using var.name as a prefix. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 

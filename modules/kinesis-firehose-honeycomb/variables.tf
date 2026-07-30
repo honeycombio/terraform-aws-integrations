@@ -10,7 +10,7 @@ variable "name" {
 
 variable "firehose_role_name" {
   type        = string
-  description = "Name for the IAM role used by Kinesis Data Firehose. If null, Terraform generates a name using var.name as a prefix."
+  description = "Name for the IAM role used by Kinesis Data Firehose. If null, Terraform generates a name using var.name as a prefix. Changing this on an existing deployment replaces the IAM role."
   default     = null
 }
 
