@@ -56,8 +56,8 @@ module "rds_logs" {
 
   lambda_role_name                          = var.rds_logs_lambda_role_name
   lambda_role_permissions_boundary          = var.rds_logs_lambda_role_permissions_boundary
-  cloudwatch_logs_role_name                 = var.rds_logs_cloudwatch_role_name
-  cloudwatch_logs_role_permissions_boundary = var.rds_logs_cloudwatch_role_permissions_boundary
+  cloudwatch_logs_role_name                 = var.rds_logs_cloudwatch_logs_role_name
+  cloudwatch_logs_role_permissions_boundary = var.rds_logs_cloudwatch_logs_role_permissions_boundary
   firehose_role_name                        = var.rds_logs_firehose_role_name
   firehose_role_permissions_boundary        = var.rds_logs_firehose_role_permissions_boundary
 
