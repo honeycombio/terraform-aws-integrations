@@ -77,9 +77,10 @@ module "rds_postgres" {
   performance_insights_retention_period = 7
   create_monitoring_role                = true
   monitoring_interval                   = 60
-  monitoring_role_name                  = "example-monitoring-role-name"
+  monitoring_role_name                  = var.monitoring_role_name
   monitoring_role_use_name_prefix       = true
   monitoring_role_description           = "Description for monitoring role"
+  monitoring_role_permissions_boundary  = var.monitoring_role_permissions_boundary
 
   parameters = [
     {

@@ -7,9 +7,11 @@ locals {
 }
 
 resource "aws_iam_role" "this" {
-  name_prefix        = var.name
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
-  tags               = var.tags
+  name                 = var.cloudwatch_logs_role_name
+  name_prefix          = var.cloudwatch_logs_role_name == null ? var.name : null
+  permissions_boundary = var.cloudwatch_logs_role_permissions_boundary
+  assume_role_policy   = data.aws_iam_policy_document.assume_role.json
+  tags                 = var.tags
 }
 
 data "aws_iam_policy_document" "assume_role" {

@@ -8,6 +8,18 @@ variable "name" {
   }
 }
 
+variable "firehose_role_name" {
+  type        = string
+  description = "Name for the IAM role used by Kinesis Data Firehose. If null, Terraform generates a name using var.name as a prefix."
+  default     = null
+}
+
+variable "firehose_role_permissions_boundary" {
+  type        = string
+  description = "ARN of the permissions boundary policy to attach to the Kinesis Data Firehose IAM role."
+  default     = null
+}
+
 variable "honeycomb_dataset_name" {
   type        = string
   description = "Your Honeycomb dataset name."

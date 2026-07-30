@@ -4,13 +4,13 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 6.0 |
 
 ## Modules
 
@@ -33,7 +33,11 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_destinations"></a> [additional\_destinations](#input\_additional\_destinations) | Additional sinks can be configured here. | <pre>list(object({<br>    honeycomb_dataset_name = string,<br>    honeycomb_api_key      = string,<br>    honeycomb_api_host     = string,<br>  }))</pre> | `[]` | no |
+| <a name="input_cloudwatch_metrics_role_name"></a> [cloudwatch\_metrics\_role\_name](#input\_cloudwatch\_metrics\_role\_name) | Name for the IAM role used by the CloudWatch Metric Stream. If null, Terraform generates a name using var.name as a prefix. | `string` | `null` | no |
+| <a name="input_cloudwatch_metrics_role_permissions_boundary"></a> [cloudwatch\_metrics\_role\_permissions\_boundary](#input\_cloudwatch\_metrics\_role\_permissions\_boundary) | ARN of the permissions boundary policy to attach to the CloudWatch Metric Stream IAM role. | `string` | `null` | no |
 | <a name="input_exclude_filters"></a> [exclude\_filters](#input\_exclude\_filters) | An optional list of exclusive CloudWatch Metric filters. If set, we'll only stream metrics that do not match these namespace and metric names.<br>Pass an empty list (`[]`) to `metric_names` to exclude all metrics for the namespace.<br>Mututally exclusive with `exclude_filters`. | <pre>list(object({<br>    namespace    = string<br>    metric_names = list(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_firehose_role_name"></a> [firehose\_role\_name](#input\_firehose\_role\_name) | Name for the IAM role used by Kinesis Data Firehose. If null, Terraform generates a name using var.name as a prefix. | `string` | `null` | no |
+| <a name="input_firehose_role_permissions_boundary"></a> [firehose\_role\_permissions\_boundary](#input\_firehose\_role\_permissions\_boundary) | ARN of the permissions boundary policy to attach to the Kinesis Data Firehose IAM role. | `string` | `null` | no |
 | <a name="input_honeycomb_api_host"></a> [honeycomb\_api\_host](#input\_honeycomb\_api\_host) | If you use a Secure Tenancy or other proxy, put its schema://host[:port] here. | `string` | `"https://api.honeycomb.io"` | no |
 | <a name="input_honeycomb_api_key"></a> [honeycomb\_api\_key](#input\_honeycomb\_api\_key) | Your Honeycomb team's API key. | `string` | n/a | yes |
 | <a name="input_honeycomb_dataset_name"></a> [honeycomb\_dataset\_name](#input\_honeycomb\_dataset\_name) | Your Honeycomb dataset name. | `string` | n/a | yes |
@@ -58,4 +62,6 @@
 |------|-------------|
 | <a name="output_cloudwatch_metric_stream_arn"></a> [cloudwatch\_metric\_stream\_arn](#output\_cloudwatch\_metric\_stream\_arn) | n/a |
 | <a name="output_cloudwatch_metric_stream_name"></a> [cloudwatch\_metric\_stream\_name](#output\_cloudwatch\_metric\_stream\_name) | n/a |
+| <a name="output_otel_collector_service_arn"></a> [otel\_collector\_service\_arn](#output\_otel\_collector\_service\_arn) | The ARN of the OpenTelemetry collector App Runner service (only available when using multiple destinations) |
+| <a name="output_otel_collector_service_url"></a> [otel\_collector\_service\_url](#output\_otel\_collector\_service\_url) | The URL of the OpenTelemetry collector App Runner service (only available when using multiple destinations) |
 <!-- END_TF_DOCS -->

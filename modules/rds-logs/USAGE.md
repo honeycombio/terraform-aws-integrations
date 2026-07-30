@@ -3,21 +3,21 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.7 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 6.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_cloudwatch_logs"></a> [cloudwatch\_logs](#module\_cloudwatch\_logs) | ../cloudwatch-logs | n/a |
-| <a name="module_rds_lambda_transform"></a> [rds\_lambda\_transform](#module\_rds\_lambda\_transform) | terraform-aws-modules/lambda/aws | 4.18.0 |
+| <a name="module_rds_lambda_transform"></a> [rds\_lambda\_transform](#module\_rds\_lambda\_transform) | terraform-aws-modules/lambda/aws | 8.8.0 |
 
 ## Resources
 
@@ -33,9 +33,13 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_agentless_integrations_version"></a> [agentless\_integrations\_version](#input\_agentless\_integrations\_version) | Version of https://github.com/honeycombio/agentless-integrations-for-aws to use. Default is LATEST, but note that specifying this does not automatically update the lambda to use the newest versions as they are released. | `string` | `"LATEST"` | no |
+| <a name="input_cloudwatch_logs_role_name"></a> [cloudwatch\_logs\_role\_name](#input\_cloudwatch\_logs\_role\_name) | Name for the IAM role used by CloudWatch Logs. If null, Terraform generates a name using var.name as a prefix. | `string` | `null` | no |
+| <a name="input_cloudwatch_logs_role_permissions_boundary"></a> [cloudwatch\_logs\_role\_permissions\_boundary](#input\_cloudwatch\_logs\_role\_permissions\_boundary) | ARN of the permissions boundary policy to attach to the CloudWatch Logs IAM role. | `string` | `null` | no |
 | <a name="input_db_engine"></a> [db\_engine](#input\_db\_engine) | Engine type on your RDS database | `string` | n/a | yes |
 | <a name="input_db_log_types"></a> [db\_log\_types](#input\_db\_log\_types) | n/a | `list(string)` | n/a | yes |
 | <a name="input_db_name"></a> [db\_name](#input\_db\_name) | Name of your RDS database. | `string` | n/a | yes |
+| <a name="input_firehose_role_name"></a> [firehose\_role\_name](#input\_firehose\_role\_name) | Name for the IAM role used by Kinesis Data Firehose. If null, Terraform generates a name using var.name as a prefix. | `string` | `null` | no |
+| <a name="input_firehose_role_permissions_boundary"></a> [firehose\_role\_permissions\_boundary](#input\_firehose\_role\_permissions\_boundary) | ARN of the permissions boundary policy to attach to the Kinesis Data Firehose IAM role. | `string` | `null` | no |
 | <a name="input_honeycomb_api_host"></a> [honeycomb\_api\_host](#input\_honeycomb\_api\_host) | If you use a Secure Tenancy or other proxy, put its schema://host[:port] here. | `string` | `"https://api.honeycomb.io"` | no |
 | <a name="input_honeycomb_api_key"></a> [honeycomb\_api\_key](#input\_honeycomb\_api\_key) | Your Honeycomb team's API key. | `string` | n/a | yes |
 | <a name="input_honeycomb_dataset_name"></a> [honeycomb\_dataset\_name](#input\_honeycomb\_dataset\_name) | Your Honeycomb dataset name. | `string` | n/a | yes |
@@ -46,6 +50,8 @@
 | <a name="input_lambda_function_timeout"></a> [lambda\_function\_timeout](#input\_lambda\_function\_timeout) | Timeout in seconds for lambda function. | `number` | `600` | no |
 | <a name="input_lambda_package_bucket"></a> [lambda\_package\_bucket](#input\_lambda\_package\_bucket) | Internal. Override S3 bucket where lambda function zip is located. | `string` | `""` | no |
 | <a name="input_lambda_package_key"></a> [lambda\_package\_key](#input\_lambda\_package\_key) | Internal. Override S3 key where lambda function zip is located. | `string` | `""` | no |
+| <a name="input_lambda_role_name"></a> [lambda\_role\_name](#input\_lambda\_role\_name) | Name for the IAM role used by the RDS log transform Lambda function. If null, the Lambda function name is used. | `string` | `null` | no |
+| <a name="input_lambda_role_permissions_boundary"></a> [lambda\_role\_permissions\_boundary](#input\_lambda\_role\_permissions\_boundary) | ARN of the permissions boundary policy to attach to the RDS log transform Lambda IAM role. | `string` | `null` | no |
 | <a name="input_log_subscription_filter_pattern"></a> [log\_subscription\_filter\_pattern](#input\_log\_subscription\_filter\_pattern) | A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events. Defaults to empty string to match everything. For more information, see the Amazon CloudWatch Logs User Guide. | `string` | `""` | no |
 | <a name="input_name"></a> [name](#input\_name) | A name for this CloudWatch Kinesis Firehose Stream. | `string` | n/a | yes |
 | <a name="input_s3_backup_mode"></a> [s3\_backup\_mode](#input\_s3\_backup\_mode) | Should we only backup to S3 data that failed delivery, or all data? | `string` | `"FailedDataOnly"` | no |

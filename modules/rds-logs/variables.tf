@@ -8,6 +8,42 @@ variable "name" {
   }
 }
 
+variable "lambda_role_name" {
+  type        = string
+  description = "Name for the IAM role used by the RDS log transform Lambda function. If null, the Lambda function name is used."
+  default     = null
+}
+
+variable "lambda_role_permissions_boundary" {
+  type        = string
+  description = "ARN of the permissions boundary policy to attach to the RDS log transform Lambda IAM role."
+  default     = null
+}
+
+variable "cloudwatch_logs_role_name" {
+  type        = string
+  description = "Name for the IAM role used by CloudWatch Logs. If null, Terraform generates a name using var.name as a prefix."
+  default     = null
+}
+
+variable "cloudwatch_logs_role_permissions_boundary" {
+  type        = string
+  description = "ARN of the permissions boundary policy to attach to the CloudWatch Logs IAM role."
+  default     = null
+}
+
+variable "firehose_role_name" {
+  type        = string
+  description = "Name for the IAM role used by Kinesis Data Firehose. If null, Terraform generates a name using var.name as a prefix."
+  default     = null
+}
+
+variable "firehose_role_permissions_boundary" {
+  type        = string
+  description = "ARN of the permissions boundary policy to attach to the Kinesis Data Firehose IAM role."
+  default     = null
+}
+
 variable "db_name" {
   type        = string
   description = "Name of your RDS database."

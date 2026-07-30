@@ -9,6 +9,30 @@ variable "name" {
   }
 }
 
+variable "cloudwatch_logs_role_name" {
+  type        = string
+  description = "Name for the IAM role used by CloudWatch Logs. If null, Terraform generates a name using var.name as a prefix."
+  default     = null
+}
+
+variable "cloudwatch_logs_role_permissions_boundary" {
+  type        = string
+  description = "ARN of the permissions boundary policy to attach to the CloudWatch Logs IAM role."
+  default     = null
+}
+
+variable "firehose_role_name" {
+  type        = string
+  description = "Name for the IAM role used by Kinesis Data Firehose. If null, Terraform generates a name using var.name as a prefix."
+  default     = null
+}
+
+variable "firehose_role_permissions_boundary" {
+  type        = string
+  description = "ARN of the permissions boundary policy to attach to the Kinesis Data Firehose IAM role."
+  default     = null
+}
+
 variable "s3_failure_bucket_arn" {
   type        = string
   description = "ARN of the S3 bucket that will store any logs that failed to be sent to Honeycomb."

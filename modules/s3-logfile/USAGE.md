@@ -3,21 +3,21 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.7 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 6.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_log_bucket"></a> [log\_bucket](#module\_log\_bucket) | terraform-aws-modules/s3-bucket/aws//modules/notification | 3.15.2 |
-| <a name="module_s3_processor"></a> [s3\_processor](#module\_s3\_processor) | terraform-aws-modules/lambda/aws | 4.18.0 |
+| <a name="module_s3_processor"></a> [s3\_processor](#module\_s3\_processor) | terraform-aws-modules/lambda/aws | 8.8.0 |
 
 ## Resources
 
@@ -45,6 +45,8 @@
 | <a name="input_lambda_function_timeout"></a> [lambda\_function\_timeout](#input\_lambda\_function\_timeout) | Timeout in seconds for lambda function. | `number` | `600` | no |
 | <a name="input_lambda_package_bucket"></a> [lambda\_package\_bucket](#input\_lambda\_package\_bucket) | Internal. Override S3 bucket where lambda function zip is located. | `string` | `""` | no |
 | <a name="input_lambda_package_key"></a> [lambda\_package\_key](#input\_lambda\_package\_key) | Internal. Override S3 key where lambda function zip is located. | `string` | `""` | no |
+| <a name="input_lambda_role_name"></a> [lambda\_role\_name](#input\_lambda\_role\_name) | Name for the IAM role used by the S3 log processor Lambda function. If null, the Lambda function name is used. | `string` | `null` | no |
+| <a name="input_lambda_role_permissions_boundary"></a> [lambda\_role\_permissions\_boundary](#input\_lambda\_role\_permissions\_boundary) | ARN of the permissions boundary policy to attach to the S3 log processor Lambda IAM role. | `string` | `null` | no |
 | <a name="input_line_filter_rules"></a> [line\_filter\_rules](#input\_line\_filter\_rules) | Rules for filtering lines. MatchLinePatterns will keep lines based on their content. FilterLinePatterns will drop lines based on their content. | <pre>list(object({<br>    Prefix : string,<br>    MatchLinePatterns : list(string),<br>    FilterLinePatterns : list(string),<br>  }))</pre> | `[]` | no |
 | <a name="input_name"></a> [name](#input\_name) | A name for this integration.<br>  Used for the lambda name, so should be unique within your AWS account. | `string` | n/a | yes |
 | <a name="input_parser_type"></a> [parser\_type](#input\_parser\_type) | The type of logfile to parse. | `string` | n/a | yes |

@@ -1,8 +1,10 @@
 # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-metric-streams-trustpolicy.html
 resource "aws_iam_role" "this" {
-  name_prefix        = var.name
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
-  tags               = var.tags
+  name                 = var.cloudwatch_metrics_role_name
+  name_prefix          = var.cloudwatch_metrics_role_name == null ? var.name : null
+  permissions_boundary = var.cloudwatch_metrics_role_permissions_boundary
+  assume_role_policy   = data.aws_iam_policy_document.assume_role.json
+  tags                 = var.tags
 }
 
 data "aws_iam_policy_document" "assume_role" {
@@ -28,4 +30,3 @@ data "aws_iam_policy_document" "this" {
     resources = [module.kfh.kinesis_firehose_delivery_stream_arn]
   }
 }
-
