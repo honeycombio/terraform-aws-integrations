@@ -1,3 +1,10 @@
 recursive:
   enabled: true
   path: modules
+
+settings:
+  # Report the provider version constraint from required_providers rather than
+  # the exact version resolved in a .terraform.lock.hcl. Whoever regenerates
+  # these docs has usually run `terraform init` somewhere in the tree, and
+  # without this the Providers table picks up their locally locked version.
+  lockfile: false
