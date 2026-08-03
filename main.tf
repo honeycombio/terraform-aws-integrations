@@ -34,6 +34,11 @@ module "cloudwatch_logs" {
   count                 = length(var.cloudwatch_log_groups) > 0 ? 1 : 0
   cloudwatch_log_groups = var.cloudwatch_log_groups
 
+  cloudwatch_logs_role_name                 = var.cloudwatch_logs_role_name
+  cloudwatch_logs_role_permissions_boundary = var.cloudwatch_logs_role_permissions_boundary
+  firehose_role_name                        = var.cloudwatch_logs_firehose_role_name
+  firehose_role_permissions_boundary        = var.cloudwatch_logs_firehose_role_permissions_boundary
+
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "cloudwatch-logs"
@@ -48,6 +53,13 @@ module "rds_logs" {
   name   = var.rds_logs_name
 
   count = var.enable_rds_logs ? 1 : 0
+
+  lambda_role_name                          = var.rds_logs_lambda_role_name
+  lambda_role_permissions_boundary          = var.rds_logs_lambda_role_permissions_boundary
+  cloudwatch_logs_role_name                 = var.rds_logs_cloudwatch_logs_role_name
+  cloudwatch_logs_role_permissions_boundary = var.rds_logs_cloudwatch_logs_role_permissions_boundary
+  firehose_role_name                        = var.rds_logs_firehose_role_name
+  firehose_role_permissions_boundary        = var.rds_logs_firehose_role_permissions_boundary
 
   db_name                = var.rds_db_name
   db_engine              = var.rds_db_engine
@@ -67,6 +79,11 @@ module "cloudwatch_metrics" {
 
   count = var.enable_cloudwatch_metrics ? 1 : 0
 
+  cloudwatch_metrics_role_name                 = var.cloudwatch_metrics_role_name
+  cloudwatch_metrics_role_permissions_boundary = var.cloudwatch_metrics_role_permissions_boundary
+  firehose_role_name                           = var.cloudwatch_metrics_firehose_role_name
+  firehose_role_permissions_boundary           = var.cloudwatch_metrics_firehose_role_permissions_boundary
+
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "cloudwatch-metrics"
@@ -84,6 +101,9 @@ module "s3_logfile" {
   name   = var.s3_logfile_name
 
   count = var.s3_bucket_arn != "" ? 1 : 0
+
+  lambda_role_name                 = var.s3_logfile_lambda_role_name
+  lambda_role_permissions_boundary = var.s3_logfile_lambda_role_permissions_boundary
 
   honeycomb_api_key  = var.honeycomb_api_key
   honeycomb_api_host = var.honeycomb_api_host

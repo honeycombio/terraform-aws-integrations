@@ -13,6 +13,9 @@ module "kfh" {
 
   name = var.name
 
+  firehose_role_name                 = var.firehose_role_name
+  firehose_role_permissions_boundary = var.firehose_role_permissions_boundary
+
   honeycomb_api_host      = var.honeycomb_api_host
   honeycomb_api_key       = var.honeycomb_api_key
   honeycomb_dataset_name  = var.honeycomb_dataset_name

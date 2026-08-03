@@ -6,6 +6,18 @@ variable "name" {
 DESC
 }
 
+variable "lambda_role_name" {
+  type        = string
+  description = "Name for the IAM role used by the S3 log processor Lambda function. If null, the Lambda function name is used. Changing this on an existing deployment replaces the IAM role."
+  default     = null
+}
+
+variable "lambda_role_permissions_boundary" {
+  type        = string
+  description = "ARN of the permissions boundary policy to attach to the S3 log processor Lambda IAM role."
+  default     = null
+}
+
 variable "environment" {
   type        = string
   description = "The environment this code is running in. If set, will be added as 'env' to each event."

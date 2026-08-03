@@ -4,6 +4,11 @@ module "kinesis_firehose_single" {
 
   name = "kfh-single-${random_pet.this.id}"
 
+  // explicitly named role with a permissions boundary; the multi-destination
+  // test case below leaves both inputs null
+  firehose_role_name                 = "kfh-single-${random_pet.this.id}-firehose"
+  firehose_role_permissions_boundary = aws_iam_policy.permissions_boundary.arn
+
   honeycomb_api_host     = var.honeycomb_api_host
   honeycomb_api_key      = var.honeycomb_api_key
   honeycomb_dataset_name = "kinesis-single"

@@ -181,8 +181,10 @@ data "aws_iam_policy_document" "firehose-assume-role-policy" {
 }
 
 resource "aws_iam_role" "firehose_s3_role" {
-  name_prefix        = var.name
-  assume_role_policy = data.aws_iam_policy_document.firehose-assume-role-policy.json
+  name                 = var.firehose_role_name
+  name_prefix          = var.firehose_role_name == null ? var.name : null
+  permissions_boundary = var.firehose_role_permissions_boundary
+  assume_role_policy   = data.aws_iam_policy_document.firehose-assume-role-policy.json
 }
 
 data "aws_iam_policy_document" "firehose_s3_policy_document" {

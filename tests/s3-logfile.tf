@@ -22,6 +22,11 @@ module "elb_logs" {
   honeycomb_api_key  = var.honeycomb_api_key
   honeycomb_api_host = var.honeycomb_api_host
 
+  // explicitly named role with a permissions boundary; the alb_logs test case
+  // above leaves both inputs null
+  lambda_role_name                 = "tf-integrations-elb-${random_pet.this.id}-lambda"
+  lambda_role_permissions_boundary = aws_iam_policy.permissions_boundary.arn
+
   s3_bucket_arn = data.aws_s3_bucket.log_bucket.arn
 }
 

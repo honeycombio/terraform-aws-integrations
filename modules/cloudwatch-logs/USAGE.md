@@ -4,13 +4,13 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 6.0 |
 
 ## Modules
 
@@ -37,7 +37,11 @@
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_destinations"></a> [additional\_destinations](#input\_additional\_destinations) | Additional sinks can be configured here. | <pre>list(object({<br>    honeycomb_dataset_name = string,<br>    honeycomb_api_key      = string,<br>    honeycomb_api_host     = string,<br>  }))</pre> | `[]` | no |
 | <a name="input_cloudwatch_log_groups"></a> [cloudwatch\_log\_groups](#input\_cloudwatch\_log\_groups) | CloudWatch Log Group names to stream to Honeycomb | `list(string)` | n/a | yes |
+| <a name="input_cloudwatch_logs_role_name"></a> [cloudwatch\_logs\_role\_name](#input\_cloudwatch\_logs\_role\_name) | Name for the IAM role used by CloudWatch Logs. If null, Terraform generates a name using var.name as a prefix. Changing this on an existing deployment replaces the IAM role. | `string` | `null` | no |
+| <a name="input_cloudwatch_logs_role_permissions_boundary"></a> [cloudwatch\_logs\_role\_permissions\_boundary](#input\_cloudwatch\_logs\_role\_permissions\_boundary) | ARN of the permissions boundary policy to attach to the CloudWatch Logs IAM role. | `string` | `null` | no |
 | <a name="input_enable_lambda_transform"></a> [enable\_lambda\_transform](#input\_enable\_lambda\_transform) | Enable a Lambda transform on the Kinesis Firehose to preprocess and structure the logs | `bool` | `false` | no |
+| <a name="input_firehose_role_name"></a> [firehose\_role\_name](#input\_firehose\_role\_name) | Name for the IAM role used by Kinesis Data Firehose. If null, Terraform generates a name using var.name as a prefix. Changing this on an existing deployment replaces the IAM role. | `string` | `null` | no |
+| <a name="input_firehose_role_permissions_boundary"></a> [firehose\_role\_permissions\_boundary](#input\_firehose\_role\_permissions\_boundary) | ARN of the permissions boundary policy to attach to the Kinesis Data Firehose IAM role. | `string` | `null` | no |
 | <a name="input_honeycomb_api_host"></a> [honeycomb\_api\_host](#input\_honeycomb\_api\_host) | If you use a Secure Tenancy or other proxy, put its schema://host[:port] here. | `string` | `"https://api.honeycomb.io"` | no |
 | <a name="input_honeycomb_api_key"></a> [honeycomb\_api\_key](#input\_honeycomb\_api\_key) | Your Honeycomb team's API key. | `string` | n/a | yes |
 | <a name="input_honeycomb_dataset_name"></a> [honeycomb\_dataset\_name](#input\_honeycomb\_dataset\_name) | Your Honeycomb dataset name. | `string` | n/a | yes |

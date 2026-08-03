@@ -78,6 +78,18 @@ Now you can run `terraform plan/apply` in sequence.
 
 For more configuration options, refer to [USAGE.md](https://github.com/honeycombio/terraform-aws-integrations/blob/main/USAGE.md).
 
+### IAM role names and permissions boundaries
+
+By default, every IAM role these modules create is named by Terraform using the integration's name as a prefix, and has no [permissions boundary](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html).
+If your organization requires specific role names or a permissions boundary, each integration accepts `*_role_name` and `*_role_permissions_boundary` inputs.
+Refer to [USAGE.md](https://github.com/honeycombio/terraform-aws-integrations/blob/main/USAGE.md) for the full list.
+
+⚠️ An IAM role's name cannot be changed in place.
+Setting a `*_role_name` on a deployment that was created without one destroys and recreates the role, which in turn replaces the resources that reference it: the Kinesis Firehose delivery stream, the CloudWatch Logs subscription filter or metric stream, and the Lambda functions.
+Run `terraform plan` first, and expect a brief gap in telemetry delivery while the replacements happen.
+
+Adding or changing a `*_role_permissions_boundary` is an in-place update to the role and does not replace anything.
+
 ## Examples
 
 Examples that use this module can be found in [`examples/`](https://github.com/honeycombio/terraform-aws-integrations/tree/main/examples/complete).

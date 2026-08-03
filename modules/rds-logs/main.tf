@@ -50,12 +50,20 @@ module "rds_lambda_transform" {
   attach_policy = true
   policy        = aws_iam_policy.lambda[count.index].arn
 
+  role_name                 = var.lambda_role_name
+  role_permissions_boundary = var.lambda_role_permissions_boundary
+
   tags = local.tags
 }
 
 module "cloudwatch_logs" {
   source = "../cloudwatch-logs"
   name   = var.name
+
+  cloudwatch_logs_role_name                 = var.cloudwatch_logs_role_name
+  cloudwatch_logs_role_permissions_boundary = var.cloudwatch_logs_role_permissions_boundary
+  firehose_role_name                        = var.firehose_role_name
+  firehose_role_permissions_boundary        = var.firehose_role_permissions_boundary
 
   cloudwatch_log_groups   = local.log_groups
   honeycomb_api_key       = var.honeycomb_api_key
