@@ -7,7 +7,7 @@
     - If recategorization or entry updates are needed, discard the edits to CHANGELOG.md, update the PR titles and labels accordingly back at GitHub, and rerun.
     - If the script picked up an unexpected previous version, you can override by including that, too: `PREVIOUS_VERSION=v2.2.0`
   - Commit changes, push, and open the PR for review.
-    - Label it `type: maintenance` and `version: no bump`
+    - Label it `type: maintenance`, `version: no bump`, and `no-changelog` to keep it out of the notes for the release it is preparing
 - Once the release prep PR is merged, apply a tag on the merge commit that matches the version to be released.
   - Fetch the updated `main` branch.
   - Apply a tag for the new version on the merged commit (e.g. `git tag -a v2.3.0 -m "v2.3.0"`)

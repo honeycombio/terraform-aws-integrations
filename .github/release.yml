@@ -4,6 +4,7 @@ changelog:
   exclude:
     labels:
       - no-changelog
+      - skip-changelog
   categories:
     - title: 💥 Breaking Changes 💥
       labels:
