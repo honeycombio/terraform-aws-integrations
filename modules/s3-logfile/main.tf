@@ -55,8 +55,13 @@ module "s3_processor" {
 
 
   environment_variables = {
-    PARSER_TYPE         = var.parser_type
-    REGEX_PATTERN       = var.regex_pattern
+    PARSER_TYPE = var.parser_type
+    # Regexes are commonly supplied via a Terraform heredoc, which appends a
+    # trailing newline to the string. That newline becomes part of the
+    # compiled pattern, requiring the matched line to end in a literal "\n" -
+    # but the Lambda's line scanner strips newlines before parsing, so the
+    # pattern can then never match. Trim it so heredoc-style inputs work.
+    REGEX_PATTERN       = trimspace(var.regex_pattern)
     FORCE_GUNZIP        = true
     ENVIRONMENT         = var.environment
     HONEYCOMB_WRITE_KEY = var.honeycomb_api_key
