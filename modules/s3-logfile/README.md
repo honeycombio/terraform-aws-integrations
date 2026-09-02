@@ -18,7 +18,7 @@ module "logs_from_a_bucket_integrations" {
   source = "honeycombio/integrations/aws//modules/s3-logfile"
   name   = var.logs_integration_name
 
-  parser_type   = var.parser_type // valid types are alb, elb, cloudfront, vpc-flow-log, s3-access, json, and keyval
+  parser_type   = var.parser_type // valid types are alb, elb, cloudfront, vpc-flow-log, s3-access, json, keyval, and regex
   s3_bucket_arn = var.s3_bucket_arn     // The full ARN of the bucket storing the logs.
 
 
@@ -73,6 +73,45 @@ These are applied in order and as soon as it matches a MatchLinePattern, it keep
 As soon as it matches a FilterLinePattern, it drops the line and moves on.
 
 When the Lambda finishes, it emits a log to stdout which says the number of processed lines and number of kept lines.
+
+### Regex Parser Type
+
+When `parser_type` is `"regex"`, `regex_pattern` is required and must contain named capture groups
+matching the fields you want extracted from each line.
+
+Using a `HEREDOC`:
+
+```hcl
+module "logs_from_a_bucket_integrations" {
+  source = "honeycombio/integrations/aws//modules/s3-logfile"
+  name   = var.logs_integration_name
+
+  parser_type   = "regex"
+  regex_pattern = <<REGEX
+^(?P<timestamp>\S+) (?P<level>\S+) (?P<message>.*)$
+REGEX
+  s3_bucket_arn = var.s3_bucket_arn
+
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "custom-logs"
+}
+```
+
+Or as a single-line string:
+
+```hcl
+module "logs_from_a_bucket_integrations" {
+  source = "honeycombio/integrations/aws//modules/s3-logfile"
+  name   = var.logs_integration_name
+
+  parser_type   = "regex"
+  regex_pattern = "^(?P<timestamp>\\S+) (?P<level>\\S+) (?P<message>.*)$"
+  s3_bucket_arn = var.s3_bucket_arn
+
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "custom-logs"
+}
+```
 
 ## Development
 
