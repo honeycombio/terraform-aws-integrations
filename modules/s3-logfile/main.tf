@@ -33,6 +33,13 @@ data "aws_iam_policy_document" "lambda" {
 resource "aws_iam_policy" "lambda" {
   description = "Honeycomb Agentless Lambda"
   policy      = data.aws_iam_policy_document.lambda.json
+
+  lifecycle {
+    precondition {
+      condition     = var.parser_type != "regex" || trimspace(var.regex_pattern) != ""
+      error_message = "regex_pattern must be set when parser_type is \"regex\"."
+    }
+  }
 }
 
 module "s3_processor" {

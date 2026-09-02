@@ -74,6 +74,45 @@ As soon as it matches a FilterLinePattern, it drops the line and moves on.
 
 When the Lambda finishes, it emits a log to stdout which says the number of processed lines and number of kept lines.
 
+### Regex Parser Type
+
+When `parser_type` is `"regex"`, `regex_pattern` is required and must contain named capture groups
+matching the fields you want extracted from each line.
+
+Using a `HEREDOC`:
+
+```hcl
+module "logs_from_a_bucket_integrations" {
+  source = "honeycombio/integrations/aws//modules/s3-logfile"
+  name   = var.logs_integration_name
+
+  parser_type   = "regex"
+  regex_pattern = <<REGEX
+^(?P<timestamp>\S+) (?P<level>\S+) (?P<message>.*)$
+REGEX
+  s3_bucket_arn = var.s3_bucket_arn
+
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "custom-logs"
+}
+```
+
+Or as a single-line string:
+
+```hcl
+module "logs_from_a_bucket_integrations" {
+  source = "honeycombio/integrations/aws//modules/s3-logfile"
+  name   = var.logs_integration_name
+
+  parser_type   = "regex"
+  regex_pattern = "^(?P<timestamp>\\S+) (?P<level>\\S+) (?P<message>.*)$"
+  s3_bucket_arn = var.s3_bucket_arn
+
+  honeycomb_api_key      = var.honeycomb_api_key
+  honeycomb_dataset_name = "custom-logs"
+}
+```
+
 ## Development
 
 Refer to our [development documentation](https://github.com/honeycombio/terraform-aws-integrations#development) for details.
