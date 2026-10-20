@@ -34,8 +34,9 @@ locals {
         endpoint = "0.0.0.0:4433"
         # record_type is deprecated in favor of the awscloudwatchmetricstreams_encoding
         # extension, but the honeycomb-opentelemetry-collector distro does not bundle
-        # that extension yet (valid extensions: health_check pprof zpages bearertokenauth
-        # headers_setter), so we keep the still-supported record_type form.
+        # that extension (v0.0.44 extensions: basicauth bearertokenauth headers_setter
+        # health_check honeycomb_auth pprof zpages), so we keep the still-supported
+        # record_type form. The receiver builds the otlp_v1 unmarshaler itself.
         record_type = "otlp_v1"
         access_key  = local.actual_otel_access_key
       }
@@ -49,7 +50,7 @@ locals {
         metric_statements = [
           {
             context    = "datapoint"
-            statements = ["delete_key(attributes, \"MetricName\")"]
+            statements = ["delete_key(datapoint.attributes, \"MetricName\")"]
           }
         ]
       }
