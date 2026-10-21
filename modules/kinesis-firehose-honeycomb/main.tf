@@ -31,15 +31,49 @@ locals {
   otel_config = {
     receivers = {
       awsfirehose = {
-        endpoint    = "0.0.0.0:4433"
+        endpoint = "0.0.0.0:4433"
+        # record_type is deprecated in favor of the awscloudwatchmetricstreams_encoding
+        # extension, but the honeycomb-opentelemetry-collector distro does not bundle
+        # that extension (check `honeycomb-otelcol components` for the pinned image), so
+        # we keep the still-supported record_type form. The receiver builds the otlp_v1
+        # unmarshaler itself, so no encoding extension is required.
         record_type = "otlp_v1"
         access_key  = local.actual_otel_access_key
       }
     }
 
+    processors = {
+      # Drop the redundant MetricName datapoint attribute. Direct Firehose ingest to
+      # kinesis_events does not send it, so leaving it in would add an attribute when
+      # traffic is proxied through the collector and change how Honeycomb compacts
+      # datapoints into events. Dropping it keeps the collector path's events shaped
+      # the same as direct ingest.
+      "transform/drop_metric_name" = {
+        metric_statements = [
+          {
+            context    = "datapoint"
+            statements = ["delete_key(datapoint.attributes, \"MetricName\")"]
+          }
+        ]
+      }
+      batch = {
+        # Honeycomb's OTLP /v1/metrics rejects oversized request bodies with HTTP 400
+        # "request body is too large". send_batch_max_size caps datapoints per export,
+        # not bytes: 8192 datapoints measured ~650 KB of protobuf in a local run, where
+        # the old send_batch_size=100000 with no max produced multi-MB posts that were
+        # dropped wholesale. A smaller timeout also bounds delivery latency and the
+        # collector's in-memory buffer.
+        timeout             = "10s"
+        send_batch_size     = 8192
+        send_batch_max_size = 8192
+      }
+    }
+
     exporters = {
-      for idx, dest in local.destinations : "otlphttp/${idx}" => {
-        endpoint = "${dest.honeycomb_api_host}/v1/metrics"
+      # metrics_endpoint is used verbatim; setting endpoint would make the exporter
+      # append /v1/metrics again, producing /v1/metrics/v1/metrics (404).
+      for idx, dest in local.destinations : "otlp_http/${idx}" => {
+        metrics_endpoint = "${dest.honeycomb_api_host}/v1/metrics"
         headers = {
           "x-honeycomb-team"    = dest.honeycomb_api_key
           "x-honeycomb-dataset" = dest.honeycomb_dataset_name
@@ -47,19 +81,12 @@ locals {
       }
     }
 
-    processors = {
-      batch = {
-        timeout         = "300s"
-        send_batch_size = 100000
-      }
-    }
-
     service = {
       pipelines = {
         metrics = {
           receivers  = ["awsfirehose"]
-          processors = ["batch"]
-          exporters  = [for idx, dest in local.destinations : "otlphttp/${idx}"]
+          processors = ["transform/drop_metric_name", "batch"]
+          exporters  = [for idx, dest in local.destinations : "otlp_http/${idx}"]
         }
       }
     }

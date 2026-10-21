@@ -49,7 +49,7 @@ No modules.
 | <a name="input_lambda_transform_arn"></a> [lambda\_transform\_arn](#input\_lambda\_transform\_arn) | If enable\_lambda\_transform is set to true, specify a valid arn | `string` | `""` | no |
 | <a name="input_name"></a> [name](#input\_name) | A name for this CloudWatch Kinesis Firehose Stream. | `string` | n/a | yes |
 | <a name="input_otel_access_key"></a> [otel\_access\_key](#input\_otel\_access\_key) | Access key for OpenTelemetry collector awsfirehose receiver authentication. Generated randomly if not provided. | `string` | `""` | no |
-| <a name="input_otel_collector_version"></a> [otel\_collector\_version](#input\_otel\_collector\_version) | The version tag of the Honeycomb OpenTelemetry collector image to use. | `string` | `"v0.0.29"` | no |
+| <a name="input_otel_collector_version"></a> [otel\_collector\_version](#input\_otel\_collector\_version) | The version tag of the Honeycomb OpenTelemetry collector image to use. | `string` | `"v0.0.44"` | no |
 | <a name="input_s3_backup_mode"></a> [s3\_backup\_mode](#input\_s3\_backup\_mode) | Should we only backup to S3 data that failed delivery, or all data? | `string` | `"FailedDataOnly"` | no |
 | <a name="input_s3_buffer_interval"></a> [s3\_buffer\_interval](#input\_s3\_buffer\_interval) | In seconds. See https://docs.aws.amazon.com/firehose/latest/dev/create-configure.html | `number` | `400` | no |
 | <a name="input_s3_buffer_size"></a> [s3\_buffer\_size](#input\_s3\_buffer\_size) | In MiB. See https://docs.aws.amazon.com/firehose/latest/dev/create-configure.html | `number` | `10` | no |
