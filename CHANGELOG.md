@@ -1,3 +1,14 @@
+# v2.3.1 - 2026-10-21
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### 🐛 Fixes
+* fix(kinesis-firehose-honeycomb): correct multi-destination collector OTLP endpoint (404) by @lizthegrey in https://github.com/honeycombio/terraform-aws-integrations/pull/115
+
+
+**Full Changelog**: https://github.com/honeycombio/terraform-aws-integrations/compare/v2.3.0...v2.3.1
+
 # v2.3.0 - 2026-08-03
 
 <!-- Release notes generated using configuration in .github/release.yml at main -->
