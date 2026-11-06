@@ -33,6 +33,13 @@ data "aws_iam_policy_document" "lambda" {
 resource "aws_iam_policy" "lambda" {
   description = "Honeycomb Agentless Lambda"
   policy      = data.aws_iam_policy_document.lambda.json
+
+  lifecycle {
+    precondition {
+      condition     = var.parser_type != "regex" || trimspace(var.regex_pattern) != ""
+      error_message = "regex_pattern must be set when parser_type is \"regex\"."
+    }
+  }
 }
 
 module "s3_processor" {
@@ -55,7 +62,13 @@ module "s3_processor" {
 
 
   environment_variables = {
-    PARSER_TYPE         = var.parser_type
+    PARSER_TYPE = var.parser_type
+    # Regexes are commonly supplied via a Terraform heredoc, which appends a
+    # trailing newline to the string. That newline becomes part of the
+    # compiled pattern, requiring the matched line to end in a literal "\n" -
+    # but the Lambda's line scanner strips newlines before parsing, so the
+    # pattern can then never match. Trim it so heredoc-style inputs work.
+    REGEX_PATTERN       = trimspace(var.regex_pattern)
     FORCE_GUNZIP        = true
     ENVIRONMENT         = var.environment
     HONEYCOMB_WRITE_KEY = var.honeycomb_api_key
